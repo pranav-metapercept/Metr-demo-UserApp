@@ -1,0 +1,271 @@
+<template>
+    <div>
+        <PageHeader :icon="'mdi mdi-cog h2'" :title="title" :items="item" />
+        <div class="row ">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <!-- Project selection card -->
+                    <div class="card shadow-sm">
+                        <div class="custom-notifications d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="custom-title ">
+                                Please fill in the following fields to proceed to docPublisher
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                        <div class="container">
+                            <form>
+                                <div class="form-group row">
+                                    <label class="col-md-12 col-form-label">Select Project<span
+                                            class="text-danger">*</span></label>
+                                    <div class="col-md-12">
+                                        <multiselect style=" width: 100%;" v-model="selectedproject"
+                                            :options="projectList.map(item => item.projectName)"
+                                            placeholder="Choose a Project" class="custom-multiselect">
+                                        </multiselect>
+                                    </div>
+                                </div>
+                                <div v-if="hasData" class="form-group row">
+                                    <label class="col-md-12 col-form-label">Select Branch<span
+                                            class="text-danger">*</span></label>
+                                    <div class="col-md-12">
+                                        <multiselect v-model="selectedBranch"
+                                            :options="repobranchesdata.map(item => item.text)"
+                                            placeholder="Choose a Project">
+                                        </multiselect>
+                                    </div>
+                                </div>
+                                <div class="row from-group">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary mb-3 btn-sm"
+                                            :disabled="isButtonDisabled"
+                                            @click.prevent="selectedproject !== '' && setdata(selectedProjectOwner, selectedProjectName,)">
+                                            Proceed To DocPublisher
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import {
+    mapActions
+} from "vuex";
+import Multiselect from "vue-multiselect";
+import checkurl from '../../../components/urlvalidator';
+import {
+    eventBus
+} from '../../../main';
+import PageHeader from "@/components/pageheader";
+import CryptoJS from "crypto-js";
+import {
+    secretKey
+} from "../../../api/global.env";
+export default {
+    components: {
+        PageHeader,
+        Multiselect
+    },
+    data() {
+        return {
+            selectedproject: '',
+            userId: this.$store.state.Auth.userId,
+            items: "",
+            selectedProjectOwner: "",
+            selectedProjectName: null,
+            selectedBranch: '',
+            projectList: [],
+            repobranchesdata: [],
+            title: 'DocPublisher',
+            item: [{
+                text: "Dashboard",
+                href: "/"
+            },
+            {
+                text: "DocPublisher",
+                active: true
+            }
+            ],
+        };
+    },
+    validateURL() {
+        const newRepoUser = CryptoJS.AES.decrypt(
+            this.$route.params.repouser,
+            secretKey
+        ).toString(CryptoJS.enc.Utf8);
+        const newRepoName = CryptoJS.AES.decrypt(
+            this.$route.params.reponame,
+            secretKey
+        ).toString(CryptoJS.enc.Utf8)
+        const oldRepoUser = localStorage.getItem('repouser');
+        const oldRepoName = localStorage.getItem('reponame');
+        if (newRepoName !== oldRepoName || newRepoUser !== oldRepoUser) {
+            checkurl(newRepoName);
+        }
+    },
+    created() {
+        eventBus.$emit('update-sidebar', "menuitems.docpublisher.text");
+        if (this.$store.state.Auth.projectsData.length) {
+            this.projectList = this.$store.state.Auth.projectsData.filter(project => project.userRole.includes("DocPublisher"));
+        } else {
+            this.getProjectData()
+        }
+    },
+    computed: {
+        isButtonDisabled() {
+            return this.selectedProjectName === null || this.selectedBranch === '';
+        },
+        hasData() {
+            return this.repobranchesdata.length > 0;
+        }
+    },
+    methods: {
+        ...mapActions({
+            get: "userProjectDetails"
+        }),
+        messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
+            this.$bvToast.toast(messageToastContent, {
+                title: messageToastTitle,
+                variant: messageToastVariant,
+                solid: true,
+            });
+        },
+        setdata(owner, projectName) {
+            this.redirectProject(owner, projectName)
+        },
+        getProjectData() {
+            this.$store.getters.client
+                .get(`/projectuser/byuserid?userId=${this.userId}`)
+                .then((response) => {
+                    if (Array.isArray(response.data)) {
+                        // Filter projects for the user role "DocPublisher"
+                        this.projectList = response.data.filter(project => project.userRole.includes("DocPublisher"));
+                        // Commit the complete project data to the Vuex store
+                        console.log(response.data);
+                        this.$store.commit('setProjectsList', response.data);
+                    } else {
+                        // Handle the case where the response data is not an array
+                        this.messageToast("Error", "danger", "Received invalid project data from the server");
+                    }
+                })
+                .catch((error) => {
+                    // Handle the error by showing a message or performing other error handling actions
+                    this.messageToast("Error", "danger", error.response ? error.response.data.message : "An error occurred while fetching project data.");
+                });
+        },
+        async redirectProject(repouser, reponame) {
+            const encryptedRepouser = CryptoJS.AES.encrypt(
+                repouser,
+                secretKey
+            ).toString();
+            const encryptedReponame = CryptoJS.AES.encrypt(
+                reponame,
+                secretKey
+            ).toString();
+            const encryptedBranch = CryptoJS.AES.encrypt(
+                this.selectedBranch,
+                secretKey
+            ).toString();
+            const encryptedOwner = CryptoJS.AES.encrypt(
+                this.selectedProjectOwner,
+                secretKey
+            ).toString();
+
+            localStorage.setItem("repouser", encryptedRepouser)
+            localStorage.setItem('reponame', encryptedReponame)
+            const encodedRepouser = encodeURIComponent(encryptedRepouser);
+            const encodedReponame = encodeURIComponent(encryptedReponame);
+            const encodedBranch = encodeURIComponent(encryptedBranch);
+            const encodedOwner = encodeURIComponent(encryptedOwner);
+            this.$router.push({
+                path: `/docpublisher/${encodedRepouser}/${encodedReponame}/${encodedBranch}/${encodedOwner}`
+            });
+        },
+        async getRepoBranch() {
+            let loader = this.$loading.show({
+                loader: "dots",
+            });
+            this.$store.getters.client
+                .get(
+                    `orguser/repobranches?repoUser=${this.selectedProjectOwner}&repoName=${this.selectedProjectName}`
+                )
+                .then((response) => {
+                    if (response.data && response.data.length > 0) {
+                        let length = response.data.length - 1;
+                        this.brachName = response.data[length].name;
+                        this.selectedBranch = response.data[0].name;
+                        this.repobranchesdata = response.data.map((element) => ({
+                            value: element.name,
+                            text: element.name,
+                        }));
+                    } else {
+                        // Handle the case when the response is empty or does not contain branches.
+                        this.messageToast("invalid request",
+                            "danger",
+                            "No branches found in the Project."
+                        );
+                    }
+                })
+                .catch((error) => {
+                    // Handle errors here
+                    this.messageToast("invalid request",
+                        "danger",
+                        error.response.data.message
+                    );
+                })
+                .finally(() => {
+                    loader.hide();
+                });
+        }
+    },
+    watch: {
+        selectedproject(newVal) {
+            const selectedProject = this.projectList.find((item) => item.projectName === newVal);
+            this.selectedProjectOwner = selectedProject.owner;
+            this.selectedProjectName = selectedProject.projectName;
+            this.repobranchesdata = [],
+                this.getRepoBranch();
+        },
+    },
+}
+</script>
+
+<style scoped>
+label {
+    font-weight: 400;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0em;
+    text-align: left;
+    color: rgba(23, 35, 61, 1);
+}
+
+.custom-notifications {
+    padding: 14px;
+    gap: 24px;
+}
+
+.custom-title {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: 0.5px;
+    text-align: left;
+    color: rgba(23, 35, 61, 1);
+}
+
+.custom-multiselect .multiselect__content-wrapper {
+    max-height: 100px !important;
+    overflow-y: auto !important;
+}
+
+.custom-multiselect .multiselect__content {
+    max-height: 100px !important;
+}</style>
