@@ -1,79 +1,105 @@
 <template>
-<!-- Card for displaying recent publications -->
-<div class="card">
-    <div class="custom-notifications d-flex justify-content-between align-items-center flex-wrap">
-        <div class="custom-title mb-0">Recent Release Log</div>
-        <div>
-            <button class="btn text-primary view-details-btn btn-sm m-0" @click="viewMore">
-                <span class="mdi mdi-eye-outline mr-2"></span> View details
-            </button>
-        </div>
-    </div>
-    <div data-simplebar class="card-body border-top py-2 mb-3">
-        <!-- Show a skeleton loading table when 'showSpinner' is true -->
-        <b-skeleton-table v-if="showSpinner" :rows="5" :columns="2" :table-props="{ bordered: true, striped: true }"></b-skeleton-table>
-        <!-- Render publications when data is available and not loading -->
-        <div v-else-if="activityData.length > 0 && !showSpinner">
-            <ul class="list-group card-body custom-card-body mb-3">
-                <li class="list-group-item list-group-item-action m-1 custom-list-item" v-for="data in activityData" :key="data.id">
-                    <div class="d-flex justify-content-between">
-                        <h5 class="mb-1 font-size-13 ptitle-cust-cls">
-                            {{ data.releaseTitle }}
-                        </h5>
-                        <div class="badge-soft-success ml-1 font-size-14 custom-badge">
-                            Output format: {{ data.outputFormat }}
-                        </div>
-                    </div>
-                    <p class="mb-1">
-                        <b><span class="font-size-14 custom-released-by">Released By: {{ data.releasedBy }}</span></b>
-                    </p>
-                    <small class="text-muted font-size-14 custom-time-ago">{{
-              getTimeAgo(data.createdAt)
-            }}</small>
-                </li>
-            </ul>
-        </div>
-        <div v-else> 
-            <div class="text-center font-size-14 custom-center">
-                <div class="custom-container">
-                    <img class="custom-image" src="../../../../assets/placeholder.png" />
-                    <div class="custom-text">No Recent Publication Added</div>
-                </div>
+    <!-- Card for displaying recent publications -->
+    <div class="card">
+        <div class="custom-notifications d-flex justify-content-between align-items-center flex-wrap">
+            <div class="custom-title mb-0">Recent Release Log</div>
+            <div>
+                <button class="btn text-primary view-details-btn btn-sm m-0" @click="viewMore">
+                    <span class="mdi mdi-eye-outline mr-2"></span> View details
+                </button>
             </div>
         </div>
+        <div data-simplebar class="card-body border-top py-2 mb-3">
 
+            <!-- Render publications when data is available and not loading -->
+            <div>
+                <ul class="list-group card-body custom-card-body mb-3">
+                    <li class="list-group-item list-group-item-action m-1 custom-list-item" v-for="data in activityData"
+                        :key="data.id">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="mb-1 font-size-13 ptitle-cust-cls">
+                                {{ data.releaseTitle }}
+                            </h5>
+                            <div class="badge-soft-success ml-1 font-size-14 custom-badge">
+                                Output format: {{ data.outputFormat }}
+                            </div>
+                        </div>
+                        <p class="mb-1">
+                            <b><span class="font-size-14 custom-released-by">Released By: {{ data.releasedBy }}</span></b>
+                        </p>
+                        <small class="text-muted font-size-14 custom-time-ago">{{
+                            getTimeAgo(data.createdAt)
+                        }}</small>
+                    </li>
+                </ul>
+            </div>
+
+
+        </div>
     </div>
-</div>
 </template>
 
 <script>
 export default {
     data() {
         return {
-            userId: this.$store.state.Auth.userId,
-            activityData: [], // List of recent publications
-            showSpinner: true,
+
+            activityData: [
+                {
+                    "_id": "641051ebca19b316a00b796a",
+                    "ditaMapFileName": "ditamap20",
+                    "outputFormat": "html5",
+                    "ditaotVersion": "3.4.1",
+                    "orgId": "640ecdb18e33cc0b2c5ea795",
+                    "userId": "63f3120a58cb1b1d4852b107",
+                    "releaseTitle": "DitaxPresso guide",
+                    "releasedBy": "jyoti kamal singh",
+                    "createdAt": "2023-03-14T10:52:27.505Z",
+                    "updatedAt": "2023-03-14T10:52:27.505Z"
+                },
+                {
+                    "_id": "64105403ca19b316a00b796b",
+                    "ditaMapFileName": "ditamap20",
+                    "outputFormat": "html5",
+                    "ditaotVersion": "3.4.1",
+                    "orgId": "640ecdb18e33cc0b2c5ea795",
+                    "userId": "63f3120a58cb1b1d4852b107",
+                    "releaseTitle": "DitaxPresso guide",
+                    "releasedBy": "jyoti kamal singh",
+                    "createdAt": "2023-03-14T11:01:23.019Z",
+                    "updatedAt": "2023-03-14T11:01:23.019Z"
+                },
+                {
+                    "_id": "641051ebca19b316a00b796a",
+                    "ditaMapFileName": "ditamap20",
+                    "outputFormat": "html5",
+                    "ditaotVersion": "3.4.1",
+                    "orgId": "640ecdb18e33cc0b2c5ea795",
+                    "userId": "63f3120a58cb1b1d4852b107",
+                    "releaseTitle": "DitaxPresso guide",
+                    "releasedBy": "jyoti kamal singh",
+                    "createdAt": "2023-03-14T10:52:27.505Z",
+                    "updatedAt": "2023-03-14T10:52:27.505Z"
+                },
+                {
+                    "_id": "64105403ca19b316a00b796b",
+                    "ditaMapFileName": "ditamap20",
+                    "outputFormat": "html5",
+                    "ditaotVersion": "3.4.1",
+                    "orgId": "640ecdb18e33cc0b2c5ea795",
+                    "userId": "63f3120a58cb1b1d4852b107",
+                    "releaseTitle": "DitaxPresso guide",
+                    "releasedBy": "jyoti kamal singh",
+                    "createdAt": "2023-03-14T11:01:23.019Z",
+                    "updatedAt": "2023-03-14T11:01:23.019Z"
+                }
+            ]
+
         };
     },
-    mounted() {
-        // Check if recent publications data is available in the store, if not, fetch data
-        if (this.$store.state.Auth.recentPublicationsData.length) {
-            this.showSpinner = false;
-            this.activityData = this.$store.state.Auth.recentPublicationsData
-                .reverse()
-                .slice(0, 5);
-        } else {
-            this.getReleaseNote(); // Fetch recent publications
-        }
-    },
+
     methods: {
-        messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
-            this.$bvToast.toast(messageToastContent, {
-                title: messageToastTitle,
-                variant: messageToastVariant,
-                solid: true,
-            });
-        },
+
         viewMore() {
             this.$router.push({
                 name: "Releasetable",
@@ -108,35 +134,7 @@ export default {
                 }
             }
         },
-        // Fetch recent publications
-        getReleaseNote() {
-            this.$store.getters.client
-                .get(`/orguser/release/byuserId?userId=${this.userId}`)
-                .then((response) => {
-                    if (response.data) {
-                        this.showSpinner = false;
-                        this.activityData = response.data.reverse().slice(0, 5);
-                        console.log(this.activityData.length > 0);
-                        this.$store.commit("setRecentPublicationsData", response.data);
-                    } else {
-                        this.messageToast(
-                            "Invalid request",
-                            "danger",
-                            "No data received from the server"
-                        );
-                        this.showSpinner = false;
-                    }
-                })
-                .catch((err) => {
-                    this.messageToast(
-                        "Invalid request",
-                        "danger",
-                        err.response ? err.response.data.message : "An error occurred"
-                    );
-                    this.showSpinner = false;
-                });
-        },
-    },
+    }
 };
 </script>
 

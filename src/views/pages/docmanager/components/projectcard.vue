@@ -1,38 +1,39 @@
 <template>
-<!-- Container for a project card -->
-<div>
-    <!-- Bootstrap Card component with project details -->
-    <b-card class="p-0 org-card">
-        <!-- Header section with project name -->
-        <div class="media">
-            <div class=" media-body overflow-hidden bg-primary card-header bg-card">
-                <h5 class="custom-title d-flex align-items-center mb-0">
-                    <!-- File icon and project name -->
-                    <i class="d-inline-block mdi cmh-icon mdi-file-document-outline"></i> {{ items.projectName }}
-                </h5>
+    <!-- Container for a project card -->
+    <div>
+        <!-- Bootstrap Card component with project details -->
+        <b-card class="p-0 org-card">
+            <!-- Header section with project name -->
+            <div class="media">
+                <div class=" media-body overflow-hidden bg-primary card-header bg-card">
+                    <h5 class="custom-title d-flex align-items-center mb-0">
+                        <!-- File icon and project name -->
+                        <i class="d-inline-block mdi cmh-icon mdi-file-document-outline"></i> {{ items.projectName }}
+                    </h5>
+                </div>
             </div>
-        </div>
-        <!-- Footer details displaying user count and roles -->
-        <div class="  mx-5 my-3 ">
-            <div class="custom-headlines mb-2">
-                <span class="mr-2 text-primary">Total User :</span><span>{{ userList.length }}</span>
+            <!-- Footer details displaying user count and roles -->
+            <div class="  mx-5 my-3 ">
+                <div class="custom-headlines mb-2">
+                    <span class="mr-2 text-primary">Total User :</span><span>{{ userList.length }}</span>
+                </div>
+                <div class="custom-headlines ">
+                    <span class=" mr-2 text-primary">Role :</span><span>
+                        <!-- Display user roles as a comma-separated list -->
+                        <span>{{ items.userRole.join(", ") }}</span>
+                    </span>
+                </div>
             </div>
-            <div class="custom-headlines ">
-                <span class=" mr-2 text-primary">Role :</span><span>
-                    <!-- Display user roles as a comma-separated list -->
-                    <span>{{ items.userRole.join(", ") }}</span>
-                </span>
+            <hr />
+            <!-- Button to get project details -->
+            <div>
+                <button class="btn card-btn  text-primary view-details-btn btn-sm m-0 "
+                    v-on:click="setdata(items.owner, items.projectName)">
+                    <span class="mdi mdi-eye-outline mr-1"></span> View details
+                </button>
             </div>
-        </div>
-        <hr />
-        <!-- Button to get project details -->
-        <div>
-            <button class="btn card-btn  text-primary view-details-btn btn-sm m-0 " v-on:click="setdata(items.owner, items.projectName)">
-                <span class="mdi mdi-eye-outline mr-1"></span> View details
-            </button>
-        </div>
-    </b-card>
-</div>
+        </b-card>
+    </div>
 </template>
 
 <script>
@@ -42,7 +43,7 @@ import cryptoJs from "crypto-js";
 import {
     secretKey
 } from "../../../../api/global.env";
-import devicevalidator from "../../../../components/devicevalidator";
+
 export default {
     props: {
         items: Object, // Project details passed as a prop
@@ -50,17 +51,51 @@ export default {
     data() {
         return {
             item: [{
-                    text: "Dashboard",
-                    href: "/",
-                },
-                {
-                    text: "Projects",
-                    active: true,
-                },
+                text: "Dashboard",
+                href: "/",
+            },
+            {
+                text: "Projects",
+                active: true,
+            },
             ],
             modalShow: false,
             projectList: [],
-            userList: [],
+            userList: [
+                {
+                    "userRole": [
+                        "Author"
+                    ],
+                    "projectId": "632d977fcefee633c876e6c5",
+                    "userId": "632c06e0f7b16423848d7764",
+                    "githubUsername": "Pritica-DITAxPresso",
+                    "githubEmail": "pritica.d@ditaxpresso.com",
+                    "githubUserId": "1234598",
+                    "acceptInvitation": true,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2022-09-23T11:37:16.914Z",
+                    "updatedAt": "2022-09-23T11:39:32.534Z",
+                    "id": "632d9a6ccefee633c876e6c7"
+                },
+                {
+                    "userRole": [
+                        "Author"
+                    ],
+                    "projectId": "632d977fcefee633c876e6c5",
+                    "userId": "632c06e1f7b16423848d7765",
+                    "githubUsername": "Vedantika-DITAxPresso",
+                    "githubEmail": "vedantika.g@ditaxpresso.com",
+                    "githubUserId": "12345",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2022-09-23T11:52:40.089Z",
+                    "updatedAt": "2022-09-23T11:52:40.089Z",
+                    "id": "632d9e08cefee633c876e6c8"
+                }
+            ]
+            ,
             userRole: {},
             projectOwner: null,
             projectName: null,
@@ -69,10 +104,7 @@ export default {
     created() {
         this.userId = this.$store.state.Auth.userId;
     },
-    mounted() {
-        // Call the getUserInProject method when the component is mounted
-        this.getUserInProject();
-    },
+
     methods: {
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
             this.$bvToast.toast(messageToastContent, {
@@ -81,25 +113,7 @@ export default {
                 solid: true,
             });
         },
-        async getUserInProject() {
-            // Fetch user list for the project
-            this.$store.getters.client
-                .get(`/projectuser/byprojectid?projectId=${this.items.projectId}`)
-                .then((response) => {
-                    if (response.data) {
-                        // Check if data exists
-                        this.userList = response.data;
-                    } else {
-                        // Handle an invalid response
-                        this.messageToast("Invalid request", "danger", "An error occurred");
-                    }
-                })
-                .catch((err) => {
-                    // Handle network issues or unexpected errors
-                    this.messageToast("Invalid request", "danger", err.response ? err.response.data.message : "An error occurred");
-                    devicevalidator(err.response.data.message);
-                });
-        },
+
         setdata(owner, projectName) {
             // Set data in local storage and commit to the store
             localStorage.setItem(

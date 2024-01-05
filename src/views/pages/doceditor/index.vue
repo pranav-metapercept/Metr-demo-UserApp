@@ -365,7 +365,7 @@ export default {
             (this.historyObject = []), (this.futureObject = []);
         });
         eventBus.$on("githubCommit", this.githubCommit);
-        this.getfoldertree();
+       
         let that = this;
         this.$nextTick(() => {
             eventBus.$emit("xmlData", that.xmlObject);

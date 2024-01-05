@@ -13,7 +13,7 @@
                 <span class="dita-ot-version ml-2">{{ ditaOtVersions }}</span>
             </div>
         </div>
-        <button v-if="isDocEditor" class="btn btn-primary btn-sm " type="submit" @click="openEditor()">
+        <button  class="btn btn-primary btn-sm " type="submit" @click="openEditor()">
             <span class="d-flex align-items-center justify-content-center">
                 <span>
                     <i class="mdi mdi-file-edit mdi-16px"></i>
@@ -191,36 +191,7 @@ export default {
             }
         },
         async openEditor() {
-            if (this.$store.state.Auth.projectsData.length) {
-                const repoName = this.projectName;
-                const hasDocEditorAccess = this.$store.state.Auth.projectsData
-                    .filter(item => item.projectName === repoName)
-                    .some(item => item.userRole.includes("DocEditor"));
-                if (hasDocEditorAccess) {
-                    this.navigateToEditor();
-                } else {
-                    this.handleAccessDenied();
-                }
-            } else {
-                this.userId = this.$store.state.Auth.userId;
-                const repoName = this.projectName;
-                this.$store.getters.client
-                    .get(`/projectuser/byuserid?userId=${this.userId}`)
-                    .then((res) => {
-                        this.$store.commit("setProjectsData", res.data);
-                        const hasDocEditorAccess = res.data
-                            .filter(item => item.projectName === repoName)
-                            .some(item => item.userRole.includes("DocEditor"));
-                        if (hasDocEditorAccess) {
-                            this.navigateToEditor();
-                        } else {
-                            this.handleAccessDenied();
-                        }
-                    })
-                    .catch(() => {
-                        // Handle API request error if needed
-                    });
-            }
+            this.navigateToEditor();
         },
         navigateToEditor() {
             const encryptedRepouser = CryptoJS.AES.encrypt(this.repouser, secretKey).toString();
