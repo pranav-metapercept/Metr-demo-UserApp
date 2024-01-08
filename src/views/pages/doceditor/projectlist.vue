@@ -8,58 +8,41 @@
         <div class="card-body">
           <!-- Project selection card -->
           <div class="card shadow-sm">
-            <div
-              class="custom-notifications d-flex justify-content-between align-items-center flex-wrap"
-            >
+            <div class="custom-notifications d-flex justify-content-between align-items-center flex-wrap">
               <div class="custom-title">
                 Please fill in the following fields to proceed to docEditor
               </div>
-              
+
             </div>
             <div class="container">
               <form>
                 <!-- Select Project -->
                 <div class="form-group row">
-                  <label class="col-md-12 col-form-label"
-                    >Select Project<span class="text-danger">*</span></label
-                  >
+                  <label class="col-md-12 col-form-label">Select Project<span class="text-danger">*</span></label>
                   <div class="col-md-12">
                     <!-- Multiselect for project selection -->
-                    <multiselect
-                      style="width: 100%"
-                      v-model="selectedproject"
-                      :options="projectList.map((item) => item.projectName)"
-                      placeholder="Choose a Project"
-                      class="custom-multiselect"
-                    ></multiselect>
+                    <multiselect style="width: 100%" v-model="selectedproject"
+                      :options="projectList.map((item) => item.projectName)" placeholder="Choose a Project"
+                      class="custom-multiselect"></multiselect>
                   </div>
                 </div>
                 <!-- Select Branch (visible only when there is data) -->
                 <div v-if="hasData" class="form-group row">
-                  <label class="col-md-12 col-form-label"
-                    >Select Branch<span class="text-danger">*</span></label
-                  >
+                  <label class="col-md-12 col-form-label">Select Branch<span class="text-danger">*</span></label>
                   <div class="col-md-12">
                     <!-- Multiselect for branch selection -->
-                    <multiselect
-                      v-model="selectedBranch"
-                      :options="repobranchesdata.map((item) => item.text)"
-                      placeholder="Choose a Branch"
-                    ></multiselect>
+                    <multiselect v-model="selectedBranch" :options="repobranchesdata.map((item) => item.text)"
+                      placeholder="Choose a Branch"></multiselect>
                   </div>
                 </div>
                 <!-- Proceed to Editor Button -->
                 <div class="row form-group">
                   <div class="col-md-12">
                     <!-- Button to proceed to the editor with conditions -->
-                    <button
-                      type="submit"
-                      class="btn btn-primary btn-sm"
-                      :disabled="isButtonDisabled || selectedproject === ''"
-                      @click.prevent="
+                    <button type="submit" class="btn btn-primary btn-sm"
+                      :disabled="isButtonDisabled || selectedproject === ''" @click.prevent="
                         setdata(selectedProjectOwner, selectedProjectName)
-                      "
-                    >
+                        ">
                       Proceed To DocEditor
                     </button>
                   </div>
@@ -179,9 +162,7 @@ export default {
       });
     },
     async getRepoBranch() {
-      let loader = this.$loading.show({
-        loader: "dots",
-      });
+
       this.$store.getters.client
         .get(
           `orguser/repobranches?repoUser=${this.selectedProjectOwner}&repoName=${this.selectedProjectName}`
@@ -213,7 +194,7 @@ export default {
           );
         })
         .finally(() => {
-          loader.hide();
+
         });
     },
   },

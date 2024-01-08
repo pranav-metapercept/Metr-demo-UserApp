@@ -111,15 +111,13 @@ export default {
         forgotpassword() {
             this.$validator.validateAll().then((result) => {
                 if (result) {
-                    let loader = this.$loading.show({
-                        loader: "dots",
-                    });
+                    
                     this.$store.getters.client
                         .post(`/orguser/forgotpassword`, {
                             email: this.email
                         })
                         .then((res) => {
-                            loader.hide();
+                          
                             if (res && res.data) {
                                 if (res.data.message === "success") {
                                     this.isEmailSend = true;
@@ -136,7 +134,7 @@ export default {
                         })
                         .catch((error) => {
                             this.isEmailSend = false;
-                            loader.hide();
+                        
                             // Handle the error and display an error message using a message toast
                             this.messageToast("Error", "danger", error.response ? error.response.data.message : 'An error occurred');
                         });

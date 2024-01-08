@@ -13,15 +13,7 @@ export default {
             return title ? `${title} | ${appConfig.title}` : appConfig.title;
         }
     },
-    created() {
-        this.$store.dispatch('fetchDitaOtVersions', this.$store.state.Auth.orgId)
-            .then((ditaOtVersions) => {
-                this.ditaOtVersions = ditaOtVersions;
-            })
-            .catch((error) => {
-                error
-            });
-    },
+   
     methods: {
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
             this.$bvToast.toast(messageToastContent, {

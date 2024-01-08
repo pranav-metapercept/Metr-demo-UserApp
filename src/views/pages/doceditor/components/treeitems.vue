@@ -69,9 +69,7 @@ export default {
             }
         },
         async test(model) {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+          
             await this.$store.getters.client
                 .get(`/orguser/workspace/filecontent?path=${model.path}`)
                 .then((res) => {
@@ -80,7 +78,7 @@ export default {
                         content: res.data,
                         path: model.path
                     });
-                    loader.hide();
+                 
                     eventBus.$emit('update_toolbar_filepath', model.path);
                     eventBus.$emit('textViewContent', {
                         content: res.data,
@@ -90,7 +88,7 @@ export default {
                 },
                 )
                 .catch((error) => {
-                    loader.hide();
+                   
                     
                     devicevalidator(error.response.data.message);
                 })

@@ -188,9 +188,7 @@ export default {
             });
         },
         async getRepoBranch() {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+           
             this.$store.getters.client
                 .get(
                     `orguser/repobranches?repoUser=${this.selectedProjectOwner}&repoName=${this.selectedProjectName}`
@@ -220,7 +218,7 @@ export default {
                     );
                 })
                 .finally(() => {
-                    loader.hide();
+                  
                 });
         }
     },

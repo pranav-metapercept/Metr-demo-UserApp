@@ -148,9 +148,7 @@ export default {
         }),
         // Fetch the list of projects
         getprojectslist() {
-            let loader = this.$loading.show({
-                loader: "dots"
-            });
+            
             this.$store.getters.client.get(`/orguser/wordToDita/syncedprojects?orgId=${this.orgId}&userId=${this.userId}`)
                 .then(response => {
                     if (response.data && Array.isArray(response.data)) {
@@ -163,11 +161,11 @@ export default {
                     } else {
                         this.messageToast("Error", "danger", "Received invalid data from the server");
                     }
-                    loader.hide();
+                    
                 })
                 .catch(error => {
                     this.messageToast("Error", "danger", error.response ? error.response.data.message : "An error occurred while fetching project names.");
-                    loader.hide();
+                  
                 });
         },
         // Show the GitHub commit modal

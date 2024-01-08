@@ -76,10 +76,10 @@
 
         <b-dropdown right variant="black" toggle-class="header-item" class="d-inline-block user-dropdown">
           <template v-slot:button-content>
-            <span class="rounded-circle header-profile-user" alt="Header Avatar" style="padding: 10px 12px 10px 12px">{{
-              $store.state.Auth.userName.charAt(0) }}</span>
+            <span class="rounded-circle header-profile-user" alt="Header Avatar"
+              style="padding: 10px 12px 10px 12px">Demo-user1</span>
             <span class="d-none d-xl-inline-block ml-1">
-              {{ $store.state.Auth.userName }}</span>
+              Demo-user1</span>
             <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
           </template>
           <!-- item -->

@@ -138,9 +138,7 @@ export default {
         resetPassword() {
             this.$validator.validateAll().then((result) => {
                 if (result) {
-                    let loader = this.$loading.show({
-                        loader: "dots",
-                    });
+                
                     this.$store.getters.client
                         .put(`orguser/resetpassword`, {
                             token: this.$route.params.token,
@@ -149,48 +147,48 @@ export default {
                         .then((res) => {
                             if (res && res.data) {
                                 if (res.data.message === "Token Expired") {
-                                    this.handleTokenExpired(loader);
+                                    this.handleTokenExpired();
                                 } else {
-                                    this.handlePasswordResetSuccess(loader);
+                                    this.handlePasswordResetSuccess();
                                 }
                             } else {
                                 // Handle the case where response data or message is empty or undefined
-                                this.handlePasswordResetError(loader, "An error occurred");
+                                this.handlePasswordResetError( "An error occurred");
                             }
                         })
                         .catch((error) => {
-                            this.handlePasswordResetError(loader, error.response ? error.response.data.message : 'An error occurred');
+                            this.handlePasswordResetError( error.response ? error.response.data.message : 'An error occurred');
                         });
                 }
             });
         },
-        handleTokenExpired(loader) {
+        handleTokenExpired() {
             this.messageToast("Error", "danger", "Link Expired");
-            loader.hide();
+           
             setTimeout(() => {
-                loader.hide();
+             
                 this.$refs.form.reset();
                 this.$router.push({
                     name: "Login"
                 });
             }, 2000);
         },
-        handlePasswordResetSuccess(loader) {
+        handlePasswordResetSuccess() {
             // Resetting Values
             this.password = this.password_confirmation = "";
             this.messageToast("Success", "success", "Password reset successfully");
-            loader.hide();
+         
             setTimeout(() => {
-                loader.hide();
+               
                 this.$refs.form.reset();
                 this.$router.push({
                     name: "Login"
                 });
             }, 2000);
         },
-        handlePasswordResetError(loader, errorMessage) {
+        handlePasswordResetError( errorMessage) {
             this.messageToast("Error", "danger", errorMessage);
-            loader.hide();
+           
         },
     },
 };

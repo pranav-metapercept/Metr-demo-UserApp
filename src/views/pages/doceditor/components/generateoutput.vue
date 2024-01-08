@@ -242,9 +242,7 @@ export default {
         },
         // Function to create a Pull Request
         createPullreq() {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+           
             this.$store.getters.client
                 .post(
                     `/orguser/workspace/pullGitChanges?projectName=${this.projectName}`
@@ -266,7 +264,7 @@ export default {
                         .catch(() => { });
                     res;
                     this.$refs["pull-modal"].hide();
-                    loader.hide();
+                  
                     this.messageToast(
                         "Success",
                         "success",
@@ -274,7 +272,7 @@ export default {
                     );
                 })
                 .catch((err) => {
-                    loader.hide();
+                
                     this.messageToast(
                         "Invalid request",
                         "danger",
@@ -283,9 +281,7 @@ export default {
                 });
         },
         async getWorkspace() {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+           
             await this.$store.getters.client
                 .get(`/orguser/workspace/byuserId?userId=${this.userId}`)
                 .then(async (res) => {
@@ -306,24 +302,24 @@ export default {
                     await this.$store.getters.client
                         .get(`/orguser/workspace/inputfiles?path=${path}&extenssion=${ext}`)
                         .then((res) => {
-                            loader.hide();
+                           
                             this.selectInput = res.data;
                         })
                         .catch(() => {
-                            loader.hide();
+                           
                         });
                     await this.$store.getters.client
                         .get(`/orguser/workspace/repotree?path=${path}`)
                         .then((tres) => {
-                            loader.hide();
+                            
                             this.model = tres.data;
                         })
                         .catch(() => {
-                            loader.hide();
+                          
                         });
                 })
                 .catch(() => {
-                    loader.hide();
+                   
                 });
         },
         makedefaultplugin() {

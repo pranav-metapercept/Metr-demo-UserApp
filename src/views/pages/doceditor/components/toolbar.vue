@@ -418,9 +418,7 @@ export default {
             this.schema = schema;
         },
         createPullreq() {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+          
             this.$store.getters.client
                 .post(
                     `/orguser/workspace/pullGitChanges?projectName=${this.projectName}`
@@ -440,7 +438,7 @@ export default {
                             eventBus.$emit("clearHistory");
                         })
                         .catch(() => {});
-                    loader.hide();
+                   
                     this.messageToast(
                         "Success",
                         "success",
@@ -448,7 +446,7 @@ export default {
                     );
                 })
                 .catch((err) => {
-                    loader.hide();
+                   
                     this.messageToast(
                         "Invalid request",
                         "danger",

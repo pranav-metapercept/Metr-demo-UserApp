@@ -1,58 +1,60 @@
 <template>
-<!-- Template for the main content of the page -->
-<simplebar class="m-0 p-0 custom-simplebar">
-    <!-- Navigation bar -->
-    <navbar />
-    <hr />
-    <div class="row">
-        <!-- Sidebar with DITAMAP tree -->
-        <div class="col-md-2 col-sm-12">
-            <div v-if="model !== null">
-                <div class="card">
-                    <div class="custom-ditamap d-flex justify-content-between align-items-center flex-wrap">
-                        <div class="custom-title mb-0">DITAMAP</div>
-                    </div>
+    <!-- Template for the main content of the page -->
+    <simplebar class="m-0 p-0 custom-simplebar">
+        <!-- Navigation bar -->
+        <navbar />
+        <hr />
+        <div class="row">
+            <!-- Sidebar with DITAMAP tree -->
+            <div class="col-md-2 col-sm-12">
+                <div v-if="model !== null">
+                    <div class="card">
+                        <div class="custom-ditamap d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="custom-title mb-0">DITAMAP</div>
+                        </div>
 
-                    <hr />
-                    <div class="tree-rows">
-                        <simplebar class="custom-tree-simplebar">
-                            <div :class="{ bold: isFolder }" @click="toggle" @dblclick="changeType">
-                                <span class="d-flex align-items-center mt-1">
-                                    <span class="folder-icon" v-if="isFolder">
-                                        {{ isOpen ? "▶" : "▼" }}
+                        <hr />
+                        <div class="tree-rows">
+                            <simplebar class="custom-tree-simplebar">
+                                <div :class="{ bold: isFolder }" @click="toggle" @dblclick="changeType">
+                                    <span class="d-flex align-items-center mt-1">
+                                        <span class="folder-icon" v-if="isFolder">
+                                            {{ isOpen ? "▶" : "▼" }}
+                                        </span>
+                                        <i class="fas fa-folder icon-cog" v-if="isFolder"></i>
+                                        <i class="fas fa-file-alt icon-cog" v-else></i>
+                                        <span class="truncated-path">{{ model.name }}</span>
                                     </span>
-                                    <i class="fas fa-folder icon-cog" v-if="isFolder"></i>
-                                    <i class="fas fa-file-alt icon-cog" v-else></i>
-                                    <span class="truncated-path">{{ model.name }}</span>
-                                </span>
-                            </div>
-                            <!-- Display child tree items when folder is open -->
-                            <div v-show="isOpen" v-if="isFolder" class="mt-1 ml-3 custom-tree tree">
-                                <TreeItem class="item treeItems" v-for="model in model.children" :key="model.id" :model="model">
-                                </TreeItem>
-                            </div>
-                        </simplebar>
+                                </div>
+                                <!-- Display child tree items when folder is open -->
+                                <div v-show="isOpen" v-if="isFolder" class="mt-1 ml-3 custom-tree tree">
+                                    <TreeItem class="item treeItems" v-for="model in model.children" :key="model.id"
+                                        :model="model">
+                                    </TreeItem>
+                                </div>
+                            </simplebar>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Text view or Tag view content -->
-        <div v-if="textVisible" class="col-md-8 col-sm-12">
-            <div class="card">
-                <div class="custom-toolbar-container d-flex justify-content-center align-items-center">
-                    <div class="custom-toolbar d-flex justify-content-between align-items-center flex-wrap">
-                        <div class="custom-title mb-0">
-                            <div class="d-flex justify-content-between text-center">
+            <!-- Text view or Tag view content -->
+            <div v-if="textVisible" class="col-md-8 col-sm-12">
+                <div class="card">
+                    <div class="custom-toolbar-container d-flex justify-content-center align-items-center">
+                        <div class="custom-toolbar d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="custom-title mb-0">
+                                <div class="d-flex justify-content-between text-center">
 
-                                <div v-if="textVisible">
-                                    <Toolbar :ditaot="ditaotVersion" :xmlObject="xmlObject" />
-                                </div>
-                                <div v-if="!textVisible">
-                                    <div class="toolbar">
-                                        <div class="btn-group mr-2 mb-2 read-only mb-sm-0 btn-toolbar p-0">
-                                            <div>
-                                                You are in read-only mode. Any changes or edits made
-                                                will not happen.
+                                    <div v-if="textVisible">
+                                        <Toolbar :ditaot="ditaotVersion" :xmlObject="xmlObject" />
+                                    </div>
+                                    <div v-if="!textVisible">
+                                        <div class="toolbar">
+                                            <div class="btn-group mr-2 mb-2 read-only mb-sm-0 btn-toolbar p-0">
+                                                <div>
+                                                    You are in read-only mode. Any changes or edits made
+                                                    will not happen.
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -60,144 +62,149 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <hr />
-                <simplebar class="custom-recursivetags">
-                    <div v-if="!xmlObject.html">
-                        <div class="editor-page">
-                            <div class="pl-2 pb-2 pr-2 py-2 mx-2">
-                                <!-- Display recursive tags for XML editing -->
-                                <recursive-tag :parentTagHistory="[]" :selectedTag="selectedTag" :errorMessage="errMessage" :data="xmlObject" :peers="[]" :self="0"></recursive-tag>
+                    <hr />
+                    <simplebar class="custom-recursivetags">
+                        <div v-if="!xmlObject.html">
+                            <div class="editor-page">
+                                <div class="pl-2 pb-2 pr-2 py-2 mx-2">
+                                    <!-- Display recursive tags for XML editing -->
+                                    <recursive-tag :parentTagHistory="[]" :selectedTag="selectedTag"
+                                        :errorMessage="errMessage" :data="xmlObject" :peers="[]" :self="0"></recursive-tag>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div v-else class="text-center">
-                        <div class="d-flex justify-content-center">
-                            <div class="position-relative">
-                                <img class="placeholder-img" src="../../../assets/placeholder.png" alt="Placeholder Image" />
-                                <div class="error-text">
-                                    {{ errMessage || "Please select a valid XML file." }}
+                        <div v-else class="text-center">
+                            <div class="d-flex justify-content-center">
+                                <div class="position-relative">
+                                    <img class="placeholder-img" src="../../../assets/placeholder.png"
+                                        alt="Placeholder Image" />
+                                    <div class="error-text">
+                                        {{ errMessage || "Please select a valid XML file." }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </simplebar>
+                </div>
+            </div>
+            <!-- Tag view content -->
+            <div v-if="!textVisible" class="col-md-10 col-sm-12">
+                <div class="card">
+                    <div class="custom-toolbar-container d-flex justify-content-center align-items-center">
+                        <div class="custom-toolbar d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="custom-title mb-0">
+                                <div class="d-flex justify-content-between text-center">
+                                    <div v-if="!textVisible">
+                                        <button v-b-tooltip.hover title="Switch to Tag View" type="button"
+                                            @click="toggleView" class="btn my-2">
+                                            <img class="toggle-switch-img-tag" src="../../../assets/toolbarsvgs/authar.svg"
+                                                alt="SVG Image" />
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </simplebar>
+                    <simplebar class="custom-recursivetags">
+                        <div v-if="!xmlObject.html" class="pl-2 pb-2 pr-2 mx-2">
+                            <!-- Display XML content in Tag view -->
+                            <TextView :rootContent="rootContent" :data="xmlObject || xmlObjectold"
+                                :errorMessage="errMessage" />
+                        </div>
+                        <div v-else class="text-center">
+                            <div class="d-flex justify-content-center">
+                                <div class="position-relative">
+                                    <img class="placeholder-img" src="../../../assets/placeholder.png"
+                                        alt="Placeholder Image" />
+                                    <div class="error-text">
+                                        {{ errMessage || "Please select a valid XML file." }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </simplebar>
+                </div>
             </div>
-        </div>
-        <!-- Tag view content -->
-        <div v-if="!textVisible" class="col-md-10 col-sm-12">
-            <div class="card">
-                <div class="custom-toolbar-container d-flex justify-content-center align-items-center">
-                    <div class="custom-toolbar d-flex justify-content-between align-items-center flex-wrap">
+            <!-- Additional options for text view -->
+            <div v-if="textVisible" class="col-md-2 col-sm-12">
+                <div class="card">
+                    <div class="custom-navigation d-flex justify-content-between align-items-center flex-wrap">
                         <div class="custom-title mb-0">
-                            <div class="d-flex justify-content-between text-center">
-                                <div v-if="!textVisible">
-                                    <button v-b-tooltip.hover title="Switch to Tag View" type="button" @click="toggleView" class="btn my-2">
-                                        <img class="toggle-switch-img-tag" src="../../../assets/toolbarsvgs/authar.svg" alt="SVG Image" />
-                                    </button>
+                            <!-- Navigation Buttons for DocManager, DocPublisher, and DocStyler -->
+                            <button class="btn btn-light mr-1 btn-sm" @click="redirectDocmanager()">
+                                DocManager
+                            </button>
+                            <button class="btn btn-light mr-1 btn-sm" @click="redirectDocPublisher()">
+                                DocPublisher
+                            </button>
+                            <button class="btn btn-light mr-1 btn-sm" v-on:click="redirectDocStyler()">
+                                DocStyler
+                            </button>
+                        </div>
+                    </div>
+                    <hr />
+                    <b-tabs class="edit-tags" justified nav-class="nav-tabs-custom" content-class="text-muted">
+                        <b-tab title="Add Child Tag" active>
+                            <div>
+                                <div v-if="model !== null">
+                                    <!-- EditTag component for adding child tags -->
+                                    <EditTag :errorMessage="errMessage" :data="xmlObject" />
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <simplebar class="custom-recursivetags">
-                    <div v-if="!xmlObject.html" class="pl-2 pb-2 pr-2 mx-2">
-                        <!-- Display XML content in Tag view -->
-                        <TextView :rootContent="rootContent" :data="xmlObject || xmlObjectold" :errorMessage="errMessage" />
-                    </div>
-                    <div v-else class="text-center">
-                        <div class="d-flex justify-content-center">
-                            <div class="position-relative">
-                                <img class="placeholder-img" src="../../../assets/placeholder.png" alt="Placeholder Image" />
-                                <div class="error-text">
-                                    {{ errMessage || "Please select a valid XML file." }}
+                        </b-tab>
+                        <b-tab title="Add Attribute">
+                            <div>
+                                <div v-if="model !== null">
+                                    <!-- Attribute component for adding attributes -->
+                                    <Attribute :errorMessage="errMessage" :data="xmlObject" />
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </simplebar>
-            </div>
-        </div>
-        <!-- Additional options for text view -->
-        <div v-if="textVisible" class="col-md-2 col-sm-12">
-            <div class="card">
-                <div class="custom-navigation d-flex justify-content-between align-items-center flex-wrap">
-                    <div class="custom-title mb-0">
-                        <!-- Navigation Buttons for DocManager, DocPublisher, and DocStyler -->
-                        <button class="btn btn-light mr-1 btn-sm" @click="redirectDocmanager()">
-                            DocManager
-                        </button>
-                        <button class="btn btn-light mr-1 btn-sm" @click="redirectDocPublisher()">
-                            DocPublisher
-                        </button>
-                        <button class="btn btn-light mr-1 btn-sm" v-on:click="redirectDocStyler()">
-                            DocStyler
-                        </button>
-                    </div>
+                        </b-tab>
+                    </b-tabs>
                 </div>
-                <hr />
-                <b-tabs class="edit-tags" justified nav-class="nav-tabs-custom" content-class="text-muted">
-                    <b-tab title="Add Child Tag" active>
-                        <div>
-                            <div v-if="model !== null">
-                                <!-- EditTag component for adding child tags -->
-                                <EditTag :errorMessage="errMessage" :data="xmlObject" />
-                            </div>
-                        </div>
-                    </b-tab>
-                    <b-tab title="Add Attribute">
-                        <div>
-                            <div v-if="model !== null">
-                                <!-- Attribute component for adding attributes -->
-                                <Attribute :errorMessage="errMessage" :data="xmlObject" />
-                            </div>
-                        </div>
-                    </b-tab>
-                </b-tabs>
             </div>
         </div>
-    </div>
 
-    <div>
-        <!-- Pull Request modal dialog -->
-        <b-modal v-model="pullReqModal" id="modal-center" centered hide-footer title="Action Required">
-            <p>
-                You will need to Create a Pull Request We noticed that your repository
-                is currently behind the latest changes. To ensure that your code is up
-                to date and aligned with the latest developments, we recommend
-                following these steps:
-                <br />
-                <code>1.</code>Create a Pull Request by clicking the “Pull request
-                button from the toolbar” to compare your code with the latest changes.
-                This step is crucial to review and integrate your work seamlessly.
-                <br />
-                <code>2.</code>Review and Commit: Once the pull request is open, take
-                your time to review the changes and address any conflicts. This
-                ensures that your code works harmoniously with the updated codebase.
-                Once everything looks good, you can proceed to commit your changes.
-                <br />
-                Remember, pull requests are an essential part of our collaborative
-                development process, enabling us to maintain code quality and stay in
-                sync with ongoing developments.
-            </p>
-        </b-modal>
-        <b-modal ref="pull-modal" hide-footer hide-header hide-close no-close-on-backdrop no-close-on-escer>
-            <div class="d-block text-center">
-                <h3>
-                    You will need to Create a Pull Request.
+        <div>
+            <!-- Pull Request modal dialog -->
+            <b-modal v-model="pullReqModal" id="modal-center" centered hide-footer title="Action Required">
+                <p>
+                    You will need to Create a Pull Request We noticed that your repository
+                    is currently behind the latest changes. To ensure that your code is up
+                    to date and aligned with the latest developments, we recommend
+                    following these steps:
                     <br />
-                    We noticed that your repository is currently behind the latest
-                    changes. To ensure that your code is up to date and aligned with the
-                    latest developments, you will need to create a pull request.
-                </h3>
-            </div>
-            <hr class="my-2" />
-            <button class="btn btn-primary btn-sm" block @click="createPullreq()">
-                Pull Repository
-            </button>
-        </b-modal>
-    </div>
-</simplebar>
+                    <code>1.</code>Create a Pull Request by clicking the “Pull request
+                    button from the toolbar” to compare your code with the latest changes.
+                    This step is crucial to review and integrate your work seamlessly.
+                    <br />
+                    <code>2.</code>Review and Commit: Once the pull request is open, take
+                    your time to review the changes and address any conflicts. This
+                    ensures that your code works harmoniously with the updated codebase.
+                    Once everything looks good, you can proceed to commit your changes.
+                    <br />
+                    Remember, pull requests are an essential part of our collaborative
+                    development process, enabling us to maintain code quality and stay in
+                    sync with ongoing developments.
+                </p>
+            </b-modal>
+            <b-modal ref="pull-modal" hide-footer hide-header hide-close no-close-on-backdrop no-close-on-escer>
+                <div class="d-block text-center">
+                    <h3>
+                        You will need to Create a Pull Request.
+                        <br />
+                        We noticed that your repository is currently behind the latest
+                        changes. To ensure that your code is up to date and aligned with the
+                        latest developments, you will need to create a pull request.
+                    </h3>
+                </div>
+                <hr class="my-2" />
+                <button class="btn btn-primary btn-sm" block @click="createPullreq()">
+                    Pull Repository
+                </button>
+            </b-modal>
+        </div>
+    </simplebar>
 </template>
 
 <script>
@@ -246,21 +253,263 @@ export default {
             title: "DocEditor",
             tagSelected: false,
             items: [{
-                    text: "Projects",
-                    href: `/docmanager`,
-                },
-                {
-                    text: "DocEditor",
-                    active: true,
-                },
+                text: "Projects",
+                href: `/docmanager`,
+            },
+            {
+                text: "DocEditor",
+                active: true,
+            },
             ],
             xmlObjectold: {
                 xtag: "Root",
                 Root: [], // the initial tag's childnodes array object
             },
             xmlObject: {
-                xtag: "Root",
-                Root: [], // the initial tag's childnodes array object
+                "xtag": "concept",
+                "id": "bookmap-readme",
+                "xml:lang": "en-us",
+                "concept": [
+                    {
+                        "xtag": "title",
+                        "title": [
+                            "Bookmap Readme"
+                        ],
+                        "nodeId": "98cdfa9e-26f9-4075-939e-05e813e28d3a",
+                        "childFrequency": {
+                            "undefined": 1
+                        },
+                        "ancestors": {
+                            "title": true,
+                            "concept": true
+                        }
+                    },
+                    {
+                        "xtag": "prolog",
+                        "nodeId": "7a1ad4cb-bde0-4dce-a86a-c848f4e79f73",
+                        "childFrequency": {},
+                        "ancestors": {
+                            "prolog": true,
+                            "concept": true
+                        },
+                        "prolog": []
+                    },
+                    {
+                        "xtag": "conbody",
+                        "conbody": [
+                            {
+                                "xtag": "p",
+                                "p": [
+                                    "This demonstration provides a proof-of-concept implementation of the DITA bookmap proposal. The proposal adds book output to DITA using a specialized DITA map known as a bookmap. The bookmap organizes the DITA topics with the correct nesting and sequence for the book. In addition, the bookmap assigns roles such as preface, chapter, and appendix to top-level topics within the book."
+                                ],
+                                "nodeId": "7db37d4d-ea80-4a30-812a-6d487694f181",
+                                "childFrequency": {
+                                    "undefined": 1
+                                },
+                                "ancestors": {
+                                    "p": true,
+                                    "conbody": true,
+                                    "concept": true
+                                }
+                            },
+                            {
+                                "xtag": "p",
+                                "class": "- topic/p ",
+                                "p": [
+                                    "For more detailed information about the proposal, see the detailed posting on the DITA forum at",
+                                    {
+                                        "xtag": "xref",
+                                        "href": "news://news.software.ibm.com:119/c11fd3$85qq$2@news.boulder.ibm.com",
+                                        "format": "news",
+                                        "xref": [
+                                            "news://news.software.ibm.com:119/c11fd3$85qq$2@news.boulder.ibm.com"
+                                        ],
+                                        "nodeId": "efb52845-2022-40a0-89b1-51cf46a87995",
+                                        "childFrequency": {
+                                            "undefined": 1
+                                        },
+                                        "ancestors": {
+                                            "xref": true,
+                                            "p": true,
+                                            "conbody": true,
+                                            "concept": true
+                                        }
+                                    },
+                                    "."
+                                ],
+                                "nodeId": "9fa1fa61-9221-4159-b729-3410ed4e3bca",
+                                "childFrequency": {
+                                    "undefined": 2,
+                                    "xref": 1
+                                },
+                                "ancestors": {
+                                    "p": true,
+                                    "conbody": true,
+                                    "concept": true
+                                }
+                            },
+                            {
+                                "xtag": "note",
+                                "note": [
+                                    "This demonstration has the following limitations:",
+                                    {
+                                        "xtag": "ul",
+                                        "ul": [
+                                            {
+                                                "xtag": "li",
+                                                "li": [
+                                                    "For XSL-FO formatting and thus PDF generation, only the basics have been implemented. Through specialization, the DITA XHTML-based outputs for DITA map are also available for bookmap."
+                                                ],
+                                                "nodeId": "cc3b0ec0-442a-4529-a7c9-5d267ec967cc",
+                                                "childFrequency": {
+                                                    "undefined": 1
+                                                },
+                                                "ancestors": {
+                                                    "li": true,
+                                                    "ul": true,
+                                                    "note": true,
+                                                    "conbody": true,
+                                                    "concept": true
+                                                }
+                                            },
+                                            {
+                                                "xtag": "li",
+                                                "li": [
+                                                    "The design for the book info component of the proposal has been fleshed out based on antecedents in DocBook and IBMIDDoc (see the comments in the",
+                                                    {
+                                                        "xtag": "codeph",
+                                                        "codeph": [
+                                                            "bookinfo.mod"
+                                                        ],
+                                                        "nodeId": "c3614e39-9ea7-4e9b-a26e-95557efe07ea",
+                                                        "childFrequency": {
+                                                            "undefined": 1
+                                                        },
+                                                        "ancestors": {
+                                                            "codeph": true,
+                                                            "li": true,
+                                                            "ul": true,
+                                                            "note": true,
+                                                            "conbody": true,
+                                                            "concept": true
+                                                        }
+                                                    },
+                                                    "file). Most of the elements in bookinfo aren't processed."
+                                                ],
+                                                "nodeId": "888e514f-2406-44a2-b289-0ad6419bfad1",
+                                                "childFrequency": {
+                                                    "undefined": 2,
+                                                    "codeph": 1
+                                                },
+                                                "ancestors": {
+                                                    "li": true,
+                                                    "ul": true,
+                                                    "note": true,
+                                                    "conbody": true,
+                                                    "concept": true
+                                                }
+                                            },
+                                            {
+                                                "xtag": "li",
+                                                "li": [
+                                                    "The book list component of the proposal hasn't been implemented yet. Possible designs for a glossary list have been discussed extensively on the DITA forum (resulting in the proposal posted as",
+                                                    {
+                                                        "xtag": "xref",
+                                                        "href": "news://news.software.ibm.com:119/3FA29F54.83AFB251@ca.ibm.com",
+                                                        "format": "news",
+                                                        "xref": [
+                                                            "news://news.software.ibm.com:119/blfg38$5k0q$1@news.boulder.ibm.com"
+                                                        ],
+                                                        "nodeId": "095c7e44-4b99-47f3-8af2-91ec8ff3ef2e",
+                                                        "childFrequency": {
+                                                            "undefined": 1
+                                                        },
+                                                        "ancestors": {
+                                                            "xref": true,
+                                                            "li": true,
+                                                            "ul": true,
+                                                            "note": true,
+                                                            "conbody": true,
+                                                            "concept": true
+                                                        }
+                                                    },
+                                                    ")."
+                                                ],
+                                                "nodeId": "8ad2d273-eec5-4346-874c-7d7552b296b1",
+                                                "childFrequency": {
+                                                    "undefined": 2,
+                                                    "xref": 1
+                                                },
+                                                "ancestors": {
+                                                    "li": true,
+                                                    "ul": true,
+                                                    "note": true,
+                                                    "conbody": true,
+                                                    "concept": true
+                                                }
+                                            },
+                                            {
+                                                "xtag": "li",
+                                                "li": [
+                                                    "The book style component of the proposal is much more experimental than the bookmap and bookinfo components. Processing for this component is limited."
+                                                ],
+                                                "nodeId": "cc986e03-4f3d-4cfe-b1fa-d1c3865874eb",
+                                                "childFrequency": {
+                                                    "undefined": 1
+                                                },
+                                                "ancestors": {
+                                                    "li": true,
+                                                    "ul": true,
+                                                    "note": true,
+                                                    "conbody": true,
+                                                    "concept": true
+                                                }
+                                            }
+                                        ],
+                                        "nodeId": "cd9c41e1-a0ba-44da-a436-6ff5b97927a3",
+                                        "childFrequency": {
+                                            "li": 4
+                                        },
+                                        "ancestors": {
+                                            "ul": true,
+                                            "note": true,
+                                            "conbody": true,
+                                            "concept": true
+                                        }
+                                    }
+                                ],
+                                "nodeId": "aa68f2a1-d455-4779-bfac-355fdb4342e6",
+                                "childFrequency": {
+                                    "undefined": 1,
+                                    "ul": 1
+                                },
+                                "ancestors": {
+                                    "note": true,
+                                    "conbody": true,
+                                    "concept": true
+                                }
+                            }
+                        ],
+                        "nodeId": "282d0792-1641-460e-90ef-60c55b64c3e9",
+                        "childFrequency": {
+                            "p": 2,
+                            "note": 1
+                        },
+                        "ancestors": {
+                            "conbody": true,
+                            "concept": true
+                        }
+                    }
+                ],
+                "nodeId": "23faf87b-e50b-4cb0-8017-5ae99c530ae7",
+                "childFrequency": {
+                    "title": 1,
+                    "prolog": 1,
+                    "conbody": 1
+                },
+                "ancestors": {
+                    "concept": true
+                }
             },
             modalVisible: false,
             names: "",
@@ -274,9 +523,382 @@ export default {
             newAttrName: "newName",
             newAttrValue: "newValue",
             fileSHA: null,
-            model: null,
+            model: {
+                "path": "/home/pranav-metapercept/DITAxPressoWorkspace/6595087f7883623234585d6f/it-book",
+                "name": "it-book",
+                "children": [
+                    {
+                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git",
+                        "name": ".git",
+                        "children": [
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\config",
+                                "name": "config"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\description",
+                                "name": "description"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\FETCH_HEAD",
+                                "name": "FETCH_HEAD"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\HEAD",
+                                "name": "HEAD"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks",
+                                "name": "hooks",
+                                "children": [
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\applypatch-msg.sample",
+                                        "name": "applypatch-msg.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\commit-msg.sample",
+                                        "name": "commit-msg.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\fsmonitor-watchman.sample",
+                                        "name": "fsmonitor-watchman.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\post-update.sample",
+                                        "name": "post-update.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\pre-applypatch.sample",
+                                        "name": "pre-applypatch.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\pre-commit.sample",
+                                        "name": "pre-commit.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\pre-merge-commit.sample",
+                                        "name": "pre-merge-commit.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\pre-push.sample",
+                                        "name": "pre-push.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\pre-rebase.sample",
+                                        "name": "pre-rebase.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\pre-receive.sample",
+                                        "name": "pre-receive.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\prepare-commit-msg.sample",
+                                        "name": "prepare-commit-msg.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\push-to-checkout.sample",
+                                        "name": "push-to-checkout.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\sendemail-validate.sample",
+                                        "name": "sendemail-validate.sample"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\hooks\\update.sample",
+                                        "name": "update.sample"
+                                    }
+                                ]
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\index",
+                                "name": "index"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\info",
+                                "name": "info",
+                                "children": [
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\info\\exclude",
+                                        "name": "exclude"
+                                    }
+                                ]
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\logs",
+                                "name": "logs",
+                                "children": [
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\logs\\HEAD",
+                                        "name": "HEAD"
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\logs\\refs",
+                                        "name": "refs",
+                                        "children": [
+                                            {
+                                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\logs\\refs\\heads",
+                                                "name": "heads",
+                                                "children": [
+                                                    {
+                                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\logs\\refs\\heads\\main",
+                                                        "name": "main"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\logs\\refs\\remotes",
+                                                "name": "remotes",
+                                                "children": [
+                                                    {
+                                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\logs\\refs\\remotes\\origin",
+                                                        "name": "origin",
+                                                        "children": [
+                                                            {
+                                                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\logs\\refs\\remotes\\origin\\HEAD",
+                                                                "name": "HEAD"
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\objects",
+                                "name": "objects",
+                                "children": [
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\objects\\info",
+                                        "name": "info",
+                                        "children": []
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\objects\\pack",
+                                        "name": "pack",
+                                        "children": [
+                                            {
+                                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\objects\\pack\\pack-f29031456c1c87ed543c0e5363efd31d9293b54c.idx",
+                                                "name": "pack-f29031456c1c87ed543c0e5363efd31d9293b54c.idx"
+                                            },
+                                            {
+                                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\objects\\pack\\pack-f29031456c1c87ed543c0e5363efd31d9293b54c.pack",
+                                                "name": "pack-f29031456c1c87ed543c0e5363efd31d9293b54c.pack"
+                                            },
+                                            {
+                                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\objects\\pack\\pack-f29031456c1c87ed543c0e5363efd31d9293b54c.rev",
+                                                "name": "pack-f29031456c1c87ed543c0e5363efd31d9293b54c.rev"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\packed-refs",
+                                "name": "packed-refs"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\refs",
+                                "name": "refs",
+                                "children": [
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\refs\\heads",
+                                        "name": "heads",
+                                        "children": [
+                                            {
+                                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\refs\\heads\\main",
+                                                "name": "main"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\refs\\remotes",
+                                        "name": "remotes",
+                                        "children": [
+                                            {
+                                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\refs\\remotes\\origin",
+                                                "name": "origin",
+                                                "children": [
+                                                    {
+                                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\refs\\remotes\\origin\\HEAD",
+                                                        "name": "HEAD"
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git\\refs\\tags",
+                                        "name": "tags",
+                                        "children": []
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\concepts",
+                        "name": "concepts",
+                        "children": [
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\concepts\\bookmap-readme.dita",
+                                "name": "bookmap-readme.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\concepts\\notices.dita",
+                                "name": "notices.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\concepts\\taskbook-abstract.dita",
+                                "name": "taskbook-abstract.dita"
+                            }
+                        ]
+                    },
+                    {
+                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\README.md",
+                        "name": "README.md"
+                    },
+                    {
+                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\taskbook.ditamap",
+                        "name": "taskbook.ditamap"
+                    },
+                    {
+                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks",
+                        "name": "tasks",
+                        "children": [
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\closeprograms.dita",
+                                "name": "closeprograms.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\configuredatabase.dita",
+                                "name": "configuredatabase.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\configurestorage.dita",
+                                "name": "configurestorage.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\configurewebserver.dita",
+                                "name": "configurewebserver.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\configuring.dita",
+                                "name": "configuring.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\databasetrouble.dita",
+                                "name": "databasetrouble.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\drivetrouble.dita",
+                                "name": "drivetrouble.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\insertdrive.dita",
+                                "name": "insertdrive.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\installdb.dita",
+                                "name": "installdb.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\installstorage.dita",
+                                "name": "installstorage.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\installwebserver.dita",
+                                "name": "installwebserver.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\maintaindatabase.dita",
+                                "name": "maintaindatabase.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\maintaining.dita",
+                                "name": "maintaining.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\maintainserver.dita",
+                                "name": "maintainserver.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\maintainstorage.dita",
+                                "name": "maintainstorage.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\replacecover.dita",
+                                "name": "replacecover.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\restart.dita",
+                                "name": "restart.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\runsetup.dita",
+                                "name": "runsetup.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\troubleshooting.dita",
+                                "name": "troubleshooting.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\unscrewcover.dita",
+                                "name": "unscrewcover.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\tasks\\webtrouble.dita",
+                                "name": "webtrouble.dita"
+                            }
+                        ]
+                    },
+                    {
+                        "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\topics",
+                        "name": "topics",
+                        "children": [
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\topics\\installing.dita",
+                                "name": "installing.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\topics\\task_appendix.dita",
+                                "name": "task_appendix.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\topics\\task_preface.dita",
+                                "name": "task_preface.dita"
+                            },
+                            {
+                                "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\topics\\trademarks.dita",
+                                "name": "trademarks.dita"
+                            }
+                        ]
+                    }
+                ]
+            },
             isOpen: true,
-            fileContent: null,
+            fileContent: `<?xml version='1.0' encoding='utf-8'?>
+<!-- This file is part of the DITA Open Toolkit project hosted on 
+  Sourceforge.net. See the accompanying license.txt file for 
+  applicable licenses.-->
+<!-- (c) Copyright IBM Corp. 2004, 2005 All Rights Reserved. -->
+
+<!DOCTYPE concept PUBLIC "-//OASIS//DTD DITA Concept//EN" "concept.dtd">
+<concept id="bookmap-readme" xml:lang="en-us">
+  <title>Bookmap Readme</title>
+  <prolog/>
+  <conbody>
+    <p>This demonstration provides a proof-of-concept implementation of the DITA bookmap proposal. The proposal adds book output to DITA using a specialized DITA map known as a bookmap. The bookmap organizes the DITA topics with the correct nesting and sequence for the book. In addition, the bookmap assigns roles such as preface, chapter, and appendix to top-level topics within the book. </p>
+    <p class="- topic/p ">For more detailed information about the proposal, see the detailed posting on the DITA forum at <xref href="news://news.software.ibm.com:119/c11fd3$85qq$2@news.boulder.ibm.com" format="news">news://news.software.ibm.com:119/c11fd3$85qq$2@news.boulder.ibm.com</xref>.</p>
+    <note>This demonstration has the following limitations:<ul>
+        <li>For XSL-FO formatting and thus PDF generation, only the basics have been implemented. Through specialization, the DITA XHTML-based outputs for DITA map are also available for bookmap.</li>
+        <li>The design for the book info component of the proposal has been fleshed out based on antecedents in DocBook and IBMIDDoc (see the comments in the <codeph>bookinfo.mod</codeph> file). Most of the elements in bookinfo aren&apos;t processed.</li>
+        <li>The book list component of the proposal hasn&apos;t been implemented yet. Possible designs for a glossary list have been discussed extensively on the DITA forum (resulting in the proposal posted as <xref href="news://news.software.ibm.com:119/3FA29F54.83AFB251@ca.ibm.com" format="news">news://news.software.ibm.com:119/blfg38$5k0q$1@news.boulder.ibm.com</xref>).</li>
+        <li>The book style component of the proposal is much more experimental than the bookmap and bookinfo components. Processing for this component is limited.</li>
+      </ul></note>
+  </conbody>
+</concept>`,
             currentfilePath: null,
             localRepoPath: null,
             commitMsg: null,
@@ -365,7 +987,7 @@ export default {
             (this.historyObject = []), (this.futureObject = []);
         });
         eventBus.$on("githubCommit", this.githubCommit);
-       
+
         let that = this;
         this.$nextTick(() => {
             eventBus.$emit("xmlData", that.xmlObject);
@@ -728,33 +1350,7 @@ export default {
                 });
         },
         redirectDocPublisher() {
-            if (this.$store.state.Auth.projectsData.length) {
-                const repoName = this.projectName;
-                const projectData = this.$store.state.Auth.projectsData.find(
-                    (item) => item.projectName === repoName
-                );
-                if (projectData && projectData.userRole.includes("DocPublisher")) {
-                    this.navigateToDocPublisher();
-                } else {
-                    this.showAccessDeniedMessage("DocPublisher");
-                }
-            } else {
-                this.fetchProjectsData()
-                    .then(() => {
-                        const repoName = this.projectName;
-                        const projectData = this.$store.state.Auth.projectsData.find(
-                            (item) => item.projectName === repoName
-                        );
-                        if (projectData && projectData.userRole.includes("DocPublisher")) {
-                            this.navigateToDocPublisher();
-                        } else {
-                            this.showAccessDeniedMessage("DocPublisher");
-                        }
-                    })
-                    .catch(() => {
-                        this.showAccessDeniedMessage("DocPublisher");
-                    });
-            }
+            this.navigateToDocPublisher();
         },
         redirectDocmanager() {
             this.$router.push({
@@ -762,48 +1358,17 @@ export default {
             });
         },
         redirectDocStyler() {
-            if (this.$store.state.Auth.projectsData.length) {
-                const repoName = this.projectName;
-                const projectData = this.$store.state.Auth.projectsData.find(
-                    (item) => item.projectName === repoName
-                );
-                if (projectData && projectData.userRole.includes("DocPublisher")) {
-                    this.navigateToDocStyler();
-                } else {
-                    this.showAccessDeniedMessage("DocStyler");
-                }
-            } else {
-                this.fetchProjectsData()
-                    .then(() => {
-                        const repoName = this.projectName;
-                        const projectData = this.$store.state.Auth.projectsData.find(
-                            (item) => item.projectName === repoName
-                        );
-                        if (projectData && projectData.userRole.includes("DocEditor")) {
-                            this.navigateToDocStyler();
-                        } else {
-                            this.showAccessDeniedMessage("DocStyler");
-                        }
-                    })
-                    .catch(() => {
-                        this.showAccessDeniedMessage("DocStyler");
-                    });
-            }
+            this.navigateToDocStyler();
         },
         navigateToDocStyler() {
-            const encodedRepouser = encodeURIComponent(this.$route.params.repouser);
-            const encodedReponame = encodeURIComponent(this.$route.params.reponame);
-            const encodedBranch = encodeURIComponent(this.$route.params.repobranch);
+
             this.$router.push({
-                path: `/docstyler/${encodedRepouser}/${encodedReponame}/${encodedBranch}`,
+                name: "styler",
             });
         },
         navigateToDocPublisher() {
-            const encodedRepouser = encodeURIComponent(this.$route.params.repouser);
-            const encodedReponame = encodeURIComponent(this.$route.params.reponame);
-            const encodedBranch = encodeURIComponent(this.$route.params.repobranch);
             this.$router.push({
-                path: `/doceditor/docpublisher/${encodedRepouser}/${encodedReponame}/${encodedBranch}`,
+                path: `/docpublisher`,
             });
         },
         showAccessDeniedMessage(role) {
@@ -841,8 +1406,8 @@ export default {
                         "Error",
                         "danger",
                         error.response ?
-                        error.response.data.message :
-                        "An error occurred while fetching project data."
+                            error.response.data.message :
+                            "An error occurred while fetching project data."
                     );
                 });
         },
@@ -851,9 +1416,9 @@ export default {
         },
         async getcontent() {
             eventBus.$on("getcontent", (data) => {
-                this.fileContent = data.content;
-                this.currentfilePath = data.path;
-                let fileContentObjn = data.content;
+
+                this.currentfilePath = `\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\concepts\\bookmap-readme.dita`;
+                let fileContentObjn = `\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\concepts\\bookmap-readme.dita`;
                 let domParser = new DOMParser();
                 let xmlDom = domParser.parseFromString(
                     fileContentObjn,
@@ -882,9 +1447,7 @@ export default {
                         nodeDetails: this.xmlObjectold,
                     };
                     if (!data.path) return;
-                    let loader = this.$loading.show({
-                        loader: "dots",
-                    });
+
                     this.$store.getters.client
                         .post(`/orguser/doceditor/generateNodeId`, body)
                         .then((res) => {
@@ -892,11 +1455,11 @@ export default {
                             sessionStorage.setItem("xmlObject", JSON.stringify(res.data));
                             this.xmlObject = JSON.parse(sessionStorage.getItem("xmlObject"));
                             this.sendData();
-                            loader.hide();
+
                         })
                         .catch((err) => {
                             this.errMessage = err.response.data.message;
-                            loader.hide();
+
                         });
                     this.$emit("get-data", this.xmlObject);
                 }
@@ -929,38 +1492,7 @@ export default {
                 this.isOpen = true;
             }
         },
-        async getfoldertree() {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
-            await this.$store.getters.client
-                .get(
-                    `/orguser/workspace/byuserId?userId=${this.$store.state.Auth.userId}`
-                )
-                .then(async (res) => {
-                    let path = res.data.installedPath + `/${this.projectName}`;
-                    this.localRepoPath = res.data.installedPath + `/${this.projectName}`;
-                    await this.$store.getters.client
-                        .post(`/orguser/workspace/fetchGitRemoteChanges?path=${path}`)
-                        .then((res) => {
-                            if (
-                                res.data.message.includes("please pull your branch to proceed")
-                            ) {
-                                this.$refs["pull-modal"].show();
-                            }
-                        });
-                    await this.$store.getters.client
-                        .get(`/orguser/workspace/repotree?path=${path}`)
-                        .then((tres) => {
-                            loader.hide();
-                            this.model = tres.data;
-                        })
-                        .catch(() => {
-                            loader.hide();
-                        });
-                })
-                .catch(() => {});
-        },
+
         async readXML() {
             await this.getcontent();
             let fileContentObjn = this.fileContent;
@@ -1026,9 +1558,7 @@ export default {
             return obj;
         },
         createPullreq() {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+
             this.$store.getters.client
                 .post(
                     `/orguser/workspace/pullGitChanges?projectName=${this.projectName}`
@@ -1047,10 +1577,10 @@ export default {
                             });
                             eventBus.$emit("clearHistory");
                         })
-                        .catch(() => {});
+                        .catch(() => { });
                     res;
                     this.$refs["pull-modal"].hide();
-                    loader.hide();
+
                     this.messageToast(
                         "Success",
                         "success",
@@ -1058,7 +1588,7 @@ export default {
                     );
                 })
                 .catch((err) => {
-                    loader.hide();
+
                     this.messageToast(
                         "Invalid request",
                         "danger",
@@ -1200,9 +1730,7 @@ export default {
             if (document.getElementsByClassName("toast").length) {
                 return;
             }
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+
             this.clearChanges();
             let result = this.processJson(this.xmlObject);
             let parser = new JsonToXml();
@@ -1224,7 +1752,7 @@ export default {
                 .post(`/orguser/workspace/savefilecontent`, fileSaveObj)
                 .then(() => {
                     this.showCommitBtn = true;
-                    loader.hide();
+
                     this.messageToast(
                         "Success",
                         "success",
@@ -1232,7 +1760,7 @@ export default {
                     );
                 })
                 .catch((err) => {
-                    loader.hide();
+
                     this.messageToast("Request failed", "danger", err);
                 });
         },

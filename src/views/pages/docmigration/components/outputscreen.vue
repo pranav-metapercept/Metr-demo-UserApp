@@ -91,9 +91,7 @@ export default {
         },
         // Function to download the output as a ZIP file
         async downloadZip() {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+          
             await this.$store.getters.client
                 .get(
                     `/orguser/wordToDita/downloadDitazip?orgId=${this.orgId}&userId=${this.userId}&folderName=${this.selectedfolder}`, {
@@ -107,7 +105,7 @@ export default {
                     link.setAttribute("download", `${this.selectedfolder}.zip`);
                     document.body.appendChild(link);
                     link.click();
-                    loader.hide();
+                   
                     this.messageToast(
                         "Success",
                         "success",
@@ -115,7 +113,7 @@ export default {
                     );
                 })
                 .catch((error) => {
-                    loader.hide();
+                  
                     this.messageToast("Invalid request", "danger", error.message);
                 });
         },

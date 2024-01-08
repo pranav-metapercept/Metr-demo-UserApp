@@ -223,14 +223,12 @@ export default {
         },
         // Get organization detail
         async getOrgDetails() {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+           
             let orgId = this.$store.state.Auth.orgId;
             this.$store.getters.client
                 .get(`serveradmin/organization/byorgid?orgId=${orgId}`)
                 .then((res) => {
-                    loader.hide();
+                    
                     if (res.data && res.data.length > 0) {
                         // Check if data exists and if it's in the expected format
                         this.isDocEditor = res.data[0].editor;
@@ -241,7 +239,7 @@ export default {
                     }
                 })
                 .catch((err) => {
-                    loader.hide();
+                    
                     // Handle network issues or unexpected errors
                     this.messageToast("Invalid request", "danger", err.response ? err.response.data.message : "An error occurred");
                     devicevalidator(err.response.data.message);
@@ -249,9 +247,7 @@ export default {
         },
         // Get all branches inside repository
         async getRepoBranch() {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+           
             let branchResponse;
             this.$store.getters.client
                 .get(`orguser/repobranches?repoUser=${this.repouser}&repoName=${this.projectName}`)
@@ -285,15 +281,13 @@ export default {
                     this.messageToast("Invalid request", "danger", "An error occurred while fetching data.");
                 })
                 .finally(() => {
-                    loader.hide();
+                  
                 });
         },
         // Get tree of output folder in particular branch
         getObject(branchsha) {
             this.brachName = branchsha;
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+           
             this.outputURL = `https://github.com/${CryptoJS.AES.decrypt(
                 this.$route.params.repouser,
                 secretKey
@@ -310,7 +304,7 @@ export default {
                     secretKey
                 ).toString(CryptoJS.enc.Utf8)}&branchsha=${branchsha}`)
                 .then((res) => {
-                    loader.hide();
+                   
                     if (res.data) {
                         // Check if data exists
                         this.treeData = res.data;
@@ -320,16 +314,14 @@ export default {
                     }
                 })
                 .catch((err) => {
-                    loader.hide();
+                   
                     // Handle network issues or unexpected errors
                     this.messageToast("Invalid request", "danger", err.response ? err.response.data.message : "An error occurred");
                 });
         },
         // Download output folder as a zip
         async downloadFun() {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+           
             const zipPromise = new JSZip();
             let user;
             let repository;
@@ -341,7 +333,7 @@ export default {
             } catch (err) {
                 // Handle URL parsing error
                 this.messageToast("Invalid request", "danger", "Error parsing URL");
-                loader.hide();
+                
                 return;
             }
             try {
@@ -405,7 +397,7 @@ export default {
                 await pMap(files, downloadFile, {
                     concurrency: 20
                 });
-                loader.hide();
+               
                 const zip = await zipPromise;
                 const zipBlob = await zip.generateAsync({
                     type: "blob"

@@ -85,10 +85,7 @@ export default {
             });
         },
         getfoldernames() {
-            // Get folder names for conversion
-            let loader = this.$loading.show({
-                loader: "dots"
-            });
+            
             this.$store.getters.client.get(`/orguser/wordToDita/getExtractedFolderList?orgId=${this.orgId}&userId=${this.userId}`)
                 .then(response => {
                     if (response.data && Array.isArray(response.data)) {
@@ -103,13 +100,13 @@ export default {
                         this.messageToast("Error", "danger", "Received invalid data from the server");
                     }
                     // Hide the loader
-                    loader.hide();
+                   
                 })
                 .catch(error => {
                  
                     this.messageToast("Error", "danger", error.response ? error.response.data.message : "An error occurred while fetching folder names.");
                     // Hide the loader in case of an error
-                    loader.hide();
+                    
                 });
         },
         hideModal() {

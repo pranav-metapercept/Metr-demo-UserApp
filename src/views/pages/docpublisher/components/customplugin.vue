@@ -247,9 +247,7 @@ export default {
             }
         },
         createPullreq() {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+           
             this.$store.getters.client
                 .post(`/orguser/workspace/pullGitChanges?projectName=${this.projectName}`)
                 .then(() => {
@@ -269,7 +267,7 @@ export default {
                         .catch(() => {
                         });
                     this.$refs["pull-modal"].hide();
-                    loader.hide();
+                    
                     this.messageToast(
                         "Success",
                         "success",
@@ -277,7 +275,7 @@ export default {
                     );
                 })
                 .catch((err) => {
-                    loader.hide();
+                   
                     this.messageToast(
                         "Error",
                         "danger",

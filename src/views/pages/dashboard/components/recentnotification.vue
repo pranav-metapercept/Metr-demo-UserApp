@@ -111,10 +111,7 @@ export default {
         this.showSpinner = false;
 
     },
-    created() {
-        // Fetch DITA OT versions for the organization
-        this.fetchDitaOtVersions(this.orgId);
-    },
+   
     methods: {
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
             this.$bvToast.toast(messageToastContent, {
@@ -126,7 +123,7 @@ export default {
         ...mapActions({
             get: "userProjectDetails"
         }),
-        ...mapActions(['fetchDitaOtVersions']),
+        
         ...mapActions(['fetchRecentNotification']),
         // Function to calculate the time ago since a given timestamp
         getTimeAgo(timestamp) {

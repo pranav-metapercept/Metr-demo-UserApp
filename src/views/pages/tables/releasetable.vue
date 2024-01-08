@@ -256,9 +256,7 @@ export default {
                 });
         },
         async downloadZip(item) {
-            let loader = this.$loading.show({
-                loader: "dots",
-            });
+            
             try {
                 const response = await this.$store.getters.client.get(`/orguser/release/download?releaseId=${item._id}`, {
                     responseType: "arraybuffer",
@@ -272,10 +270,10 @@ export default {
                 link.setAttribute("download", `${item.releaseTitle}.zip`);
                 document.body.appendChild(link);
                 link.click();
-                loader.hide()
+                
                 this.messageToast("Success", "success", "Zip file has been downloaded successfully");
             } catch (error) {
-                loader.hide();
+               
                 this.messageToast("Invalid request", "danger", error.message);
             }
         },
