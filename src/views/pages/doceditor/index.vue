@@ -1273,8 +1273,8 @@ export default {
                         let commitProjectObj = {
                             path: this.projectPath,
                             message: commitMsg,
-                            githubUsername: this.$store.state.Auth.githubUsername,
-                            email: this.$store.state.Auth.userEmail,
+                            githubUsername: null,
+                            email: null,
                         };
                         swalWithBootstrapButtons.fire({
                             title: "Commit request in progress...",
@@ -1322,7 +1322,7 @@ export default {
                 });
         },
         async getDitaOt() {
-            this.getOrgId = this.$store.state.Auth.orgId;
+            this.getOrgId = null;
             return this.$store.getters.client
                 .get(`/serveradmin/organization/byorgid?orgId=${this.getOrgId}`)
                 .then((response) => {
@@ -1350,11 +1350,13 @@ export default {
                 });
         },
         redirectDocPublisher() {
-            this.navigateToDocPublisher();
+            this.$router.push({
+                path: `/docpublisher1`,
+            });
         },
         redirectDocmanager() {
             this.$router.push({
-                name: "DocManager",
+                path: "/docmanager",
             });
         },
         redirectDocStyler() {
@@ -1366,11 +1368,7 @@ export default {
                 name: "styler",
             });
         },
-        navigateToDocPublisher() {
-            this.$router.push({
-                path: `/docpublisher`,
-            });
-        },
+
         showAccessDeniedMessage(role) {
             const swalWithBootstrapButtons = Swal.mixin({
                 customClass: {
@@ -1386,7 +1384,7 @@ export default {
             });
         },
         fetchProjectsData() {
-            this.userId = this.$store.state.Auth.userId;
+            this.userId = null;
             return this.$store.getters.client
                 .get(`/projectuser/byuserid?userId=${this.userId}`)
                 .then((res) => {

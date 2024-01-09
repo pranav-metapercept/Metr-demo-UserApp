@@ -313,8 +313,8 @@ export default {
                 const formData = new FormData();
                 formData.append('HtmlLogo', file);
                 this.topictitle1Attr.logoName = file.name
-                const userId = this.$store.state.Auth.userId;
-                const orgId = this.$store.state.Auth.orgId;
+                const userId = null;
+                const orgId = null;
                 this.$store.getters.client.post(`/orguser/docstyler/uploadHtmlLogo?userId=${userId}&orgId=${orgId}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'

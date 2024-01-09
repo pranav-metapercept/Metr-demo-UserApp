@@ -1,51 +1,31 @@
 <template>
-<!-- Template for the DocPublisher page -->
-<div>
-    <!-- Page header with title and items -->
-    <PageHeader :icon="'mdi mdi-cog h2'" :title="title" :items="items" />
+    <!-- Template for the DocPublisher page -->
     <div>
-        <div class=" mr-2 px-1 ">
-            <span class="project-name">{{ projectName }}</span>
+        <!-- Page header with title and items -->
+        <PageHeader :icon="'mdi mdi-cog h2'" :title="title" :items="items" />
+        <div>
+            <div class=" mr-2 px-1 ">
+                <span class="project-name">{{ projectName }}</span>
+            </div>
+            <div class="mr-2 dita-ot-cont px-1 ">
+                <span class="dita-ot">DITA-OT Version:</span>
+                <span class="dita-ot-version ml-2">{{ ditaOtVersions }}</span>
+            </div>
         </div>
-        <div class="mr-2 dita-ot-cont px-1 ">
-            <span class="dita-ot">DITA-OT Version:</span>
-            <span class="dita-ot-version ml-2">{{ ditaOtVersions }}</span>
-        </div>
-    </div>
-    <div class="row mt-3">
-        <div class="col-xl-12" v-if="this.$store.state.Auth.orgDetails.customPlugin && customPluginOutputFormat.length">
-            <!-- Display custom plugin content if available -->
-            <b-card>
-                <b-tabs justified nav-class="nav-tabs-custom" content-class="text-muted" class="btabs-height">
-                    <b-tab title="Default Publisher" active>
-                        <div>
-                            <div>
-                                <generateoutput :ditaotVersion="ditaOtVersions" />
-                            </div>
-                        </div>
-                    </b-tab>
-                    <b-tab title="Custom Publisher">
-                        <div>
-                            <div>
-                                <customPlugin :ditaotVersion="ditaOtVersions"></customPlugin>
-                            </div>
-                        </div>
-                    </b-tab>
-                </b-tabs>
-            </b-card>
-        </div>
-        <div v-else class="col-xl-12">
-            <!-- Display default publisher if custom plugin is disabled -->
-            <div v-if="ditaOtVersions !== null">
-                <generateoutput :ditaotVersion="ditaOtVersions" />
+        <div class="row mt-3">
+
+            <div class="col-xl-12">
+                <!-- Display default publisher if custom plugin is disabled -->
+                <div v-if="ditaOtVersions !== null">
+                    <generateoutput :ditaotVersion="ditaOtVersions" />
+                </div>
             </div>
         </div>
     </div>
-</div>
 </template>
 <script>
 import generateoutput from "./components/generateoutput";
-import customPlugin from "../docpublisher/components/customplugin.vue";
+
 import {
     secretKey
 } from "../../../api/global.env";
@@ -56,18 +36,13 @@ import {
     mapGetters
 } from "vuex";
 import Swal from "sweetalert2";
-import {
-    BTabs,
-    BTab
-} from "bootstrap-vue";
+
 import CryptoJS from "crypto-js";
 import devicevalidator from "../../../components/devicevalidator";
 export default {
     components: {
         generateoutput,
-        BTabs,
-        BTab,
-        customPlugin,
+
     },
     computed: {
         ...mapGetters(["ditaOtVersions"]),
@@ -76,7 +51,7 @@ export default {
         return {
             organizationDetails: null,
             customPluginOutputFormat: null,
-            orgId: this.$store.state.Auth.orgId,
+            orgId: null,
             projectName: CryptoJS.AES.decrypt(
                 this.$route.params.reponame,
                 secretKey
@@ -91,17 +66,17 @@ export default {
             ).toString(CryptoJS.enc.Utf8),
             title: "DocPublisher",
             items: [{
-                    text: "Projects",
-                    href: `/docmanager`
-                },
-                {
-                    text: "DocEditor",
-                    href: `/doceditor/${encodeURIComponent(this.$route.params.repouser)}/${encodeURIComponent(this.$route.params.reponame)}/${encodeURIComponent(this.$route.params.repobranch)}`,
-                },
-                {
-                    text: "DocPublisher",
-                    active: true
-                }
+                text: "Projects",
+                href: `/docmanager`
+            },
+            {
+                text: "DocEditor",
+                href: `/doceditor/${encodeURIComponent(this.$route.params.repouser)}/${encodeURIComponent(this.$route.params.reponame)}/${encodeURIComponent(this.$route.params.repobranch)}`,
+            },
+            {
+                text: "DocPublisher",
+                active: true
+            }
             ],
         };
     },
@@ -138,11 +113,7 @@ export default {
                     swalWithBootstrapButtons;
                 }
             });
-        if (Object.keys(this.$store.state.Auth.orgDetails).length) {
-            this.organizationDetails = this.$store.state.Auth.orgDetails;
-        } else {
-            this.getOrgDetails();
-        }
+
     },
     methods: {
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
@@ -175,7 +146,7 @@ export default {
                     this.customPluginOutputFormat = res.data;
                     this.ditaOtFolder = res.data;
                 })
-                .catch(() => {});
+                .catch(() => { });
         },
     },
 };
@@ -190,6 +161,7 @@ export default {
     color: rgba(23, 35, 61, 1);
     ;
 }
+
 .dita-ot-cont {
     margin-top: 0.4rem;
     font-size: 14px;
@@ -198,19 +170,24 @@ export default {
     letter-spacing: 0em;
     text-align: left;
 }
+
 .dita-ot {
     color: rgba(23, 35, 61, 1);
 }
+
 .dita-ot-version {
     color: rgba(105, 111, 121, 1);
     ;
 }
+
 .form-group {
     margin: 10px;
 }
+
 .btabs-height {
     height: 100%;
 }
+
 /* Media query for Z Fold when the screen is folded */
 @media screen and (max-width: 280px) {
     .font-size-15 {

@@ -62,8 +62,8 @@ export default {
             progress: 0,
             selectedfolder: "",
             foldername: [],
-            userId: this.$store.state.Auth.userId,
-            orgId: this.$store.state.Auth.orgId,
+            userId: null,
+            orgId: null,
         };
     },
     computed: {
@@ -118,8 +118,8 @@ export default {
         convertToDita() {
             this.progress = 0;
             const body = {
-                userId: this.$store.state.Auth.userId,
-                orgId: this.$store.state.Auth.orgId,
+                userId: null,
+                orgId: null,
                 folderName: this.selectedfolder,
             };
             const targetProgress = 100;

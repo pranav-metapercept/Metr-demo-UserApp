@@ -430,8 +430,8 @@ export default {
                 const formData = new FormData();
                 formData.append('pdfCoverLogo', file);
                 this.frontmatter_logo.FrontmatterLogoFile = file.name
-                const userId = this.$store.state.Auth.userId;
-                const orgId = this.$store.state.Auth.orgId;
+                const userId = null;
+                const orgId = null;
                 this.$store.getters.client.post(`/orguser/docstyler/uploadPdfLogo?userId=${userId}&orgId=${orgId}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'

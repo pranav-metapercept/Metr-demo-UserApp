@@ -72,7 +72,7 @@ export default {
     data() {
         return {
             activityData: [],
-            userId: this.$store.state.Auth.userId,
+            userId: null,
             userRoleMap: {
                 DocManager: 'DocManager',
                 DocPublisher: 'DocPublisher',
@@ -109,13 +109,7 @@ export default {
             return _;
         },
     },
-    created() {
-        if (this.$store.state.Auth.projectsData.length) {
-            this.activityData = this.$store.state.Auth.projectsData
-        } else {
-            this.getProjectsWithUserRole();
-        }
-    },
+    
     methods: {
         moment,
         onFiltered(filteredItems) {

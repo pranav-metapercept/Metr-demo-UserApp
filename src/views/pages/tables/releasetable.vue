@@ -94,7 +94,7 @@ export default {
                     active: true
                 }
             ],
-            userId: this.$store.state.Auth.userId,
+            userId: null,
             totalRows: 1,
             currentPage: 1,
             perPage: 10,
@@ -137,11 +137,7 @@ export default {
         },
     },
     created() {
-        if (this.$store.state.Auth.recentPublicationsData.length) {
-            this.activityData = this.$store.state.Auth.recentPublicationsData
-        } else {
-            this.getReleasePublication();
-        }
+        
         this.prepareChartData();
     },
     methods: {

@@ -39,7 +39,7 @@ export default {
     },
     data() {
         return {
-            orgId: this.$store.state.Auth.orgId,
+            orgId: null,
             title: "DocPublisher",
             items: [{
                     text: "Projects",

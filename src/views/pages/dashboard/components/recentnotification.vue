@@ -9,11 +9,8 @@
             </div>
             <div data-simplebar class="card-body border-top py-2 mb-3 ">
                 <ul class="list-unstyled activity-wid">
-                    <!-- Show skeleton loading when 'showSpinner' is true -->
-                    <b-skeleton-table v-if="showSpinner" :rows="5" :columns="2"
-                        :table-props="{ bordered: true, striped: true }"></b-skeleton-table>
-                    <!-- Render notifications when data is available and not loading -->
-                    <div v-else-if="notificationData.length > 0 && !showSpinner">
+
+                    <div>
                         <li class="activity-list publication-list-cust-cls" v-for="data in notificationData" :key="data.id">
                             <div class="d-flex justify-content-between">
                                 <div class="activity-icon avatar-xs">
@@ -43,25 +40,14 @@
                         </li>
                     </div>
                     <!-- Display a message when no notifications are available -->
-                    <li v-else>
-                        <div class="d-flex justify-content-center align-items-center m-0 p-0">
-                            <div class="text-center">
-                                <img class="custom-image" src="../../../../assets/placeholder.png" />
-                                <div class="custom-text">
-                                    No commits added in the last 24 hours
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+
                 </ul>
             </div>
         </div>
     </div>
 </template>
 <script>
-import {
-    mapActions
-} from "vuex";
+
 export default {
     props: {
         items: Object,
@@ -69,8 +55,7 @@ export default {
     data() {
         return {
             showSpinner: true,
-            userId: this.$store.state.Auth.userId,
-            orgId: this.$store.state.Auth.orgId,
+
             notificationData: [
                 {
                     "committer": {
@@ -111,7 +96,7 @@ export default {
         this.showSpinner = false;
 
     },
-   
+
     methods: {
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
             this.$bvToast.toast(messageToastContent, {
@@ -120,11 +105,8 @@ export default {
                 solid: true,
             });
         },
-        ...mapActions({
-            get: "userProjectDetails"
-        }),
-        
-        ...mapActions(['fetchRecentNotification']),
+
+
         // Function to calculate the time ago since a given timestamp
         getTimeAgo(timestamp) {
             const now = new Date();

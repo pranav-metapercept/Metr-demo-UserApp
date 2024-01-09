@@ -27,7 +27,7 @@
                   </div>
                 </div>
                 <!-- Select Branch (visible only when there is data) -->
-                <div v-if="hasData" class="form-group row">
+                <div class="form-group row">
                   <label class="col-md-12 col-form-label">Select Branch<span class="text-danger">*</span></label>
                   <div class="col-md-12">
                     <!-- Multiselect for branch selection -->
@@ -69,13 +69,145 @@ export default {
   data() {
     return {
       selectedproject: "",
-      userId: this.$store.state.Auth.userId,
+      userId: null,
       items: "",
       selectedBranch: "",
       selectedProjectOwner: "",
       selectedProjectName: null,
-      projectList: [],
-      repobranchesdata: [],
+      projectList: [
+        {
+          "userRole": [
+            "DocManager",
+            "DocPublisher",
+            "DocEditor",
+            "DocMigration"
+          ],
+          "_id": "6595132d7883623234585dba",
+          "projectId": "65950c567883623234585db8",
+          "projectName": "learning",
+          "userId": "6595087f7883623234585d6f",
+          "githubUsername": "Jyoti-Metapercept",
+          "githubEmail": "jyotikamal.s@metapercept.com",
+          "githubUserId": "124129047",
+          "acceptInvitation": false,
+          "isActive": true,
+          "isDeleted": false,
+          "createdAt": "2024-01-03T06:13:10.000Z",
+          "updatedAt": "2024-01-03T07:56:29.087Z",
+          "__v": 0,
+          "owner": "pranav-metapercept"
+        },
+        {
+          "userRole": [
+            "DocManager",
+            "DocPublisher",
+            "DocEditor",
+            "DocMigration"
+          ],
+          "_id": "6595132f7883623234585dbb",
+          "projectId": "65950c557883623234585db6",
+          "projectName": "ditamap-01",
+          "userId": "6595087f7883623234585d6f",
+          "githubUsername": "Jyoti-Metapercept",
+          "githubEmail": "jyotikamal.s@metapercept.com",
+          "githubUserId": "124129047",
+          "acceptInvitation": false,
+          "isActive": true,
+          "isDeleted": false,
+          "createdAt": "2024-01-03T06:09:05.000Z",
+          "updatedAt": "2024-01-03T07:56:31.467Z",
+          "__v": 0,
+          "owner": "pranav-metapercept"
+        },
+        {
+          "userRole": [
+            "DocManager",
+            "DocPublisher",
+            "DocEditor",
+            "DocMigration"
+          ],
+          "_id": "659513297883623234585db9",
+          "projectId": "65950c557883623234585db5",
+          "projectName": "it-book",
+          "userId": "6595087f7883623234585d6f",
+          "githubUsername": "Jyoti-Metapercept",
+          "githubEmail": "jyotikamal.s@metapercept.com",
+          "githubUserId": "124129047",
+          "acceptInvitation": false,
+          "isActive": true,
+          "isDeleted": false,
+          "createdAt": "2024-01-03T05:34:46.000Z",
+          "updatedAt": "2024-01-03T07:56:25.394Z",
+          "__v": 0,
+          "owner": "pranav-metapercept"
+        },
+        {
+          "userRole": [
+            "DocManager",
+            "DocPublisher",
+            "DocEditor",
+            "DocMigration"
+          ],
+          "_id": "659513327883623234585dbc",
+          "projectId": "65950c547883623234585db3",
+          "projectName": "EnableXSmoothDoc",
+          "userId": "6595087f7883623234585d6f",
+          "githubUsername": "Jyoti-Metapercept",
+          "githubEmail": "jyotikamal.s@metapercept.com",
+          "githubUserId": "124129047",
+          "acceptInvitation": false,
+          "isActive": true,
+          "isDeleted": false,
+          "createdAt": "2023-09-25T05:15:25.000Z",
+          "updatedAt": "2024-01-03T07:56:34.467Z",
+          "__v": 0,
+          "owner": "gurupawar05"
+        },
+        {
+          "userRole": [
+            "DocManager",
+            "DocPublisher",
+            "DocEditor",
+            "DocMigration"
+          ],
+          "_id": "659513357883623234585dbd",
+          "projectId": "65950c527883623234585da7",
+          "projectName": "DocEditorResearech",
+          "userId": "6595087f7883623234585d6f",
+          "githubUsername": "Jyoti-Metapercept",
+          "githubEmail": "jyotikamal.s@metapercept.com",
+          "githubUserId": "124129047",
+          "acceptInvitation": false,
+          "isActive": true,
+          "isDeleted": false,
+          "createdAt": "2023-06-28T12:13:14.000Z",
+          "updatedAt": "2024-01-03T07:56:37.837Z",
+          "__v": 0,
+          "owner": "Jyoti-Metapercept"
+        }
+      ],
+      repobranchesdata: [
+        {
+          "name": "dev",
+          "commit": {
+            "sha": "0f85dd8b02bdfec3673ed8cd81135d1a622f8bda",
+            "url": "https://api.github.com/repos/Vedantika-DITAxPresso/DITAOT-2/commits/0f85dd8b02bdfec3673ed8cd81135d1a622f8bda"
+          },
+          "protected": false
+        },
+        {
+          "name": "main",
+          "commit": {
+            "sha": "0f85dd8b02bdfec3673ed8cd81135d1a622f8bda",
+            "url": "https://api.github.com/repos/Vedantika-DITAxPresso/DITAOT-2/commits/0f85dd8b02bdfec3673ed8cd81135d1a622f8bda"
+          },
+          "protected": false
+        }
+      ].map((element) => ({
+        value: element.name,
+        text: element.name,
+      }))
+      ,
       title: "DocEditor",
       item: [
         {
@@ -93,19 +225,7 @@ export default {
     // Emit event to update the sidebar
     eventBus.$emit("update-sidebar", "menuitems.doceditor.text");
   },
-  created() {
-    // Emit event to update the sidebar
-    eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
-    if (this.$store.state.Auth.projectsData.length) {
-      // Filter and set the projectList based on the user's role
-      this.projectList = this.$store.state.Auth.projectsData.filter((project) =>
-        project.userRole.includes("DocEditor")
-      );
-    } else {
-      // If no project data is available, fetch it
-      this.getProjectData();
-    }
-  },
+
   computed: {
     // Determine if the button should be disabled based on conditions
     isButtonDisabled() {

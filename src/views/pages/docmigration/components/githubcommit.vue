@@ -95,8 +95,8 @@ export default {
             selectedproject: "",
             projectlist: [],
             commitMsg: null,
-            userId: this.$store.state.Auth.userId,
-            orgId: this.$store.state.Auth.orgId,
+            userId: null,
+            orgId: null,
             disabledCommit: false,
             title: "DocMigration",
             item: [{
@@ -264,7 +264,7 @@ export default {
             let body = {
                 "userId": this.userId,
                 "orgId": this.orgId,
-                gitToken: this.$store.state.Auth.gitToken
+                gitToken: null
             }
             setInterval(() => {
                 if (this.progress < 100) {

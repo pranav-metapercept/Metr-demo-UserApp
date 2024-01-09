@@ -61,7 +61,7 @@
             </div>
         </div>
         <!-- Conditional HR -->
-        <hr v-if="this.$store.state.Auth.orgDetails.customPlugin === `Disabled`" />
+        <hr  />
         <div v-if="!hideform" class="card">
             <div class="card-body">
                 <form novalidate @submit.prevent>
@@ -160,9 +160,7 @@ export default {
     },
     data() {
         return {
-            userId: this.$store.state.Auth.userId,
-            orgId: this.$store.state.Auth.orgId,
-            userName: this.$store.state.Auth.userName,
+            
             typeform: {
                 inputPath: "",
                 outputPath: "",
@@ -431,8 +429,8 @@ export default {
                     let commitProjectObj = {
                         path: this.projectPath,
                         message: commitMsg,
-                        githubUsername: this.$store.state.Auth.githubUsername,
-                        email: this.$store.state.Auth.userEmail,
+                        githubUsername: null,
+                        email: null,
                     };
                     swalWithBootstrapButtons.fire({
                         title: "Commit request in progress...",

@@ -53,8 +53,8 @@ import {
 export default {
     data() {
         return {
-            userId: this.$store.state.Auth.userId,
-            orgId: this.$store.state.Auth.orgId,
+            userId: null,
+            orgId:null,
             ditaotVersion: "",
             // Decrypt and display selected folder name
             selectedfolder: CryptoJS.AES.decrypt(

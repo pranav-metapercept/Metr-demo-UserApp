@@ -98,9 +98,7 @@
 <script>
 import projectcard from "./components/projectcard";
 
-import {
-    mapActions
-} from "vuex";
+
 
 import {
     BRow,
@@ -211,9 +209,7 @@ export default {
 
     },
     methods: {
-        ...mapActions({
-            get: "userProjectDetails"
-        }),
+
         syncGithub() {
             window.location.href = `${this.clientId}`;
         },

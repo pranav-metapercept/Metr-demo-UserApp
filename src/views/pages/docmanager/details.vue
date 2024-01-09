@@ -152,14 +152,14 @@ export default {
             brachName: null,
             urlParserRegex: /^[/]([^/]+)[/]([^/]+)[/]tree[/]([^/]+)[/](.*)/,
             outputURL: null,
-            gitToken: this.$store.state.Auth.gitToken,
+            gitToken: null,
             isDocEditor: null,
             isDocPublisher: null,
             editor: ClassicEditor,
             editorData: null,
             editorLoader: false,
             modal: false,
-            userId: this.$store.state.Auth.userId,
+            userId: null,
         };
     },
     created() {
@@ -224,7 +224,7 @@ export default {
         // Get organization detail
         async getOrgDetails() {
            
-            let orgId = this.$store.state.Auth.orgId;
+            let orgId = null;
             this.$store.getters.client
                 .get(`serveradmin/organization/byorgid?orgId=${orgId}`)
                 .then((res) => {

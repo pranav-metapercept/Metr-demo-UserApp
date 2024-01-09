@@ -61,7 +61,7 @@
             </div>
         </div>
         <!-- Conditional HR -->
-        <hr v-if="!this.$store.state.Auth.orgDetails.customPlugi" />
+        <hr />
         <div v-if="!hideform" class="card">
             <div class="card-body">
                 <form novalidate @submit.prevent>
@@ -157,9 +157,9 @@ export default {
     },
     data() {
         return {
-            userId: this.$store.state.Auth.userId,
-            orgId: this.$store.state.Auth.orgId,
-            userName: this.$store.state.Auth.userName,
+            userId: null,
+            orgId: null,
+            userName: null,
             typeform: {
                 inputPath: "",
                 outputPath: "",
@@ -167,18 +167,9 @@ export default {
                 releaseTitle: "",
             },
             selectInput: null,
-            projectName: CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            repouser: CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            brachName: CryptoJS.AES.decrypt(
-                this.$route.params.repobranch,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
+            projectName: null,
+            repouser: null,
+            brachName: null,
             selectOutputFormat: null,
             submitted: false,
             projectPath: null,
@@ -239,7 +230,7 @@ export default {
             }
         },
         createPullreq() {
-          
+
             this.$store.getters.client
                 .post(`/orguser/workspace/pullGitChanges?projectName=${this.projectName}`)
                 .then(() => {
@@ -259,7 +250,7 @@ export default {
                         .catch(() => {
                         });
                     this.$refs["pull-modal"].hide();
-               
+
                     this.messageToast(
                         "Success",
                         "success",
@@ -267,7 +258,7 @@ export default {
                     );
                 })
                 .catch((err) => {
-                  
+
                     this.messageToast(
                         "Error",
                         "danger",
@@ -276,7 +267,7 @@ export default {
                 });
         },
         async getWorkspace() {
-         
+
             await this.$store.getters.client
                 .get(`/orguser/workspace/byuserId?userId=${this.userId}`)
                 .then(async (res) => {
@@ -297,24 +288,24 @@ export default {
                     await this.$store.getters.client
                         .get(`/orguser/workspace/inputfiles?path=${path}&extenssion=${ext}`)
                         .then((res) => {
-                           
+
                             this.selectInput = res.data;
                         })
                         .catch(() => {
-                            
+
                         });
                     await this.$store.getters.client
                         .get(`/orguser/workspace/repotree?path=${path}`)
                         .then((tres) => {
-                           
+
                             this.model = tres.data;
                         })
                         .catch(() => {
-                          
+
                         });
                 })
                 .catch(() => {
-                 
+
                 });
         },
         makedefaultplugin() {
@@ -425,8 +416,8 @@ export default {
                     let commitProjectObj = {
                         path: this.projectPath,
                         message: commitMsg,
-                        githubUsername: this.$store.state.Auth.githubUsername,
-                        email: this.$store.state.Auth.userEmail,
+                        githubUsername: null,
+                        email: null,
                     };
                     swalWithBootstrapButtons.fire({
                         title: "Commit request in progress...",
@@ -451,7 +442,7 @@ export default {
                                 })
                                 .catch((err) => {
                                     this.$refs["modaloutputprogress"].hide();
-                                    
+
                                     this.messageToast(
                                         "invalid request",
                                         "danger",
@@ -507,7 +498,7 @@ export default {
 </script>
 <style scoped>
 label {
-    font-size: 14px ;
+    font-size: 14px;
     font-weight: 400;
     line-height: 16px;
     letter-spacing: 0em;

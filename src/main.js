@@ -10,7 +10,28 @@ import router from "./router";
 import store from "@/state/store";
 import i18n from "./i18n";
 import VJstree from "vue-jstree";
+
 import "@/assets/scss/app.scss";
+import { initFirebaseBackend } from "./helpers/firebase/authutils.js";
+
+import { configureFakeBackend } from "./helpers/fakebackend/fake-backend";
+
+const firebaseConfig = {
+  apiKey: process.env.VUE_APP_APIKEY,
+  authDomain: process.env.VUE_APP_AUTHDOMAIN,
+  databaseURL: process.env.VUE_APP_VUE_APP_DATABASEURL,
+  projectId: process.env.VUE_APP_PROJECTId,
+  storageBucket: process.env.VUE_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.VUE_APP_MESSAGINGSENDERID,
+  appId: process.env.VUE_APP_APPId,
+  measurementId: process.env.VUE_APP_MEASUREMENTID,
+};
+
+if (process.env.VUE_APP_DEFAULT_AUTH === "firebase") {
+  initFirebaseBackend(firebaseConfig);
+} else {
+  configureFakeBackend();
+}
 // Import and register your global components
 import PageHeader from "@/components/pageheader";
 import Simplebar from "simplebar-vue";
@@ -18,6 +39,7 @@ import Simplebar from "simplebar-vue";
 require("dotenv").config();
 // Register global components
 Vue.component("PageHeader", PageHeader);
+
 // Vue.config.devtools = process.env.NODE_ENV !== "production";
 Vue.component("Simplebar", Simplebar);
 Vue.config.productionTip = false;

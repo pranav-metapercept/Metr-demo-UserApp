@@ -102,7 +102,7 @@ export default {
         };
     },
     created() {
-        this.userId = this.$store.state.Auth.userId;
+        this.userId = null;
     },
 
     methods: {

@@ -131,8 +131,8 @@ export default {
             totalForms: 6,
             formDataList: {},
             childData: {},
-            userId: this.$store.state.Auth.userId,
-            orgId: this.$store.state.Auth.orgId,
+            userId: null,
+            orgId: null,
             projectName: CryptoJS.AES.decrypt(
                 this.$route.params.reponame,
                 secretKey

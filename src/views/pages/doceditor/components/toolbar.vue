@@ -566,8 +566,8 @@ export default {
             const formData = new FormData();
             formData.append("ditaContentImages", file);
             this.fileName = file.name;
-            const userId = this.$store.state.Auth.userId;
-            const orgId = this.$store.state.Auth.orgId;
+            const userId = null;
+            const orgId = null;
             this.$store.getters.client
                 .post(
                     `/orguser/doceditor/uploadDitaContentImg?userId=${userId}&orgId=${orgId}&projectName=${this.projectName}`,

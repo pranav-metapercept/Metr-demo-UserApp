@@ -144,9 +144,9 @@ export default {
     },
     data() {
         return {
-            userId: this.$store.state.Auth.userId,
-            orgId: this.$store.state.Auth.orgId,
-            userName: this.$store.state.Auth.userName,
+            userId: null,
+            orgId: null,
+            userName: null,
             typeform: {
                 inputPath: "",
                 outputPath: "",
@@ -403,8 +403,8 @@ export default {
                     let commitProjectObj = {
                         path: this.projectPath,
                         message: commitMsg,
-                        githubUsername: this.$store.state.Auth.githubUsername,
-                        email: this.$store.state.Auth.userEmail,
+                        githubUsername: null,
+                        email: null,
                     };
                     swalWithBootstrapButtons.fire({
                         title: "Commit request in progress...",

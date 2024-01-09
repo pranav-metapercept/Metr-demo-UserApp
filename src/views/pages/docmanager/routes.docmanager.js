@@ -8,11 +8,6 @@ export default [
     path: "/docmanager",
     component: DocManager,
     name: "DocManager",
-    props: (route) => ({
-      // Decode and pass dynamic parameters from the URL as props to the component
-      repouser: decodeURIComponent(route.params.repouser),
-      reponame: decodeURIComponent(route.params.reponame),
-    }),
   },
   {
     // Define a route for the ProjectDetail component with dynamic parameters

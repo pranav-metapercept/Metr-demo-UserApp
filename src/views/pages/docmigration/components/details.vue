@@ -179,8 +179,8 @@ export default {
             this.progress = 0;
             const formData = new FormData();
             formData.append("wordFile", this.file);
-            const userId = this.$store.state.Auth.userId;
-            const orgId = this.$store.state.Auth.orgId;
+            const userId = null;
+            const orgId = null;
             this.$store.getters.client
                 .post(
                     `/orguser/wordToDita/uploadWordFileExtracts?userId=${userId}&orgId=${orgId}`,

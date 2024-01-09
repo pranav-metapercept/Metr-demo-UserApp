@@ -44,7 +44,7 @@ export default {
     data() {
         return {
             organizationDetails: null,
-            orgId: this.$store.state.Auth.orgId,
+            orgId: null,
             projectName: CryptoJS.AES.decrypt(
                 this.$route.params.reponame,
                 secretKey

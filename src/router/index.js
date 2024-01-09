@@ -8,6 +8,7 @@ import DocMigration from "@/views/pages/docmigration/routes.docmigration/";
 import frontmatter from "@/views/pages/docstyler/routes.docstyler/";
 import DocEditor from "@/views/pages/doceditor/routes.doceditor/";
 import Tables from "@/views/pages/tables/routes.tables/";
+
 Vue.use(Router);
 // Vue.use(VueMeta, {
 //   // The component option name that vue-meta looks for meta info on.
