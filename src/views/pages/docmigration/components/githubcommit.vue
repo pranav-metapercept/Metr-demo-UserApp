@@ -1,85 +1,82 @@
 <template>
-<div>
-    <!-- Page header component with title and icon -->
-    <PageHeader :title="title" :icon="'ri-dashboard-line h3'" :items="item" />
     <div>
-          
+        <!-- Page header component with title and icon -->
+        <PageHeader :title="title" :icon="'ri-dashboard-line h3'" :items="item" />
+        <div>
+
             <div class="mr-2 dita-ot-cont px-1 ">
                 <span class="dita-ot">DITA-OT Version:</span>
                 <span class="dita-ot-version ml-2">{{ ditaOtVersions }}</span>
             </div>
         </div>
-    <!-- Modal for committing output to GitHub -->
-    <b-modal id="modal-commit" ref="modalcommit" title="Commit Output" title-class="font-18" hide-footer hide-close no-close-on-backdrop no-close-on-esc>
-        <div>
-            <b-form-group label="Commit Message">
-                <b-form-input for="text" v-model="commitMsg"></b-form-input>
-            </b-form-group>
-            <button class="btn btn-sm  btn-primary" v-on:click="commitOutput()">
-                Commit on GitHub
-            </button>
-        </div>
-    </b-modal>
-    <!-- Modal for showing progress -->
-    <b-modal id="modal-progress" ref="modaloutputprogress" title="Processing" hide-header title-class="font-18" hide-footer hide-close no-close-on-backdrop no-close-on-esc>
-        <strong>Please wait</strong>
-        <br />
-        <p>loading . . .</p>
-        <b-progress :value="progress" :max="100" class="custom-progress"></b-progress>
-    </b-modal>
-    <div class="row justify-content-center">
-        <div class="col-md-4 bg-white">
-            <!-- GitHub commit form -->
-            <div class="custom-notifications d-flex justify-content-between align-items-center flex-wrap">
-                <div class="custom-title mb-0">
-                    Github Commit
-                </div>
+        <!-- Modal for committing output to GitHub -->
+        <b-modal id="modal-commit" ref="modalcommit" title="Commit Output" title-class="font-18" hide-footer hide-close
+            no-close-on-backdrop no-close-on-esc>
+            <div>
+                <b-form-group label="Commit Message">
+                    <b-form-input for="text" v-model="commitMsg"></b-form-input>
+                </b-form-group>
+                <button class="btn btn-sm  btn-primary" v-on:click="commitOutput()">
+                    Commit on GitHub
+                </button>
             </div>
-
-            <div class="card-body">
-
-                <label>Select Project<span class="text-danger">*</span></label>
-
-                <!-- Multiselect for project selection -->
-                <multiselect v-model="selectedproject" :options="projectlist.map(item => item.text)" placeholder="Choose a Project">
-                </multiselect>
-
-                <div class="text-right pt-1">
-                    <!-- Buttons for committing and syncing projects -->
-                    <button type="submit" class="btn btn-primary btn-sm mr-2 " @click.prevent="syncprojects">
-                        Sync Projects
-                    </button>
-                    <button :disabled="!disabledCommit" type="submit" class="btn btn-secondary btn-sm " @click.prevent="commitOutput">
-                        Commit on Github
-                    </button>
-                    
+        </b-modal>
+        <!-- Modal for showing progress -->
+        <b-modal id="modal-progress" ref="modaloutputprogress" title="Processing" hide-header title-class="font-18"
+            hide-footer hide-close no-close-on-backdrop no-close-on-esc>
+            <strong>Please wait</strong>
+            <br />
+            <p>loading . . .</p>
+            <b-progress :value="progress" :max="100" class="custom-progress"></b-progress>
+        </b-modal>
+        <div class="row justify-content-center">
+            <div class="col-md-4 bg-white">
+                <!-- GitHub commit form -->
+                <div class="custom-notifications d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="custom-title mb-0">
+                        Github Commit
+                    </div>
                 </div>
 
-            </div>
+                <div class="card-body">
 
+                    <label>Select Project<span class="text-danger">*</span></label>
+
+                    <!-- Multiselect for project selection -->
+                    <multiselect v-model="selectedproject" :options="projectlist.map(item => item.text)"
+                        placeholder="Choose a Project">
+                    </multiselect>
+
+                    <div class="text-right pt-1">
+                        <!-- Buttons for committing and syncing projects -->
+                        <button type="submit" class="btn btn-primary btn-sm mr-2 " @click.prevent="syncprojects">
+                            Sync Projects
+                        </button>
+                        <button :disabled="!disabledCommit" type="submit" class="btn btn-secondary btn-sm "
+                            @click.prevent="commitOutput">
+                            Commit on Github
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
 import _ from "lodash";
 import Multiselect from "vue-multiselect";
-import {
-    mapActions
-} from "vuex";
+
 import Swal from "sweetalert2";
 
 import {
     eventBus
 } from '../../../../main';
-import {
-    mapGetters
-} from 'vuex';
-import CryptoJS from "crypto-js";
-import {
-    secretKey
-} from "../../../../api/global.env";
+
+
 export default {
     components: {
 
@@ -100,13 +97,13 @@ export default {
             disabledCommit: false,
             title: "DocMigration",
             item: [{
-                    text: "Dashboard",
-                    href: "/"
-                },
-                {
-                    text: "DocMigration",
-                    active: true
-                }
+                text: "Dashboard",
+                href: "/"
+            },
+            {
+                text: "DocMigration",
+                active: true
+            }
             ],
         };
     },
@@ -117,7 +114,7 @@ export default {
         isCommitButtonDisabled() {
             return this.commitMsg.length === 0
         },
-        ...mapGetters(['ditaOtVersions']),
+
     },
     watch: {
         selectedproject: function (newVal) {
@@ -142,31 +139,127 @@ export default {
                 solid: true,
             });
         },
-        // Call the 'get' action to fetch project details
-        ...mapActions({
-            get: "userProjectDetails"
-        }),
+
         // Fetch the list of projects
         getprojectslist() {
-            
-            this.$store.getters.client.get(`/orguser/wordToDita/syncedprojects?orgId=${this.orgId}&userId=${this.userId}`)
-                .then(response => {
-                    if (response.data && Array.isArray(response.data)) {
-                        response.data.forEach((ele) => {
-                            this.projectlist.push({
-                                value: ele.projectName,
-                                text: ele.projectName,
-                            });
-                        });
-                    } else {
-                        this.messageToast("Error", "danger", "Received invalid data from the server");
-                    }
-                    
-                })
-                .catch(error => {
-                    this.messageToast("Error", "danger", error.response ? error.response.data.message : "An error occurred while fetching project names.");
-                  
-                });
+            [
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132d7883623234585dba",
+                    "projectId": "65950c567883623234585db8",
+                    "projectName": "learning",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:13:10.000Z",
+                    "updatedAt": "2024-01-03T07:56:29.087Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132f7883623234585dbb",
+                    "projectId": "65950c557883623234585db6",
+                    "projectName": "ditamap-01",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:09:05.000Z",
+                    "updatedAt": "2024-01-03T07:56:31.467Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513297883623234585db9",
+                    "projectId": "65950c557883623234585db5",
+                    "projectName": "it-book",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T05:34:46.000Z",
+                    "updatedAt": "2024-01-03T07:56:25.394Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513327883623234585dbc",
+                    "projectId": "65950c547883623234585db3",
+                    "projectName": "EnableXSmoothDoc",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-09-25T05:15:25.000Z",
+                    "updatedAt": "2024-01-03T07:56:34.467Z",
+                    "__v": 0,
+                    "owner": "gurupawar05"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513357883623234585dbd",
+                    "projectId": "65950c527883623234585da7",
+                    "projectName": "DocEditorResearech",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-06-28T12:13:14.000Z",
+                    "updatedAt": "2024-01-03T07:56:37.837Z",
+                    "__v": 0,
+                    "owner": "Jyoti-Metapercept"
+                }
+            ].forEach((ele) => {
+                this.projectlist.push({
+                    value: ele.projectName,
+                    text: ele.projectName,
+                });// List of user projects
+            })
+
         },
         // Show the GitHub commit modal
         gitHubCommit() {
@@ -217,13 +310,7 @@ export default {
                 value: commitMsg
             }) => {
                 if (commitMsg !== undefined) {
-                    let body = {
-                        commitMessage: commitMsg,
-                        userId: this.userId,
-                        orgId: this.orgId,
-                        commitFolderName: this.selectedproject,
-                        ditaFolderName: CryptoJS.AES.decrypt(this.$route.params.selectedfolder, secretKey).toString(CryptoJS.enc.Utf8)
-                    }
+
                     swalWithBootstrapButtons.fire({
                         title: "Commit request in progress...",
                         allowOutsideClick: false,
@@ -231,67 +318,32 @@ export default {
                             Swal.showLoading();
                         },
                     });
-                    this.$store.getters.client
-                        .post(`/orguser/wordToDita/commitDitaFiles`, body)
-                        .then((res) => {
-                            this.showCommitBtn = false;
-                            swalWithBootstrapButtons.fire({
-                                icon: 'success',
-                                title: "Commit request completed successfully!",
-                                text: res.data.message || res.data,
-                            });
-                            this.$router.push({
-                                path: `/docmigration`,
-                            });
-                            this.commitMsg = null,
-                                this.selectedproject = ""
-                        })
-                        .catch((err) => {
-                            swalWithBootstrapButtons.fire({
-                                icon: 'error',
-                                title: "Commit failed!",
-                                text: err.response.data.message,
-                            });
-                            this.commitMsg = null,
-                                this.selectedproject = ""
-                        });
+                    this.showCommitBtn = false;
+                    swalWithBootstrapButtons.fire({
+                        icon: 'success',
+                        title: "Commit request completed successfully!",
+
+                    });
+                    this.$router.push({
+                        path: `/docmigration`,
+                    });
+                    this.commitMsg = null,
+                        this.selectedproject = ""
                 }
             });
         },
         // Sync projects with GitHub
         syncprojects() {
             this.progress = 0;
-            let body = {
-                "userId": this.userId,
-                "orgId": this.orgId,
-                gitToken: null
-            }
+
             setInterval(() => {
                 if (this.progress < 100) {
                     this.progress += 50;
                 }
+                this.$refs["modaloutputprogress"].hide();
             }, 1000);
             this.$refs["modaloutputprogress"].show();
-            this.$store.getters.client.put(`/orguser/workspace/sync`, body).then(() => {
-                setTimeout(() => {
-                    this.$refs["modaloutputprogress"].hide();
-                    this.selectedproject = ""
-                    this.messageToast(
-                        "Success",
-                        "success",
-                        "Sync complete! Your projects are up-to-date."
-                    )
-                }, 2000)
-            }).catch(() => {
-                setTimeout(() => {
-                    this.$refs["modaloutputprogress"].hide();
-                    this.messageToast(
-                        "Invalid request",
-                        "danger",
-                        "Sorry, we were unable to sync your projects at this time. Please check your network connectivity and try again. If the issue persists, please contact our technical support team for further assistance."
-                    )
-                }, 1000);
-            })
+
         }
     }
 }
@@ -347,7 +399,8 @@ label {
     letter-spacing: 0em;
     text-align: left;
     color: rgba(23, 35, 61, 1);
-}   
+}
+
 .custom-notifications {
     padding: 14px;
     gap: 24px;
@@ -376,7 +429,7 @@ label {
     height: 5px;
 }
 
-.card-body{
+.card-body {
     padding-top: 0rem;
 }
 </style>

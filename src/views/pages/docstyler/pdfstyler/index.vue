@@ -110,10 +110,7 @@ import HeaderFooter from './components/headerfooter.vue'
 import Commons from './components/commons.vue'
 import tables from './components/tables.vue'
 import lists from './components/lists.vue'
-import CryptoJS from "crypto-js";
-import {
-    secretKey
-} from "../../../../api/global.env";
+
 export default {
     components: {
         frontpage,
@@ -133,18 +130,9 @@ export default {
             childData: {},
             userId: null,
             orgId: null,
-            projectName: CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            repouser: CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            brachName: CryptoJS.AES.decrypt(
-                this.$route.params.repobranch,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
+            projectName:null,
+            repouser:null,
+            brachName: null,
         }
     },
     computed: {

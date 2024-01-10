@@ -37,8 +37,8 @@
 </template>
 
 <script>
-import Swal from "sweetalert2";
-import CryptoJS from "crypto-js";
+
+
 import cryptoJs from "crypto-js";
 import {
     secretKey
@@ -128,36 +128,15 @@ export default {
             this.$store.commit("setRepoName", projectName);
             this.redirectProject(owner, projectName);
         },
-        async redirectProject(repouser, reponame) {
+        async redirectProject() {
             // Redirect to DocManager or display an error message
-            if (this.items.userRole.includes("DocManager")) {
-                const encryptedRepouser = CryptoJS.AES.encrypt(
-                    repouser,
-                    secretKey
-                ).toString();
-                const encryptedReponame = CryptoJS.AES.encrypt(
-                    reponame,
-                    secretKey
-                ).toString();
-                const encodedRepouser = encodeURIComponent(encryptedRepouser);
-                const encodedReponame = encodeURIComponent(encryptedReponame);
-                this.$router.push({
-                    path: `/docmanager/${encodedRepouser}/${encodedReponame}`,
-                });
-            } else {
-                const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: "btn btn-primary btn-sm mr-2",
-                        cancelButton: "btn btn-light btn-sm"
-                    },
-                    buttonsStyling: false
-                });
-                swalWithBootstrapButtons.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Sorry, you do not have access to DocManager. Please contact your administrator if you would like to access this feature. Thank you.",
-                });
-            }
+
+
+
+            this.$router.push({
+                path: `/docmanager/details`,
+            });
+
         },
     },
 };

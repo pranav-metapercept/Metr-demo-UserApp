@@ -327,9 +327,7 @@ export default {
     created() {
         this.updateFormData(this.formDataList);
     },
-    beforeDestroy() {
-        this.submitForm();
-    },
+   
     mounted() {
         const data = {
             title: "Commons",

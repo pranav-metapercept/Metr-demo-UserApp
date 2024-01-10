@@ -20,9 +20,7 @@
 <script>
 // import generateoutput from './generateoutout.vue'
 import generateoutput from '../components/generateoutput.vue'
-import {
-    mapGetters
-} from 'vuex';
+
 import {
     eventBus
 } from '../../../../../main';
@@ -34,9 +32,7 @@ export default {
     components: {
         generateoutput,
     },
-    computed: {
-        ...mapGetters(['ditaOtVersions']),
-    },
+    
     data() {
         return {
             orgId: null,

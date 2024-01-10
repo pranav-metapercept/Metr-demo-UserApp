@@ -93,9 +93,8 @@ export default {
             });
         if (Object.keys(null).length) {
             this.organizationDetails = null;
-        } else {
-            this.getOrgDetails();
-        }
+        } 
+           
     },
     methods: {
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
@@ -105,21 +104,7 @@ export default {
                 solid: true,
             });
         },
-        async getOrgDetails() {
-            await this.$store.getters.client
-                .get(`/serveradmin/organization/byorgid?orgId=${this.orgId}`)
-                .then((response) => {
-                    if (response.data) {
-                        this.organizationDetails = response.data[0];
-                        this.$store.commit("setOrgDetails", this.organizationDetails);
-                    } else {
-                        this.messageToast("Invalid request", "danger", "No data received from the server");
-                    }
-                })
-                .catch((err) => {
-                    this.messageToast("Invalid request", "danger", err.response ? err.response.data.message : "An error occurred");
-                });
-        },
+       
         async getoutputFormat() {
             await this.$store.getters.client
                 .get(`/orguser/docpublisher/customplugin`)

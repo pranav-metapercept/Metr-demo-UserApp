@@ -1,101 +1,111 @@
 <template>
-<div>
-   
-    <!-- Important Message Modal -->
-    <b-modal ref="importantMessageModal" hide-footer title="Important Message" hide-close no-close-on-backdrop no-close-on-esc>
-        <div class="d-block text-center">
-            <h6>
-                "I'm sorry, It seems that the formatting of your Word file is not correct, which may be causing some
-                issues. In order to rectify this, you will need to adjust the formatting to ensure that it meets the
-                required standards. Once you have made the necessary changes, please try again."
-            </h6>
-        </div>
-        <hr />
-        <button class="btn btn-primary btn-sm mt-3" @click="hideModal">Go Back</button>
-    </b-modal>
-    <!-- Card for file upload -->
-    <div class="container mt-3" >
-        <div class="card">
-            <div class="card-body">
-                <div class="form-group" v-if="!showUploadScreen && !showConvertScreen">
-                    <div>
-                        <h6>Upload Word File<span class="text-danger">*</span></h6>
-                    </div>
-                    <form @submit.prevent="submitForm" enctype="multipart/form-data">
-                        <!-- File drop zone -->
-                        <div class="row">
-                            <div class="col-md-12 offset-md-0 col-lg-12 offset-lg-0 drop-zone" :class="{ dragging: dragging }" @dragover.prevent @dragenter="dragging = true" @dragleave="dragging = false" @drop="handleDrop">
-                                <!-- Displayed when no file is selected -->
-                                <!-- Displayed when no file is selected -->
-                                <div v-if="!fileSelected" class="text-center" @click="openFileInput">
-                                    <img src="../../../../assets/images/upload.svg" class="img-fluid" style="max-width: 100%;" />
-                                    <p class="mt-2">Drag and drop or <span class="text-primary">browse file</span> to
-                                        upload
-                                    </p>
-                                    <p class="m-0 " v-if="!fileName">Accepted file type: docx only</p>
+    <div>
+
+        <!-- Important Message Modal -->
+        <b-modal ref="importantMessageModal" hide-footer title="Important Message" hide-close no-close-on-backdrop
+            no-close-on-esc>
+            <div class="d-block text-center">
+                <h6>
+                    "I'm sorry, It seems that the formatting of your Word file is not correct, which may be causing some
+                    issues. In order to rectify this, you will need to adjust the formatting to ensure that it meets the
+                    required standards. Once you have made the necessary changes, please try again."
+                </h6>
+            </div>
+            <hr />
+            <button class="btn btn-primary btn-sm mt-3" @click="hideModal">Go Back</button>
+        </b-modal>
+        <!-- Card for file upload -->
+        <div class="container mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group" v-if="!showUploadScreen && !showConvertScreen">
+                        <div>
+                            <h6>Upload Word File<span class="text-danger">*</span></h6>
+                        </div>
+                        <form @submit.prevent="submitForm" enctype="multipart/form-data">
+                            <!-- File drop zone -->
+                            <div class="row">
+                                <div class="col-md-12 offset-md-0 col-lg-12 offset-lg-0 drop-zone"
+                                    :class="{ dragging: dragging }" @dragover.prevent @dragenter="dragging = true"
+                                    @dragleave="dragging = false" @drop="handleDrop">
+                                    <!-- Displayed when no file is selected -->
+                                    <!-- Displayed when no file is selected -->
+                                    <div v-if="!fileSelected" class="text-center" @click="openFileInput">
+                                        <img src="../../../../assets/images/upload.svg" class="img-fluid"
+                                            style="max-width: 100%;" />
+                                        <p class="mt-2">Drag and drop or <span class="text-primary">browse file</span> to
+                                            upload
+                                        </p>
+                                        <p class="m-0 " v-if="!fileName">Accepted file type: docx only</p>
+                                    </div>
+                                    <div v-if="fileSelected" class="alert alert-success m-2" role="alert">
+                                        <p v-if="fileName">Selected file: {{ fileName }}</p>
+                                    </div>
+                                    <input v-if="!fileSelected" type="file" @change="handleFileInput" class="d-none"
+                                        ref="fileInput" name="wordFile" accept=".docx" />
                                 </div>
-                                <div v-if="fileSelected" class="alert alert-success m-2" role="alert">
-                                    <p v-if="fileName">Selected file: {{ fileName }}</p>
+                            </div>
+                            <div class="text-right mt-3">
+                                <div v-if="!showConvertbtn">
+                                    <!-- Buttons for uploading and resetting the form -->
+                                    <button type="button" class="btn btn-sm btn-primary mr-2" :disabled="!fileSelected"
+                                        @click="sendFileToServer()">
+                                        Upload
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-light" @click="cancelForm">
+                                        Reset
+                                    </button>
                                 </div>
-                                <input v-if="!fileSelected" type="file" @change="handleFileInput" class="d-none" ref="fileInput" name="wordFile" accept=".docx" />
                             </div>
-                        </div>
-                        <div class="text-right mt-3">
-                            <div v-if="!showConvertbtn">
-                                <!-- Buttons for uploading and resetting the form -->
-                                <button type="button" class="btn btn-sm btn-primary mr-2" :disabled="!fileSelected" @click="sendFileToServer()">
-                                    Upload
-                                </button>
-                                <button type="button" class="btn btn-sm btn-light" @click="cancelForm">
-                                    Reset
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="form-group" v-if="showUploadScreen && !showConvertScreen">
-                    <div>
-                        <h6>Upload Word File<span class="text-danger">*</span></h6>
+                        </form>
                     </div>
-                    <form @submit.prevent="submitForm" enctype="multipart/form-data">
-                        <!-- File drop zone -->
-                        <div class="showConvertbtn ">
-                            <div v-if="fileSelected" class="  d-flex justify-content-between p-0 m-0">
-                                <p v-if="fileName"> {{ fileName }}</p>
-                                <p v-if="showConvertbtn" class="text-secondary"><span class="mdi mdi-check-circle-outline mr-1"></span>Done</p>
+                    <div class="form-group" v-if="showUploadScreen && !showConvertScreen">
+                        <div>
+                            <h6>Upload Word File<span class="text-danger">*</span></h6>
+                        </div>
+                        <form @submit.prevent="submitForm" enctype="multipart/form-data">
+                            <!-- File drop zone -->
+                            <div class="showConvertbtn ">
+                                <div v-if="fileSelected" class="  d-flex justify-content-between p-0 m-0">
+                                    <p v-if="fileName"> {{ fileName }}</p>
+                                    <p v-if="showConvertbtn" class="text-secondary"><span
+                                            class="mdi mdi-check-circle-outline mr-1"></span>Done</p>
+                                </div>
+                                <b-progress variant="secondary" :value="progress" :max="100"
+                                    class="custom-height"></b-progress>
                             </div>
-                            <b-progress variant="secondary" :value="progress" :max="100" class="custom-height"></b-progress>
-                        </div>
-                        <div class="text-right mt-3">
-                            <button :disabled="!showConvertbtn" class="btn btn-primary btn-sm" @click.prevent="convertToDita()">
-                                Convert Now
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div class="form-group" v-if="showConvertScreen">
-                    <div>
-                        <h6>Converting to Dita<span class="text-danger">*</span></h6>
+                            <div class="text-right mt-3">
+                                <button :disabled="!showConvertbtn" class="btn btn-primary btn-sm"
+                                    @click.prevent="convertToDita()">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                    <form @submit.prevent="submitForm" enctype="multipart/form-data">
-                        <!-- File drop zone -->
-                        <div class="showConvertbtn ">
-                            <div v-if="fileSelected" class="  d-flex justify-content-between p-0 m-0">
-                                <p v-if="fileName"> {{ fileName }}</p>
+                    <div class="form-group" v-if="showConvertScreen">
+                        <div>
+                            <h6>Converting to Dita<span class="text-danger">*</span></h6>
+                        </div>
+                        <form @submit.prevent="submitForm" enctype="multipart/form-data">
+                            <!-- File drop zone -->
+                            <div class="showConvertbtn ">
+                                <div v-if="fileSelected" class="  d-flex justify-content-between p-0 m-0">
+                                    <p v-if="fileName"> {{ fileName }}</p>
+                                </div>
+                                <b-progress variant="secondary" :value="progress" :max="100"
+                                    class="custom-height"></b-progress>
                             </div>
-                            <b-progress variant="secondary" :value="progress" :max="100" class="custom-height"></b-progress>
-                        </div>
-                        <div class="text-right mt-3">
-                            <button disabled class="btn btn-primary btn-sm" @click.prevent="convertToDita()">
-                                Convert Now
-                            </button>
-                        </div>
-                    </form>
+                            <div class="text-right mt-3">
+                                <button disabled class="btn btn-primary btn-sm" @click.prevent="convertToDita()">
+                                    Convert Now
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </template>
 <script>
 import _ from "lodash";
@@ -114,7 +124,7 @@ export default {
             uploadPercentage: 0,
             showConvertbtn: false,
             showUploadScreen: false,
-            showConvertScreen : false
+            showConvertScreen: false
         };
     },
     computed: {
@@ -179,73 +189,19 @@ export default {
             this.progress = 0;
             const formData = new FormData();
             formData.append("wordFile", this.file);
-            const userId = null;
-            const orgId = null;
-            this.$store.getters.client
-                .post(
-                    `/orguser/wordToDita/uploadWordFileExtracts?userId=${userId}&orgId=${orgId}`,
-                    formData, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    }
-                )
-                .then((response) => {
-                    const targetProgress = 100;
-                    const totalTime = 5000; // 5 seconds in milliseconds
-                    const increment = (targetProgress / totalTime) * 50;
-                    const intervalId = setInterval(() => {
-                        if (this.progress < targetProgress) {
-                            this.progress += increment;
-                        } else {
-                            clearInterval(intervalId);
-                        }
-                    }, 50);
-                    if (typeof response.data.message !== "object") {
-                        setTimeout(() => {
-                            this.showConvertbtn = true
-                            this.fileSelected = true
-                            this.messageToast(
-                                "Success",
-                                "success",
-                                "Word file uploaded successfully",
-                            );
-                        }, 2000);
-                    } else {
-                        setTimeout(() => {
-                            this.showConvertbtn = true
-                            this.fileSelected = true
-                            this.messageToast(
-                                "Success",
-                                "success",
-                                "Word file uploaded successfully",
-                            );
-                            if (typeof response.data.message === "object") {
-                                setTimeout(() => {
-                                    // this.$router.push({ path: "/docmigration/converttodita" });
-                                }, 5000);
-                            }
-                        }, 5000);
-                    }
-                    this.file = null;
-                    this.dragging = false;
-                    this.formData = null;
-                })
-                .catch((error) => {
-                    this.messageToast(
-                        "Invalid request",
-                        "danger",
-                        error.response.data.message
-                    );
-                    this.file = null;
-                    this.dragging = false;
-                    this.fileName = null;
-                    this.formData = null;
-                    this.fileSelected = false;
-                    this.file = null;
-                    this.dragging = false;
-                    this.formData = null;
-                });
+
+            const targetProgress = 100;
+            const totalTime = 5000; // 5 seconds in milliseconds
+            const increment = (targetProgress / totalTime) * 50;
+            const intervalId = setInterval(() => {
+                if (this.progress < targetProgress) {
+                    this.progress += increment;
+                } else {
+                    clearInterval(intervalId);
+                }
+            }, 50);
+            this.showConvertbtn = true
+            this.fileSelected = true
         },
         submitForm() {
             if (this.file) {
@@ -265,15 +221,11 @@ export default {
         convertToDita() {
 
             this.progress = 0;
-            this.showConvertScreen= true
+            this.showConvertScreen = true
             let folderName = this.fileName.split('.')
             folderName.pop()
             folderName = folderName.join('.')
-            const body = {
-                userId: localStorage.getItem("userId"),
-                orgId: localStorage.getItem("orgId"),
-                folderName
-            }
+
             const targetProgress = 100;
             const totalTime = 5000;
             const increment = (targetProgress / totalTime) * 50;
@@ -284,36 +236,16 @@ export default {
                     clearInterval(intervalId);
                 }
             }, 50);
-          
-            this.$store.getters.client.post("/orguser/wordToDita/convertToDita", body)
-                .then(response => {
-                    setTimeout(() => {
-                        this.showConvertScreen = false
-                    }, 2000)
-                    this.foldername = response.data
-                    this.messageToast(
-                        "Success",
-                        "success",
-                        response.data.message
-                    );
-                    setTimeout(() => {
-                        this.$router.push({
-                            path: `/docmigration/outputscreen/${encodeURIComponent(CryptoJS.AES.encrypt(folderName, secretKey).toString())}`
-                        });
-                        this.showConvertScreen = false
-                    }, 2000);
-                })
-                .catch(error => {
-                    console.error(error);
-                    setTimeout(() => {
-                        this.$refs["modaloutputprogress"].hide();
-                    }, 3000);
-                    setTimeout(() => {
-                        this.$refs['my-modal'].show();
-                    }, 2000);
-                    this.fileSelected = false;
-                    this.fileName = null;
+            setTimeout(() => {
+                this.showConvertScreen = false
+            }, 2000)
+            setTimeout(() => {
+                this.$router.push({
+                    path: `/docmigration/outputscreen/${encodeURIComponent(CryptoJS.AES.encrypt(folderName, secretKey).toString())}`
                 });
+                this.showConvertScreen = false
+            }, 2000);
+
         }
     },
 };
@@ -323,6 +255,7 @@ p {
     margin-top: 0;
     margin-bottom: 0.3rem !important;
 }
+
 .drop-zone {
     border: 1.5px dashed rgba(15, 52, 96, 1);
     background-color: rgba(113, 165, 203, 0.05);
@@ -334,10 +267,12 @@ p {
     justify-content: center;
     cursor: pointer;
 }
+
 .drop-zone p.mt-2 {
     margin-top: 0.5rem;
     font-size: 20px;
 }
+
 .drop-zone p.m-0 {
     font-size: 16px;
     font-weight: 400;
@@ -345,30 +280,38 @@ p {
     letter-spacing: 0.5px;
     text-align: center;
 }
+
 .alert-success {
     margin: 0.5rem 0;
 }
+
 .btn-secondaryBtn {
     background: #252b3b !important;
     color: #fff !important;
 }
+
 .card-icons-btn {
     background: #5864d2;
     color: #fff;
 }
+
 .card-icons-btn:hover {
     color: #fff;
 }
+
 .progress {
     height: 20px;
 }
-.progress-bar{
+
+.progress-bar {
     background-color: rgba(254, 94, 69, 1) !important;
 }
+
 .showConvertbtn {
     padding: 0.2rem !important;
     background-color: rgba(220, 222, 226, 0.2);
 }
+
 .custom-height {
     height: 5px;
 }

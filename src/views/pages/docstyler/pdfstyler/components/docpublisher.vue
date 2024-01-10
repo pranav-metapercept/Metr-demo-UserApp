@@ -14,7 +14,7 @@
         </div>
         <!-- Generate Output Section (conditionally displayed) -->
         <div class="row">
-            <div class="col-xl-12" v-if="ditaOtVersions !== null">
+            <div class="col-xl-12" >
                 <!-- Generate Output Component with DITA-OT Version Prop -->
                 <generateoutput :ditaotVersion="ditaOtVersions" />
             </div>
@@ -28,9 +28,7 @@ import generateoutput from '../components/generateoutput.vue'
 import {
     eventBus
 } from '../../../../../main';
-import {
-    mapGetters
-} from 'vuex';
+
 import CryptoJS from "crypto-js";
 import { secretKey } from '../../../../../api/global.env';
 export default {
@@ -38,9 +36,7 @@ export default {
         generateoutput,
 
     },
-    computed: {
-        ...mapGetters(['ditaOtVersions']),
-    },
+    
     data() {
         return {
             organizationDetails: null,

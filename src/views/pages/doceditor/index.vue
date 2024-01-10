@@ -12,7 +12,6 @@
                         <div class="custom-ditamap d-flex justify-content-between align-items-center flex-wrap">
                             <div class="custom-title mb-0">DITAMAP</div>
                         </div>
-
                         <hr />
                         <div class="tree-rows">
                             <simplebar class="custom-tree-simplebar">
@@ -913,10 +912,7 @@ export default {
             showSaveContentBtn: false,
             intervalId: null,
             formattedXml: "",
-            projectName: CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
+            projectName: null,
             selectedTag: "",
             xmlfile: "",
             oldXmlValue: null,
@@ -973,9 +969,7 @@ export default {
             this.showAlert = true;
         });
     },
-    beforeDestroy() {
-        document.removeEventListener("keydown", this.handleKeyDown);
-    },
+
     mounted() {
         eventBus.$on("saveContentEditor", () => {
             this.saveContent();
@@ -989,9 +983,7 @@ export default {
         eventBus.$on("githubCommit", this.githubCommit);
 
         let that = this;
-        this.$nextTick(() => {
-            eventBus.$emit("xmlData", that.xmlObject);
-        });
+        
         eventBus.$on("body-updated", (body) => {
             body.nodeDetails = this.xmlObject;
             this.body = body;
@@ -1102,7 +1094,7 @@ export default {
             that.clickedTag = {};
         });
         document.addEventListener("keydown", this.handleKeyDown);
-        this.getDitaOt();
+        
     },
     computed: {
         isFolder() {
@@ -1321,37 +1313,14 @@ export default {
                     }
                 });
         },
-        async getDitaOt() {
-            this.getOrgId = null;
-            return this.$store.getters.client
-                .get(`/serveradmin/organization/byorgid?orgId=${this.getOrgId}`)
-                .then((response) => {
-                    if (
-                        response.data &&
-                        Array.isArray(response.data) &&
-                        response.data.length > 0 &&
-                        "ditaotVersion" in response.data[0]
-                    ) {
-                        this.ditaotVersion = response.data[0].ditaotVersion;
-                    } else {
-                        this.messageToast(
-                            "Invalid request",
-                            "danger",
-                            "No valid DITA OT version data received from the server"
-                        );
-                    }
-                })
-                .catch((err) => {
-                    this.messageToast(
-                        "Invalid request",
-                        "danger",
-                        err.response ? err.response.data.message : "An error occurred"
-                    );
-                });
-        },
+     
         redirectDocPublisher() {
+            const encodedRepouser = encodeURIComponent(this.$route.params.repouser);
+            const encodedReponame = encodeURIComponent(this.$route.params.reponame);
+            const encodedBranch = encodeURIComponent(this.$route.params.repobranch);
+      
             this.$router.push({
-                path: `/docpublisher1`,
+                path: `/doceditor/docpublisher/${encodedRepouser}/${encodedReponame}/${encodedBranch}`,
             });
         },
         redirectDocmanager() {
@@ -1360,14 +1329,13 @@ export default {
             });
         },
         redirectDocStyler() {
-            this.navigateToDocStyler();
-        },
-        navigateToDocStyler() {
-
+            
             this.$router.push({
-                name: "styler",
+                path: `/docstyler`,
             });
         },
+
+
 
         showAccessDeniedMessage(role) {
             const swalWithBootstrapButtons = Swal.mixin({

@@ -9,15 +9,15 @@
             </div>
             <div class="mr-2 dita-ot-cont px-1 ">
                 <span class="dita-ot">DITA-OT Version:</span>
-                <span class="dita-ot-version ml-2">{{ ditaOtVersions }}</span>
+               
             </div>
         </div>
         <div class="row mt-3">
 
             <div class="col-xl-12">
                 <!-- Display default publisher if custom plugin is disabled -->
-                <div v-if="ditaOtVersions !== null">
-                    <generateoutput :ditaotVersion="ditaOtVersions" />
+                <div >
+                    <generateoutput />
                 </div>
             </div>
         </div>
@@ -32,21 +32,17 @@ import {
 import {
     eventBus
 } from "../../../main";
-import {
-    mapGetters
-} from "vuex";
+
 import Swal from "sweetalert2";
 
 import CryptoJS from "crypto-js";
-import devicevalidator from "../../../components/devicevalidator";
+
 export default {
     components: {
         generateoutput,
 
     },
-    computed: {
-        ...mapGetters(["ditaOtVersions"]),
-    },
+   
     data() {
         return {
             organizationDetails: null,
@@ -82,7 +78,7 @@ export default {
     },
     created() {
         eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
-        this.getoutputFormat()
+
     },
     mounted() {
         const swalWithBootstrapButtons = Swal.mixin({
@@ -123,22 +119,7 @@ export default {
                 solid: true,
             });
         },
-        async getOrgDetails() {
-            return this.$store.getters.client
-                .get(`/serveradmin/organization/byorgid?orgId=${this.orgId}`)
-                .then((res) => {
-                    if (res.data) {
-                        this.organizationDetails = res.data[0];
-                        this.$store.commit("setOrgDetails", this.organizationDetails);
-                    } else {
-                        this.messageToast("Invalid request", "danger", "No data received from the server");
-                    }
-                })
-                .catch((err) => {
-                    devicevalidator(err.response.data.message);
-                    this.messageToast("Invalid request", "danger", err.response ? err.response.data.message : "An error occurred");
-                });
-        },
+        
         async getoutputFormat() {
             await this.$store.getters.client
                 .get(`/orguser/docpublisher/customplugin`)

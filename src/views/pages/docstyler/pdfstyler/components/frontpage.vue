@@ -346,9 +346,7 @@ export default {
     created() {
         this.updateFormData(this.formDataList);
     },
-    beforeDestroy() {
-        this.submitForm();
-    },
+    
     methods: {
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
             this.$bvToast.toast(messageToastContent, {

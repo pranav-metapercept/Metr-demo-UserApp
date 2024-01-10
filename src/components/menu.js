@@ -1,5 +1,3 @@
-
-
 export const menuItems = [
   {
     id: 1,
@@ -24,7 +22,7 @@ export const menuItems = [
     id: 4,
     label: "menuitems.doceditor.text",
     icon: "ri-file-edit-fill",
-    link: "/doceditor",
+    link: "/doceditor/projectlist",
     hide: false,
   },
   {
@@ -39,10 +37,6 @@ export const menuItems = [
     label: "menuitems.docmigration.text",
     icon: "mdi mdi-file-replace",
     link: "/docmigration",
-    // hide: false,
-    disabled: false,
+    hide: false,
   },
 ];
-
-
-

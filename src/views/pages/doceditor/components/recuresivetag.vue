@@ -258,10 +258,7 @@ export default {
     this.getData();
     this.getSchema();
   },
-  beforeDestroy() {
-    eventBus.$off("deleteTagEvent", this.deleteTag);
-    eventBus.$off("updateNodeId");
-  },
+  
   computed: {
     name() {
       if (this.data && this.data.xtag) {

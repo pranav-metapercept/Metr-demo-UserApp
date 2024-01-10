@@ -321,9 +321,7 @@ export default {
         // Call the updateFormData method with your formDataList
         this.updateFormData(this.formDataList);
     },
-    beforeDestroy() {
-        this.submitForm();
-    },
+  
     methods: {
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
             this.$bvToast.toast(messageToastContent, {

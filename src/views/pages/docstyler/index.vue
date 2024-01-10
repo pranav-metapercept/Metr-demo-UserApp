@@ -41,17 +41,12 @@ import {
 import htmlstyler from "./htmlstyler/index.vue";
 import pdfstyler from "./pdfstyler/index.vue";
 
-import checkurl from "../../../components/urlvalidator";
+
 import {
     eventBus
 } from "../../../main";
-import {
-    mapGetters
-} from "vuex";
-import CryptoJS from "crypto-js";
-import {
-    secretKey
-} from "../../../api/global.env";
+
+
 export default {
     components: {
         BTabs,
@@ -60,24 +55,13 @@ export default {
         pdfstyler,
 
     },
-    computed: {
-        ...mapGetters(["ditaOtVersions"]),
-    },
+   
     data() {
         return {
             ditaotVersion: "",
-            projectName: CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            repouser: CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            brachName: CryptoJS.AES.decrypt(
-                this.$route.params.repobranch,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
+            projectName: null,
+            repouser: null,
+            brachName:null,
             activeTab: 0,
             title: "DocStyler",
             items: [{
@@ -110,21 +94,7 @@ export default {
                 solid: true,
             });
         },
-        validateURL() {
-            const newRepoUser = CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8);
-            const newRepoName = CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8);
-            const oldRepoUser = localStorage.getItem("repouser");
-            const oldRepoName = localStorage.getItem("reponame");
-            if (newRepoName !== oldRepoName || newRepoUser !== oldRepoUser) {
-                checkurl(newRepoName);
-            }
-        },
+       
     },
 };
 </script>

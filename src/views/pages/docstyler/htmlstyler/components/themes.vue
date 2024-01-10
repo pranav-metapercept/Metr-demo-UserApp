@@ -75,9 +75,7 @@ export default {
         };
         this.$emit("data-mounted", data);
     },
-    beforeDestroy() {
-        this.submitForm();
-    },
+   
     computed: {
         formattedMessage() {
             return {

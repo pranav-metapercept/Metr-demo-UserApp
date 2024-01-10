@@ -91,9 +91,7 @@ export default {
         };
         this.$emit("data-mounted", data);
     },
-    beforeDestroy() {
-        this.submitForm();
-    },
+  
     methods: {
         nextForm() {
             this.$emit('next-form',)

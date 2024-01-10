@@ -1,82 +1,88 @@
 <template>
-<div>
-    <!-- Page Header -->
-    <PageHeader :icon="'fas fa-file-invoice'" :title="title" :items="items" />
-    <!-- Project Info -->
-    <div class="d-flex justify-content-between align-items-center">
-        <div>
-            <div class=" mr-2 px-1 ">
-                <span class="project-name">{{ projectName }}</span>
+    <div>
+        <!-- Page Header -->
+        <PageHeader :icon="'fas fa-file-invoice'" :title="title" :items="items" />
+        <!-- Project Info -->
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <div class=" mr-2 px-1 ">
+                    <span class="project-name">{{ projectName }}</span>
+                </div>
+                <div class="mr-2 dita-ot-cont px-1 ">
+                    <span class="dita-ot">DITA-OT Version:</span>
+                    <span class="dita-ot-version ml-2">{{ ditaOtVersions }}</span>
+                </div>
             </div>
-            <div class="mr-2 dita-ot-cont px-1 ">
-                <span class="dita-ot">DITA-OT Version:</span>
-                <span class="dita-ot-version ml-2">{{ ditaOtVersions }}</span>
+            <button class="btn btn-primary btn-sm " type="submit" @click="openEditor()">
+                <span class="d-flex align-items-center justify-content-center">
+                    <span>
+                        <i class="mdi mdi-file-edit mdi-16px"></i>
+                    </span>
+                    <span class=" ml-2">
+                        DocEditor
+                    </span>
+                </span>
+            </button>
+        </div>
+        <!-- Branches Dropdown -->
+        <div class="row mb-2 mt-3">
+            <label class=" col-label ml-3">Select Branch <span class="text-danger">*</span></label>
+            <div class="col-lg-12 ">
+                <select class="form-control" v-model="selected" placeholder="Select Branch" @change="getObject">
+                    <option value="" disabled>Please Choose Branch</option>
+                    <option v-for="(option, index) in repobranchesdata" :key="index" :value="option.value">{{ option.text }}
+                    </option>
+                </select>
             </div>
         </div>
-        <button  class="btn btn-primary btn-sm " type="submit" @click="openEditor()">
-            <span class="d-flex align-items-center justify-content-center">
-                <span>
-                    <i class="mdi mdi-file-edit mdi-16px"></i>
-                </span>
-                <span class=" ml-2">
-                    DocEditor
-                </span>
-            </span>
-        </button>
-    </div>
-    <!-- Branches Dropdown -->
-    <div class="row mb-2 mt-3">
-        <label class=" col-label ml-3">Select Branch <span class="text-danger">*</span></label>
-        <div class="col-lg-12 ">
-            <select class="form-control" v-model="selected" placeholder="Select Branch" @change="getObject">
-                <option value="" disabled>Please Choose Branch</option>
-                <option v-for="(option, index) in repobranchesdata" :key="index" :value="option.value">{{ option.text }}
-                </option>
-            </select>
-        </div>
-    </div>
-    <!-- Source and Target -->
-    <div class="row">
-        <!-- Source Section -->
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="custom-source  d-flex justify-content-between align-items-center flex-wrap">
-                                        <div class="custom-title mb-0">
-                                            Source
+        <!-- Source and Target -->
+        <div class="row">
+            <!-- Source Section -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div
+                                            class="custom-source  d-flex justify-content-between align-items-center flex-wrap">
+                                            <div class="custom-title mb-0">
+                                                Source
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="border-top">
-                                        <simplebar v-if="treeData.length > 0" class="mt-1 custom-jstree">
-                                            <v-jstree :data="treeData" multiple allow-batch whole-row @item-click="itemClick"></v-jstree>
-                                        </simplebar>
-                                        <template v-else>
-                                            <div class="d-flex justify-content-center align-items-center no-output-cont">
-                                                <div class="mb-5 no-output-div">
-                                                    <img src="../../../assets/placeholder.png" />
-                                                    <div class="no-output-text">
-                                                        No output generated.
+                                        <div class="border-top">
+                                            <simplebar v-if="treeData.length > 0" class="mt-1 custom-jstree">
+                                                <v-jstree :data="treeData" multiple allow-batch whole-row
+                                                    @item-click="itemClick"></v-jstree>
+                                            </simplebar>
+                                            <template v-else>
+                                                <div
+                                                    class="d-flex justify-content-center align-items-center no-output-cont">
+                                                    <div class="mb-5 no-output-div">
+                                                        <img src="../../../assets/placeholder.png" />
+                                                        <div class="no-output-text">
+                                                            No output generated.
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </template>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="custom-source  d-flex justify-content-between align-items-center flex-wrap">
-                                        <div class="custom-title mb-0">
-                                            Target
+                                            </template>
                                         </div>
                                     </div>
-                                    <div class="border-top">
-                                        <div class="download-field " v-on:click="downloadFun()">
-                                            <div class="download-btn">
-                                                <span>Download as Zip</span>
-                                                <img class="downloadImg" src="../../../assets/toolbarsvgs/download.svg" alt="SVG Image" />
+                                    <div class="col-md-6">
+                                        <div
+                                            class="custom-source  d-flex justify-content-between align-items-center flex-wrap">
+                                            <div class="custom-title mb-0">
+                                                Target
+                                            </div>
+                                        </div>
+                                        <div class="border-top">
+                                            <div class="download-field " v-on:click="downloadFun()">
+                                                <div class="download-btn">
+                                                    <span>Download as Zip</span>
+                                                    <img class="downloadImg" src="../../../assets/toolbarsvgs/download.svg"
+                                                        alt="SVG Image" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -86,10 +92,9 @@
                     </div>
                 </div>
             </div>
-        </div>
 
+        </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -101,10 +106,8 @@ import pRetry from "p-retry";
 import saveFile from "save-file";
 import simplebar from "simplebar-vue";
 import Swal from "sweetalert2";
-import {
-    mapGetters
-} from "vuex";
-import checkurl from "../../../components/urlvalidator";
+
+
 import PageHeader from "@/components/pageheader";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import CryptoJS from "crypto-js";
@@ -120,36 +123,28 @@ export default {
         PageHeader,
         simplebar,
     },
-    computed: {
-        ...mapGetters(["ditaOtVersions"]),
-    },
+    
     data() {
         return {
             title: "DocManager",
             items: [{
-                    text: "Projects",
-                    href: `/docmanager`,
-                },
-                {
-                    text: "DocManager",
-                    active: true,
-                },
+                text: "Projects",
+                href: `/docmanager`,
+            },
+            {
+                text: "DocManager",
+                active: true,
+            },
             ],
             treeData: [],
             repobranchesdata: [],
             ditaotVersion: "",
-            projectName: CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            repouser: CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
+            projectName: null,
+            repouser:null,
             selected: "",
             isLoading: false,
             downloadURL: "",
-            brachName: null,
+            brachName: "main",
             urlParserRegex: /^[/]([^/]+)[/]([^/]+)[/]tree[/]([^/]+)[/](.*)/,
             outputURL: null,
             gitToken: null,
@@ -171,37 +166,15 @@ export default {
         this.getOrgDetails();
     },
     methods: {
-        // openEditor(){
-        //   this.modal = true;
-        //   setTimeout(()=>{this.editorLoader = true}, 2000)
-        // },
-        validateURL() {
-            const newRepoUser = CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8);
-            const newRepoName = CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8);
-            const oldRepoUser = localStorage.getItem("repouser");
-            const oldRepoName = localStorage.getItem("reponame");
-            if (newRepoName !== oldRepoName || newRepoUser !== oldRepoUser) {
-                checkurl(newRepoName);
-            }
-        },
+
+       
         async openEditor() {
             this.navigateToEditor();
         },
         navigateToEditor() {
-            const encryptedRepouser = CryptoJS.AES.encrypt(this.repouser, secretKey).toString();
-            const encryptedReponame = CryptoJS.AES.encrypt(this.projectName, secretKey).toString();
-            const encryptedBranch = CryptoJS.AES.encrypt(this.brachName, secretKey).toString();
-            const encodedRepouser = encodeURIComponent(encryptedRepouser);
-            const encodedReponame = encodeURIComponent(encryptedReponame);
-            const encodedBranch = encodeURIComponent(encryptedBranch);
+          
             this.$router.push({
-                path: `/doceditor/${encodedRepouser}/${encodedReponame}/${encodedBranch}`,
+                path: `/doceditor`,
             });
         },
         handleAccessDenied() {
@@ -223,12 +196,12 @@ export default {
         },
         // Get organization detail
         async getOrgDetails() {
-           
+
             let orgId = null;
             this.$store.getters.client
                 .get(`serveradmin/organization/byorgid?orgId=${orgId}`)
                 .then((res) => {
-                    
+
                     if (res.data && res.data.length > 0) {
                         // Check if data exists and if it's in the expected format
                         this.isDocEditor = res.data[0].editor;
@@ -239,7 +212,7 @@ export default {
                     }
                 })
                 .catch((err) => {
-                    
+
                     // Handle network issues or unexpected errors
                     this.messageToast("Invalid request", "danger", err.response ? err.response.data.message : "An error occurred");
                     devicevalidator(err.response.data.message);
@@ -247,7 +220,7 @@ export default {
         },
         // Get all branches inside repository
         async getRepoBranch() {
-           
+
             let branchResponse;
             this.$store.getters.client
                 .get(`orguser/repobranches?repoUser=${this.repouser}&repoName=${this.projectName}`)
@@ -281,13 +254,13 @@ export default {
                     this.messageToast("Invalid request", "danger", "An error occurred while fetching data.");
                 })
                 .finally(() => {
-                  
+
                 });
         },
         // Get tree of output folder in particular branch
         getObject(branchsha) {
             this.brachName = branchsha;
-           
+
             this.outputURL = `https://github.com/${CryptoJS.AES.decrypt(
                 this.$route.params.repouser,
                 secretKey
@@ -304,7 +277,7 @@ export default {
                     secretKey
                 ).toString(CryptoJS.enc.Utf8)}&branchsha=${branchsha}`)
                 .then((res) => {
-                   
+
                     if (res.data) {
                         // Check if data exists
                         this.treeData = res.data;
@@ -314,14 +287,14 @@ export default {
                     }
                 })
                 .catch((err) => {
-                   
+
                     // Handle network issues or unexpected errors
                     this.messageToast("Invalid request", "danger", err.response ? err.response.data.message : "An error occurred");
                 });
         },
         // Download output folder as a zip
         async downloadFun() {
-           
+
             const zipPromise = new JSZip();
             let user;
             let repository;
@@ -333,7 +306,7 @@ export default {
             } catch (err) {
                 // Handle URL parsing error
                 this.messageToast("Invalid request", "danger", "Error parsing URL");
-                
+
                 return;
             }
             try {
@@ -352,8 +325,8 @@ export default {
                 const fetchPublicFile = async (file) => {
                     const response = await axios.get(
                         `https://raw.githubusercontent.com/${user}/${repository}/${ref}/${this.escapeFilepath(file.path)}`, {
-                            signal: controller.signal
-                        }
+                        signal: controller.signal
+                    }
                     );
                     if (!response.ok) {
                         throw new Error(`HTTP ${response.statusText} for ${file.path}`);
@@ -397,7 +370,7 @@ export default {
                 await pMap(files, downloadFile, {
                     concurrency: 20
                 });
-               
+
                 const zip = await zipPromise;
                 const zipBlob = await zip.generateAsync({
                     type: "blob"
@@ -637,5 +610,4 @@ img {
     img {
         height: 200px;
     }
-}
-</style>
+}</style>

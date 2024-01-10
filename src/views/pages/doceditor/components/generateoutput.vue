@@ -145,19 +145,15 @@
 
 <script>
 import _ from "lodash";
-import Swal from "sweetalert2";
+
 import checkurl from "../../../../components/urlvalidator";
-import {
-    eventBus
-} from "../../../../main";
+
 import CryptoJS from "crypto-js";
 import {
     secretKey
 } from "../../../../api/global.env";
 export default {
-    props: {
-        ditaotVersion: String,
-    },
+  
     data() {
         return {
             
@@ -196,13 +192,12 @@ export default {
         };
     },
     created() {
-        // this.validateURL()
-        this.getWorkspace();
+        
+       
         this.hideform = false;
     },
     mounted() {
-        this.getoutputFormat();
-        this.makedefaultplugin();
+       
         this.hideform = false;
     },
     computed: {
@@ -239,244 +234,9 @@ export default {
             }
         },
         // Function to create a Pull Request
-        createPullreq() {
-           
-            this.$store.getters.client
-                .post(
-                    `/orguser/workspace/pullGitChanges?projectName=${this.projectName}`
-                )
-                .then((res) => {
-                    this.$store.getters.client
-                        .get(`/orguser/workspace/filecontent?path=${this.currentfilePath}`)
-                        .then((res) => {
-                            eventBus.$emit("getcontent", {
-                                content: res.data,
-                                path: this.currentfilePath,
-                            });
-                            eventBus.$emit("textViewContent", {
-                                content: res.data,
-                                path: this.currentfilePath,
-                            });
-                            eventBus.$emit("clearHistory");
-                        })
-                        .catch(() => { });
-                    res;
-                    this.$refs["pull-modal"].hide();
-                  
-                    this.messageToast(
-                        "Success",
-                        "success",
-                        "Pull request successfully completed "
-                    );
-                })
-                .catch((err) => {
-                
-                    this.messageToast(
-                        "Invalid request",
-                        "danger",
-                        err.response.data.message
-                    );
-                });
-        },
-        async getWorkspace() {
-           
-            await this.$store.getters.client
-                .get(`/orguser/workspace/byuserId?userId=${this.userId}`)
-                .then(async (res) => {
-                    let path = res.data.installedPath + `/${this.projectName}`;
-                    this.workspacePath = res.data.installedPath;
-                    this.projectPath =
-                        res.data.installedPath + "/" + this.projectName;
-                    await this.$store.getters.client
-                        .post(`/orguser/workspace/fetchGitRemoteChanges?path=${path}`)
-                        .then((res) => {
-                            if (
-                                res.data.message.includes("please pull your branch to proceed")
-                            ) {
-                                this.$refs["pull-modal"].show();
-                            }
-                        });
-                    let ext = "ditamap";
-                    await this.$store.getters.client
-                        .get(`/orguser/workspace/inputfiles?path=${path}&extenssion=${ext}`)
-                        .then((res) => {
-                           
-                            this.selectInput = res.data;
-                        })
-                        .catch(() => {
-                           
-                        });
-                    await this.$store.getters.client
-                        .get(`/orguser/workspace/repotree?path=${path}`)
-                        .then((tres) => {
-                            
-                            this.model = tres.data;
-                        })
-                        .catch(() => {
-                          
-                        });
-                })
-                .catch(() => {
-                   
-                });
-        },
-        makedefaultplugin() {
-            const body = {
-                userId: this.userId,
-                orgId: this.orgId,
-                customizationOptions: {},
-            };
-            this.$store.getters.client
-                .post(`/orguser/docstyler/customizePdfOutput`, body)
-                .then(() => { })
-                .catch(() => { });
-            this.$store.getters.client
-                .post(`/orguser/docstyler/customizehtmlOutput`, body)
-                .then(() => { })
-                .catch(() => { });
-        },
-        async generateOutputFun(path, workspacePath) {
-            this.disablebutton = true;
-            let bitPath = workspacePath + "/dita-ot-" + this.ditaotVersion + "/bin";
-            let outputParams = {
-                inputPath: this.typeform.inputPath,
-                binPath: bitPath,
-                ditaotVersion: this.ditaotVersion,
-                outputPath: path + "/output",
-                outputFormat: this.typeform.outputFormat,
-            };
-            this.releaseParams = {
-                ditaMapFileName: this.typeform.inputPath.split("/").pop(),
-                outputFormat: this.typeform.outputFormat,
-                ditaotVersion: this.ditaotVersion,
-                orgId: this.orgId,
-                userId: this.userId,
-                releaseTitle: this.typeform.releaseTitle,
-                releasedBy: this.userName,
-                projectName: this.projectName,
-            };
-            await this.$validator.validateAll().then((result) => {
-                if (result) {
-                    this.$refs["modaloutputprogress"].show();
-                    this.$store.getters.client
-                        .post(`/orguser/docpublish`, outputParams)
-                        .then((res) => {
-                            this.disablebutton = false;
-                            setTimeout(() => {
-                                this.$refs["modaloutputprogress"].hide();
-                                this.messageToast(
-                                    "Output Generated",
-                                    "success",
-                                    res.data.message
-                                );
-                                this.typeform.inputPath = null;
-                                this.hideform = true;
-                                this.typeform.outputFormat = null;
-                                this.disablecommitbutton = false;
-                                this.typeform.releaseTitle = null;
-                                
-                            }, 10000);
-                        })
-                        .catch((err) => {
-                            this.$refs["modaloutputprogress"].hide();
-                            this.messageToast(
-                                "invalid request",
-                                "danger",
-                                err.response.data.message
-                            );
-                        });
-                }
-            });
-        },
-        commitOnGithub() {
-            this.showModal = true;
-        },
-        githubCommit() {
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: "btn btn-primary btn-sm mr-2",
-                    cancelButton: "btn btn-light btn-sm"
-                },
-                buttonsStyling: false
-            });
-            swalWithBootstrapButtons.fire({
-                title: "Enter Commit Message to Commit on Github",
-                input: "text",
-                showCancelButton: true,
-                confirmButtonText: "Submit",
-                showLoaderOnConfirm: true,
-                confirmButtonColor: "#556ee6",
-                cancelButtonColor: "#f46a6a",
-                preConfirm: (commitMsg) => {
-                    return new Promise((resolve, reject) => {
-                        if (commitMsg.trim() === "") {
-                            reject(new Error("Please enter a commit message."));
-                        } else {
-                            resolve(commitMsg);
-                        }
-                    });
-                },
-                allowOutsideClick: false,
-                inputValidator: (value) => {
-                    return value.trim() !== "" ?
-                        undefined :
-                        "Please enter a commit message.";
-                },
-            }).then(({
-                value: commitMsg
-            }) => {
-                if (commitMsg !== undefined) {
-                    let commitProjectObj = {
-                        path: this.projectPath,
-                        message: commitMsg,
-                        githubUsername: null,
-                        email: null,
-                    };
-                    swalWithBootstrapButtons.fire({
-                        title: "Commit request in progress...",
-                        allowOutsideClick: false,
-                        onOpen: () => {
-                            Swal.showLoading();
-                        },
-                    });
-                    this.$store.getters.client
-                        .put(`/orguser/workspace/commit`, commitProjectObj)
-                        .then((res) => {
-                            this.disabledownloadbutton = false;
-                            this.releaseParams.commitSHA = res.data.commitSHA
-                            this.releaseParams.owner = CryptoJS.AES.decrypt(
-                                this.$route.params.repouser,
-                                secretKey
-                            ).toString(CryptoJS.enc.Utf8)
-                            this.$store.getters.client
-                                .post(`/orguser/release`, this.releaseParams)
-                                .then(() => { 
-                                    this.$store.commit('setRecentPublicationsData', [] );
-                                })
-                                .catch((err) => {
-                                    this.$refs["modaloutputprogress"].hide();
-                                    this.messageToast(
-                                        "invalid request",
-                                        "danger",
-                                        err.response.data.message
-                                    );
-                                });
-                            swalWithBootstrapButtons.fire({
-                                icon: "success",
-                                title: "Commit request completed successfully!",
-                                text: res.data.message,
-                            });
-                        })
-                        .catch((err) => {
-                            swalWithBootstrapButtons.fire({
-                                icon: "error",
-                                title: "Commit failed!",
-                                text: err.response.data.message,
-                            });
-                        });
-                }
-            });
-        },
+       
+        
+       
         async getoutputFormat() {
             await this.$store.getters.client
                 .get(`/plugins`)

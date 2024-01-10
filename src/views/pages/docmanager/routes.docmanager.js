@@ -11,13 +11,8 @@ export default [
   },
   {
     // Define a route for the ProjectDetail component with dynamic parameters
-    path: "/docmanager/:repouser/:reponame",
+    path: "/docmanager/details",
     component: ProjectDetail,
     name: "ProjectDetail",
-    props: (route) => ({
-      // Decode and pass dynamic parameters from the URL as props to the component
-      repouser: decodeURIComponent(route.params.repouser),
-      reponame: decodeURIComponent(route.params.reponame),
-    }),
   },
 ];

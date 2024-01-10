@@ -167,9 +167,7 @@ export default {
             }
         },
     },
-    beforeDestroy() {
-        window.removeEventListener('resize', this.handleWindowResize);
-    },
+   
 };
 </script>
 <style scoped>

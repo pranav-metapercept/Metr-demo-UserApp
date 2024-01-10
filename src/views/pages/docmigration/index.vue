@@ -21,7 +21,7 @@
 
 <script>
 import Details from "./components/details.vue";
-import { mapGetters } from 'vuex';
+
 
 import { eventBus } from "../../../main";
 export default {
@@ -46,9 +46,7 @@ export default {
       ],
     };
   },
-  computed: {
-    ...mapGetters(['ditaOtVersions']), // Using Vuex getter
-  },
+ 
   mounted() {
     // Emit event to update the sidebar menu
     eventBus.$emit('update-sidebar', "menuitems.docmigration.text");

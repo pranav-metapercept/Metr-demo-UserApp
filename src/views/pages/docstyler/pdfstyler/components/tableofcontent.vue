@@ -327,9 +327,7 @@ export default {
         // Call the updateFormData method with your formDataList
         this.updateFormData(this.formDataList);
     },
-    beforeDestroy() {
-        this.submitForm();
-    },
+    
     mounted() {
         const data = {
             title: "Table of content",

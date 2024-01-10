@@ -18,7 +18,7 @@ export default [
   },
   {
     // Define a route for the ProjectList component
-    path: "/doceditor",
+    path: "/doceditor/projectlist",
     component: ProjectList,
     name: "DocEditor",
   },

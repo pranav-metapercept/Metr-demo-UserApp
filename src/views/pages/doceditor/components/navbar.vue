@@ -87,31 +87,15 @@
 <script>
 // Import required modules and libraries
 import Swal from "sweetalert2";
-import {
-    mapGetters
-} from "vuex";
+
 import i18n from "../../../../i18n";
-import CryptoJS from "crypto-js";
-import {
-    secretKey
-} from "../../../../api/global.env";
+
 export default {
     data() {
         return {
             isOnline: navigator.onLine,
             ditaotVersion: "",
-            projectName: CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            repouser: CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            brachName: CryptoJS.AES.decrypt(
-                this.$route.params.repobranch,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
+            
             languages: [{
                     flag: require("@/assets/images/flags/us.jpg"),
                     language: "en",
@@ -151,9 +135,7 @@ export default {
         window.removeEventListener("online", this.updateOnlineStatus);
         window.removeEventListener("offline", this.updateOnlineStatus);
     },
-    computed: {
-        ...mapGetters(["ditaOtVersions"]),
-    },
+   
     methods: {
         // Handler for the "Go Back" button
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
