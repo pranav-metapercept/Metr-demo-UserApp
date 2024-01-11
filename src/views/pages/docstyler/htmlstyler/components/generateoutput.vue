@@ -425,7 +425,7 @@ export default {
                             this.$store.getters.client
                                 .post(`/orguser/release`, this.releaseParams)
                                 .then(() => { 
-                                    this.$store.commit('setRecentPublicationsData', [] );
+                                    
                                 })
                                 .catch((err) => {
                                     this.$refs["modaloutputprogress"].hide();

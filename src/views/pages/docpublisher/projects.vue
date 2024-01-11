@@ -25,7 +25,7 @@
                                         </multiselect>
                                     </div>
                                 </div>
-                                <div  class="form-group row">
+                                <div class="form-group row">
                                     <label class="col-md-12 col-form-label">Select Branch<span
                                             class="text-danger">*</span></label>
                                     <div class="col-md-12">
@@ -38,7 +38,6 @@
                                 <div class="row from-group">
                                     <div class="col-md-12">
                                         <button type="submit" class="btn btn-primary mb-3 btn-sm"
-                                            :disabled="isButtonDisabled"
                                             @click.prevent="selectedproject !== '' && setdata(selectedProjectOwner, selectedProjectName,)">
                                             Proceed To DocPublisher
                                         </button>
@@ -276,7 +275,7 @@ export default {
                         this.projectList = response.data.filter(project => project.userRole.includes("DocPublisher"));
                         // Commit the complete project data to the Vuex store
                         console.log(response.data);
-                        this.$store.commit('setProjectsList', response.data);
+
                     } else {
                         // Handle the case where the response data is not an array
                         this.messageToast("Error", "danger", "Received invalid project data from the server");
@@ -287,32 +286,9 @@ export default {
                     this.messageToast("Error", "danger", error.response ? error.response.data.message : "An error occurred while fetching project data.");
                 });
         },
-        async redirectProject(repouser, reponame) {
-            const encryptedRepouser = CryptoJS.AES.encrypt(
-                repouser,
-                secretKey
-            ).toString();
-            const encryptedReponame = CryptoJS.AES.encrypt(
-                reponame,
-                secretKey
-            ).toString();
-            const encryptedBranch = CryptoJS.AES.encrypt(
-                this.selectedBranch,
-                secretKey
-            ).toString();
-            const encryptedOwner = CryptoJS.AES.encrypt(
-                this.selectedProjectOwner,
-                secretKey
-            ).toString();
-
-            localStorage.setItem("repouser", encryptedRepouser)
-            localStorage.setItem('reponame', encryptedReponame)
-            const encodedRepouser = encodeURIComponent(encryptedRepouser);
-            const encodedReponame = encodeURIComponent(encryptedReponame);
-            const encodedBranch = encodeURIComponent(encryptedBranch);
-            const encodedOwner = encodeURIComponent(encryptedOwner);
+        async redirectProject() {
             this.$router.push({
-                path: `/docpublisher/${encodedRepouser}/${encodedReponame}/${encodedBranch}/${encodedOwner}`
+                path: `/docpublisher`
             });
         },
         async getRepoBranch() {
@@ -350,15 +326,15 @@ export default {
                 });
         }
     },
-    watch: {
-        selectedproject(newVal) {
-            const selectedProject = this.projectList.find((item) => item.projectName === newVal);
-            this.selectedProjectOwner = selectedProject.owner;
-            this.selectedProjectName = selectedProject.projectName;
-            this.repobranchesdata = [],
-                this.getRepoBranch();
-        },
-    },
+    // watch: {
+    //     selectedproject(newVal) {
+    //         const selectedProject = this.projectList.find((item) => item.projectName === newVal);
+    //         this.selectedProjectOwner = selectedProject.owner;
+    //         this.selectedProjectName = selectedProject.projectName;
+    //         this.repobranchesdata = [],
+    //             this.getRepoBranch();
+    //     },
+    // },
 }
 </script>
 

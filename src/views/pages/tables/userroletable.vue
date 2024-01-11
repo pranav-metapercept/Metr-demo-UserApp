@@ -71,7 +71,776 @@ import _ from "lodash";
 export default {
     data() {
         return {
-            activityData: [],
+            activityData: [
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132d7883623234585dba",
+                    "projectId": "65950c567883623234585db8",
+                    "projectName": "learning",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:13:10.000Z",
+                    "updatedAt": "2024-01-03T07:56:29.087Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132f7883623234585dbb",
+                    "projectId": "65950c557883623234585db6",
+                    "projectName": "ditamap-01",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:09:05.000Z",
+                    "updatedAt": "2024-01-03T07:56:31.467Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513297883623234585db9",
+                    "projectId": "65950c557883623234585db5",
+                    "projectName": "it-book",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T05:34:46.000Z",
+                    "updatedAt": "2024-01-03T07:56:25.394Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513327883623234585dbc",
+                    "projectId": "65950c547883623234585db3",
+                    "projectName": "EnableXSmoothDoc",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-09-25T05:15:25.000Z",
+                    "updatedAt": "2024-01-03T07:56:34.467Z",
+                    "__v": 0,
+                    "owner": "gurupawar05"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513357883623234585dbd",
+                    "projectId": "65950c527883623234585da7",
+                    "projectName": "DocEditorResearech",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-06-28T12:13:14.000Z",
+                    "updatedAt": "2024-01-03T07:56:37.837Z",
+                    "__v": 0,
+                    "owner": "Jyoti-Metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132d7883623234585dba",
+                    "projectId": "65950c567883623234585db8",
+                    "projectName": "learning",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:13:10.000Z",
+                    "updatedAt": "2024-01-03T07:56:29.087Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132f7883623234585dbb",
+                    "projectId": "65950c557883623234585db6",
+                    "projectName": "ditamap-01",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:09:05.000Z",
+                    "updatedAt": "2024-01-03T07:56:31.467Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513297883623234585db9",
+                    "projectId": "65950c557883623234585db5",
+                    "projectName": "it-book",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T05:34:46.000Z",
+                    "updatedAt": "2024-01-03T07:56:25.394Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513327883623234585dbc",
+                    "projectId": "65950c547883623234585db3",
+                    "projectName": "EnableXSmoothDoc",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-09-25T05:15:25.000Z",
+                    "updatedAt": "2024-01-03T07:56:34.467Z",
+                    "__v": 0,
+                    "owner": "gurupawar05"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513357883623234585dbd",
+                    "projectId": "65950c527883623234585da7",
+                    "projectName": "DocEditorResearech",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-06-28T12:13:14.000Z",
+                    "updatedAt": "2024-01-03T07:56:37.837Z",
+                    "__v": 0,
+                    "owner": "Jyoti-Metapercept"
+                }
+                ,
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132d7883623234585dba",
+                    "projectId": "65950c567883623234585db8",
+                    "projectName": "learning",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:13:10.000Z",
+                    "updatedAt": "2024-01-03T07:56:29.087Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132f7883623234585dbb",
+                    "projectId": "65950c557883623234585db6",
+                    "projectName": "ditamap-01",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:09:05.000Z",
+                    "updatedAt": "2024-01-03T07:56:31.467Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513297883623234585db9",
+                    "projectId": "65950c557883623234585db5",
+                    "projectName": "it-book",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T05:34:46.000Z",
+                    "updatedAt": "2024-01-03T07:56:25.394Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513327883623234585dbc",
+                    "projectId": "65950c547883623234585db3",
+                    "projectName": "EnableXSmoothDoc",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-09-25T05:15:25.000Z",
+                    "updatedAt": "2024-01-03T07:56:34.467Z",
+                    "__v": 0,
+                    "owner": "gurupawar05"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513357883623234585dbd",
+                    "projectId": "65950c527883623234585da7",
+                    "projectName": "DocEditorResearech",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-06-28T12:13:14.000Z",
+                    "updatedAt": "2024-01-03T07:56:37.837Z",
+                    "__v": 0,
+                    "owner": "Jyoti-Metapercept"
+                }, {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132d7883623234585dba",
+                    "projectId": "65950c567883623234585db8",
+                    "projectName": "learning",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:13:10.000Z",
+                    "updatedAt": "2024-01-03T07:56:29.087Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132f7883623234585dbb",
+                    "projectId": "65950c557883623234585db6",
+                    "projectName": "ditamap-01",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:09:05.000Z",
+                    "updatedAt": "2024-01-03T07:56:31.467Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513297883623234585db9",
+                    "projectId": "65950c557883623234585db5",
+                    "projectName": "it-book",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T05:34:46.000Z",
+                    "updatedAt": "2024-01-03T07:56:25.394Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513327883623234585dbc",
+                    "projectId": "65950c547883623234585db3",
+                    "projectName": "EnableXSmoothDoc",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-09-25T05:15:25.000Z",
+                    "updatedAt": "2024-01-03T07:56:34.467Z",
+                    "__v": 0,
+                    "owner": "gurupawar05"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513357883623234585dbd",
+                    "projectId": "65950c527883623234585da7",
+                    "projectName": "DocEditorResearech",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-06-28T12:13:14.000Z",
+                    "updatedAt": "2024-01-03T07:56:37.837Z",
+                    "__v": 0,
+                    "owner": "Jyoti-Metapercept"
+                }, {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132d7883623234585dba",
+                    "projectId": "65950c567883623234585db8",
+                    "projectName": "learning",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:13:10.000Z",
+                    "updatedAt": "2024-01-03T07:56:29.087Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132f7883623234585dbb",
+                    "projectId": "65950c557883623234585db6",
+                    "projectName": "ditamap-01",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:09:05.000Z",
+                    "updatedAt": "2024-01-03T07:56:31.467Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513297883623234585db9",
+                    "projectId": "65950c557883623234585db5",
+                    "projectName": "it-book",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T05:34:46.000Z",
+                    "updatedAt": "2024-01-03T07:56:25.394Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513327883623234585dbc",
+                    "projectId": "65950c547883623234585db3",
+                    "projectName": "EnableXSmoothDoc",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-09-25T05:15:25.000Z",
+                    "updatedAt": "2024-01-03T07:56:34.467Z",
+                    "__v": 0,
+                    "owner": "gurupawar05"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513357883623234585dbd",
+                    "projectId": "65950c527883623234585da7",
+                    "projectName": "DocEditorResearech",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-06-28T12:13:14.000Z",
+                    "updatedAt": "2024-01-03T07:56:37.837Z",
+                    "__v": 0,
+                    "owner": "Jyoti-Metapercept"
+                }, {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132d7883623234585dba",
+                    "projectId": "65950c567883623234585db8",
+                    "projectName": "learning",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:13:10.000Z",
+                    "updatedAt": "2024-01-03T07:56:29.087Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132f7883623234585dbb",
+                    "projectId": "65950c557883623234585db6",
+                    "projectName": "ditamap-01",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:09:05.000Z",
+                    "updatedAt": "2024-01-03T07:56:31.467Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513297883623234585db9",
+                    "projectId": "65950c557883623234585db5",
+                    "projectName": "it-book",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T05:34:46.000Z",
+                    "updatedAt": "2024-01-03T07:56:25.394Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513327883623234585dbc",
+                    "projectId": "65950c547883623234585db3",
+                    "projectName": "EnableXSmoothDoc",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-09-25T05:15:25.000Z",
+                    "updatedAt": "2024-01-03T07:56:34.467Z",
+                    "__v": 0,
+                    "owner": "gurupawar05"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513357883623234585dbd",
+                    "projectId": "65950c527883623234585da7",
+                    "projectName": "DocEditorResearech",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-06-28T12:13:14.000Z",
+                    "updatedAt": "2024-01-03T07:56:37.837Z",
+                    "__v": 0,
+                    "owner": "Jyoti-Metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132d7883623234585dba",
+                    "projectId": "65950c567883623234585db8",
+                    "projectName": "learning",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:13:10.000Z",
+                    "updatedAt": "2024-01-03T07:56:29.087Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "6595132f7883623234585dbb",
+                    "projectId": "65950c557883623234585db6",
+                    "projectName": "ditamap-01",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T06:09:05.000Z",
+                    "updatedAt": "2024-01-03T07:56:31.467Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513297883623234585db9",
+                    "projectId": "65950c557883623234585db5",
+                    "projectName": "it-book",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2024-01-03T05:34:46.000Z",
+                    "updatedAt": "2024-01-03T07:56:25.394Z",
+                    "__v": 0,
+                    "owner": "pranav-metapercept"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513327883623234585dbc",
+                    "projectId": "65950c547883623234585db3",
+                    "projectName": "EnableXSmoothDoc",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-09-25T05:15:25.000Z",
+                    "updatedAt": "2024-01-03T07:56:34.467Z",
+                    "__v": 0,
+                    "owner": "gurupawar05"
+                },
+                {
+                    "userRole": [
+                        "DocManager",
+                        "DocPublisher",
+                        "DocEditor",
+                        "DocMigration"
+                    ],
+                    "_id": "659513357883623234585dbd",
+                    "projectId": "65950c527883623234585da7",
+                    "projectName": "DocEditorResearech",
+                    "userId": "6595087f7883623234585d6f",
+                    "githubUsername": "Jyoti-Metapercept",
+                    "githubEmail": "jyotikamal.s@metapercept.com",
+                    "githubUserId": "124129047",
+                    "acceptInvitation": false,
+                    "isActive": true,
+                    "isDeleted": false,
+                    "createdAt": "2023-06-28T12:13:14.000Z",
+                    "updatedAt": "2024-01-03T07:56:37.837Z",
+                    "__v": 0,
+                    "owner": "Jyoti-Metapercept"
+                }
+            ],
             userId: null,
             userRoleMap: {
                 DocManager: 'DocManager',
@@ -109,7 +878,7 @@ export default {
             return _;
         },
     },
-    
+
     methods: {
         moment,
         onFiltered(filteredItems) {
@@ -156,7 +925,7 @@ export default {
                     if (response.data) {
                         console.log(response.data);
                         this.activityData = response.data;
-                        this.$store.commit('setProjectsData', response.data);
+
                     } else {
                         this.messageToast("Invalid request", "danger", "No data received from the server");
                     }

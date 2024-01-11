@@ -32,7 +32,7 @@ export default {
   data() {
     return {
       // Initialize data properties
-      ditaotVersion: '', // DITA-OT version
+      ditaOtVersions:'4.3.2',
       title: "DocMigration",
       items: [
         {

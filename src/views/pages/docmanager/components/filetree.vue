@@ -4,13 +4,7 @@
     <!-- File Explorer header -->
     <header class="file-explorer-header">File Explorer</header>
     <!-- Show preloader if isLoading is true -->
-    <div v-if="isLoading" class="preloader">
-        <div class="status">
-            <div class="spinner">
-                <i class="ri-loader-line spin-icon"></i>
-            </div>
-        </div>
-    </div>
+    
     <!-- Render a tree view using v-jstree component -->
     <v-jstree :data="treeData" whole-row @item-click="itemClick"></v-jstree>
 </div>
@@ -43,16 +37,7 @@ export default {
             // Handle item click event
             // Fetch file content based on the clicked node's path
             this.$store.getters.client
-                .get(`orguser/repocontent?repoUser=${CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8)}&repoName=${CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8)}&repoBranch=${CryptoJS.AES.decrypt(
-                this.$route.params.repobranch,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8)}&repoPath=${node.model.path}`)
+                .get(`orguser/repocontent?repoUser=${null}&repoName=${null}&repoBranch=${null}&repoPath=${node.model.path}`)
                 .then((res) => {
                     if (res.data) {
                         // Emit the file content to the parent component

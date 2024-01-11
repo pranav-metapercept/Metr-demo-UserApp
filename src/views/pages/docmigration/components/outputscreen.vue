@@ -40,9 +40,7 @@
 </template>
 
 <script>
-import {
-    mapGetters
-} from "vuex";
+
 import {
     eventBus
 } from "../../../../main";
@@ -55,7 +53,7 @@ export default {
         return {
             userId: null,
             orgId:null,
-            ditaotVersion: "",
+            ditaOtVersions:'4.3.2',
             // Decrypt and display selected folder name
             selectedfolder: CryptoJS.AES.decrypt(
                 this.$route.params.selectedfolder,
@@ -77,9 +75,7 @@ export default {
         // Emit an event to update the sidebar
         eventBus.$emit("update-sidebar", "menuitems.docmigration.text");
     },
-    computed: {
-        ...mapGetters(["ditaOtVersions"]),
-    },
+   
     methods: {
         // Display a toast message
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {

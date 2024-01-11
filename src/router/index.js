@@ -54,6 +54,7 @@ const router = new Router({
 router.afterEach(() => {
   const appLoading = document.getElementById("loading-bg");
   if (appLoading) {
+    alert("hi");
     appLoading.style.display = "none";
   }
 });

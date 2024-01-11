@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-xl-12" v-if="ditaOtVersions!== null">
+        <div class="col-xl-12">
             <generateoutput :ditaotVersion="ditaOtVersions" />
         </div>
     </div>
@@ -24,10 +24,7 @@ import generateoutput from '../components/generateoutput.vue'
 import {
     eventBus
 } from '../../../../../main';
-import CryptoJS from "crypto-js";
-import {
-    secretKey
-} from '../../../../../api/global.env';
+
 export default {
     components: {
         generateoutput,
@@ -54,18 +51,10 @@ export default {
                     active: true
                 }
             ],
-            projectName: CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            repouser: CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            brachName: CryptoJS.AES.decrypt(
-                this.$route.params.repobranch,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
+            projectName: null,
+            repouser:null,
+            brachName: null,
+            ditaOtVersions:'4.3.2',
         }
     },
     created() {

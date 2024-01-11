@@ -4,7 +4,7 @@ import Vertical from "./vertical";
 import Horizontal from "./horizontal";
 
 export default {
-  components: { Vertical, Horizontal, },
+  components: { Vertical, Horizontal,  },
   data() {
     return {
       title: "",
@@ -16,19 +16,26 @@ export default {
     ...layoutComputed,
   },
   methods: {
-
+    
     messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
-      this.$bvToast.toast(messageToastContent, {
-        title: messageToastTitle,
-        variant: messageToastVariant,
-        solid: true,
-      });
+            this.$bvToast.toast(messageToastContent, {
+                title: messageToastTitle,
+                variant: messageToastVariant,
+                solid: true,
+            });
+        },
+    verifyToken() {
+      const token = this.$store.state.Auth.token;
+      if (!token) {
+        this.$router.push({ name: "Login" });
+      }
     },
-
-
+    
   },
-
-
+  mounted() {
+    this.verifyToken();
+  },
+  
 };
 </script>
 

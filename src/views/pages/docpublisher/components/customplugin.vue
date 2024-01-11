@@ -129,7 +129,7 @@
 <script>
 import _ from "lodash";
 import Swal from "sweetalert2";
-import checkurl from "../../../../components/urlvalidator";
+
 import {
     eventBus
 } from "../../../../main";
@@ -231,21 +231,7 @@ export default {
                 solid: true,
             });
         },
-        validateURL() {
-            const newRepoUser = CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8);
-            const newRepoName = CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8);
-            const oldRepoUser = localStorage.getItem("repouser");
-            const oldRepoName = localStorage.getItem("reponame");
-            if (newRepoName !== oldRepoName || newRepoUser !== oldRepoUser) {
-                checkurl(newRepoName);
-            }
-        },
+      
         createPullreq() {
            
             this.$store.getters.client
@@ -450,7 +436,7 @@ export default {
                             this.$store.getters.client
                                 .post(`/orguser/release`, this.releaseParams)
                                 .then(() => { 
-                                    this.$store.commit('setRecentPublicationsData', [] );
+                     
                                 })
                                 .catch((err) => {
                                     this.$refs["modaloutputprogress"].hide();

@@ -15,7 +15,7 @@
         <div class="row mt-3">
 
             <div class="col-xl-12">
-                <div v-if="ditaOtVersions !== null">
+                <div >
                     <generateoutput :ditaotVersion="ditaOtVersions" />
                 </div>
             </div>
@@ -39,6 +39,7 @@ export default {
     data() {
         return {
             organizationDetails: null,
+            ditaOtVersions:'4.3.2',
             customPluginOutputFormat: null,
             orgId: null,
             projectName: null,
@@ -78,11 +79,9 @@ export default {
             })
             .then((result) => {
                 if (result.isConfirmed) {
-                    const encodedRepouser = encodeURIComponent(this.$route.params.repouser);
-                    const encodedReponame = encodeURIComponent(this.$route.params.reponame);
-                    const encodedBranch = encodeURIComponent(this.$route.params.repobranch);
+                   
                     this.$router.push({
-                        path: `/docstyler/${encodedRepouser}/${encodedReponame}/${encodedBranch}`,
+                        path: `/docstyler`,
                     });
                 } else if (
                     /* Read more about handling dismissals below */

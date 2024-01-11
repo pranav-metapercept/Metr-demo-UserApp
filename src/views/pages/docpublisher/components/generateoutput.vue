@@ -145,12 +145,10 @@
 <script>
 import _ from "lodash";
 import Swal from "sweetalert2";
-import checkurl from "../../../../components/urlvalidator";
 import {
     eventBus
 } from "../../../../main";
-import CryptoJS from "crypto-js";
-import { secretKey } from "../../../../api/global.env";
+
 export default {
     props: {
         ditaotVersion: String,
@@ -166,11 +164,39 @@ export default {
                 outputFormat: "",
                 releaseTitle: "",
             },
-            selectInput: null,
+            selectInput: [
+                {
+                    "fileName": "introduction.ditamap",
+                    "path": "/home/pranav-metapercept/DITAxPressoWorkspace/6595087f7883623234585d6f/ditamap-01/Chapter1/introduction.ditamap"
+                }
+            ],
             projectName: null,
             repouser: null,
             brachName: null,
-            selectOutputFormat: null,
+            selectOutputFormat: [
+                {
+                    "_id": "63da59c14f68a337a4ef3637",
+                    "type": "pdf",
+                    "name": "DITA-OT PDF",
+                    "packageName": "org.dita.pdf2",
+                    "transtype": "pdf",
+                    "description": "Basic PDF output",
+                    "company": "www.dita-ot.org",
+                    "createdAt": "2023-02-01T12:23:29.895Z",
+                    "__v": 0
+                },
+                {
+                    "_id": "63da5a284f68a337a4ef3638",
+                    "type": "html",
+                    "name": "DITA-OT HTML",
+                    "packageName": "org.dita.html5",
+                    "transtype": "html5",
+                    "description": "Basic HTML5 output",
+                    "company": "www.dita-ot.org",
+                    "createdAt": "2023-02-01T12:25:12.010Z",
+                    "__v": 0
+                }
+            ],
             submitted: false,
             projectPath: null,
             typesubmit: false,
@@ -214,21 +240,7 @@ export default {
                 solid: true,
             });
         },
-        validateURL() {
-            const newRepoUser = CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8);
-            const newRepoName = CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8);
-            const oldRepoUser = localStorage.getItem("repouser");
-            const oldRepoName = localStorage.getItem("reponame");
-            if (newRepoName !== oldRepoName || newRepoUser !== oldRepoUser) {
-                checkurl(newRepoName);
-            }
-        },
+
         createPullreq() {
 
             this.$store.getters.client
@@ -323,16 +335,8 @@ export default {
                 .then(() => { })
                 .catch(() => { });
         },
-        async generateOutputFun(path, workspacePath) {
+        async generateOutputFun() {
             this.disablebutton = true;
-            let bitPath = workspacePath + "/dita-ot-" + this.ditaotVersion + "/bin";
-            let outputParams = {
-                inputPath: this.typeform.inputPath,
-                ditaotVersion: this.ditaotVersion,
-                binPath: bitPath,
-                outputPath: path + "/output",
-                outputFormat: this.typeform.outputFormat,
-            };
             this.releaseParams = {
                 ditaMapFileName: this.typeform.inputPath.split("/").pop(),
                 outputFormat: this.typeform.outputFormat,
@@ -343,37 +347,19 @@ export default {
                 releasedBy: this.userName,
                 projectName: this.projectName,
             };
-            await this.$validator.validateAll().then((result) => {
-                if (result) {
-                    this.$refs["modaloutputprogress"].show();
-                    this.$store.getters.client
-                        .post(`/orguser/docpublish`, outputParams)
-                        .then((res) => {
-                            this.disablebutton = false;
-                            setTimeout(() => {
-                                this.$refs["modaloutputprogress"].hide();
-                                this.messageToast(
-                                    "Output Generated",
-                                    "success",
-                                    res.data.message
-                                );
-                                this.typeform.inputPath = null;
-                                this.hideform = true;
-                                this.typeform.outputFormat = null;
-                                this.disablecommitbutton = false;
-                                this.typeform.releaseTitle = null;
-                            }, 10000);
-                        })
-                        .catch((err) => {
-                            this.$refs["modaloutputprogress"].hide();
-                            this.messageToast(
-                                "invalid request",
-                                "danger",
-                                err.response.data.message
-                            );
-                        });
-                }
-            });
+            this.messageToast(
+                "Output Generated",
+                "success",
+                "output created succesfully"
+            );
+            this.disablebutton = false;
+            setTimeout(() => {
+                this.typeform.inputPath = null;
+                this.hideform = true;
+                this.typeform.outputFormat = null;
+                this.disablecommitbutton = false;
+                this.typeform.releaseTitle = null;
+            }, 1000);
         },
         commitOnGithub() {
             this.showModal = true;
@@ -413,12 +399,7 @@ export default {
                 value: commitMsg
             }) => {
                 if (commitMsg !== undefined) {
-                    let commitProjectObj = {
-                        path: this.projectPath,
-                        message: commitMsg,
-                        githubUsername: null,
-                        email: null,
-                    };
+
                     swalWithBootstrapButtons.fire({
                         title: "Commit request in progress...",
                         allowOutsideClick: false,
@@ -426,71 +407,26 @@ export default {
                             Swal.showLoading();
                         },
                     });
-                    this.$store.getters.client
-                        .put(`/orguser/workspace/commit`, commitProjectObj)
-                        .then((res) => {
-                            this.disabledownloadbutton = false;
-                            this.releaseParams.commitSHA = res.data.commitSHA
-                            this.releaseParams.owner = CryptoJS.AES.decrypt(
-                                this.$route.params.repoowner,
-                                secretKey
-                            ).toString(CryptoJS.enc.Utf8)
-                            this.$store.getters.client
-                                .post(`/orguser/release`, this.releaseParams)
-                                .then(() => {
-                                    this.$store.commit('setRecentPublicationsData', []);
-                                })
-                                .catch((err) => {
-                                    this.$refs["modaloutputprogress"].hide();
+                    swalWithBootstrapButtons.fire({
+                        icon: "success",
+                        title: "Commit request completed successfully!",
 
-                                    this.messageToast(
-                                        "invalid request",
-                                        "danger",
-                                        err.response.data.message
-                                    );
-                                });
-                            swalWithBootstrapButtons.fire({
-                                icon: "success",
-                                title: "Commit request completed successfully!",
-                                text: res.data.message,
-                            });
-                        })
-                        .catch((err) => {
-                            swalWithBootstrapButtons.fire({
-                                icon: "error",
-                                title: "Commit failed!",
-                                text: err.response.data.message,
-                            });
-                        });
+                    });
+                    this.disabledownloadbutton = false
+
                 }
             });
         },
-        async getoutputFormat() {
-            await this.$store.getters.client
-                .get(`/plugins`)
-                .then((res) => {
-                    this.selectOutputFormat = res.data;
-                })
-                .catch(() => { });
-        },
+     
         resetform() {
             this.typeform.inputPath = "";
             this.typeform.outputFormat = "";
             this.typeform.releaseTitle = "";
         },
         openDownload() {
-            const encryptedRepouser = CryptoJS.AES.encrypt(
-                this.repouser,
-                secretKey
-            ).toString();
-            const encryptedReponame = CryptoJS.AES.encrypt(
-                this.projectName,
-                secretKey
-            ).toString();
-            const encodedRepouser = encodeURIComponent(encryptedRepouser);
-            const encodedReponame = encodeURIComponent(encryptedReponame);
+        
             this.$router.push({
-                path: `/docmanager/${encodedRepouser}/${encodedReponame}`,
+                path: `/docmanager/details`,
             });
         },
     },

@@ -26,16 +26,13 @@
 <script>
 import generateoutput from "./components/generateoutput";
 
-import {
-    secretKey
-} from "../../../api/global.env";
+
 import {
     eventBus
 } from "../../../main";
 
 import Swal from "sweetalert2";
 
-import CryptoJS from "crypto-js";
 
 export default {
     components: {
@@ -48,18 +45,9 @@ export default {
             organizationDetails: null,
             customPluginOutputFormat: null,
             orgId: null,
-            projectName: CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            repouser: CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            brachName: CryptoJS.AES.decrypt(
-                this.$route.params.repobranch,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
+            projectName: null,
+            repouser: null,
+            brachName: null,
             title: "DocPublisher",
             items: [{
                 text: "Projects",
@@ -99,11 +87,9 @@ export default {
             })
             .then((result) => {
                 if (result.isConfirmed) {
-                    const encodedRepouser = encodeURIComponent(this.$route.params.repouser);
-                    const encodedReponame = encodeURIComponent(this.$route.params.reponame);
-                    const encodedBranch = encodeURIComponent(this.$route.params.repobranch);
+                   
                     this.$router.push({
-                        path: `/docstyler/${encodedRepouser}/${encodedReponame}/${encodedBranch}`,
+                        path: `/docstyler`,
                     });
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons;

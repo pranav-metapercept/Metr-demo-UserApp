@@ -18,58 +18,58 @@
                         </div>
                     </div>
                     <div class="border-top">
-                       
-                            <!-- Front Page Form Link -->
-                            <div class="categories-group-card">
-                                <a class="categories-group-list card-title"
-                                    :class="{ active: currentFormNumber === 1, '': currentFormNumber === 1 }"
-                                    @click="changeForm(1)">
-                                    <i class="mdi mdi-home font-size-18 align-middle mr-2"></i> Front Page
-                                </a>
-                            </div>
-                            <!-- Table of Content Form Link -->
-                            <div class="categories-group-card">
-                                <a class="categories-group-list card-title"
-                                    :class="{ active: currentFormNumber === 2, '': currentFormNumber === 2 }"
-                                    @click="changeForm(2)">
-                                    <i class="mdi mdi-format-list-bulleted font-size-18 align-middle mr-2"></i> Table of
-                                    content
-                                </a>
-                            </div>
-                            <!-- Header/Footer Form Link -->
-                            <div class="categories-group-card">
-                                <a class="categories-group-list card-title"
-                                    :class="{ active: currentFormNumber === 3, '': currentFormNumber === 3 }"
-                                    @click="changeForm(3)">
-                                    <i class="mdi mdi-page-layout-header-footer font-size-18 align-middle mr-2"></i>
-                                    Header/Footer
-                                </a>
-                            </div>
-                            <!-- Commons Form Link -->
-                            <div class="categories-group-card">
-                                <a class="categories-group-list card-title"
-                                    :class="{ active: currentFormNumber === 4, '': currentFormNumber === 4 }"
-                                    @click="changeForm(4)">
-                                    <i class="mdi mdi-folder-multiple-outline font-size-18 align-middle mr-2"></i> Commons
-                                </a>
-                            </div>
-                            <!-- Tables Form Link -->
-                            <div class="categories-group-card">
-                                <a class="categories-group-list card-title"
-                                    :class="{ active: currentFormNumber === 5, '': currentFormNumber === 5 }"
-                                    @click="changeForm(5)">
-                                    <i class="mdi mdi-table-large font-size-18 align-middle mr-2"></i> Tables
-                                </a>
-                            </div>
-                            <!-- Lists Form Link -->
-                            <div class="categories-group-card">
-                                <a class="categories-group-list card-title"
-                                    :class="{ active: currentFormNumber === 6, '': currentFormNumber === 6 }"
-                                    @click="changeForm(6)">
-                                    <i class="mdi mdi-format-list-bulleted font-size-18 align-middle mr-2"></i> Lists
-                                </a>
-                            </div>
-                        
+
+                        <!-- Front Page Form Link -->
+                        <div class="categories-group-card">
+                            <a class="categories-group-list card-title"
+                                :class="{ active: currentFormNumber === 1, '': currentFormNumber === 1 }"
+                                @click="changeForm(1)">
+                                <i class="mdi mdi-home font-size-18 align-middle mr-2"></i> Front Page
+                            </a>
+                        </div>
+                        <!-- Table of Content Form Link -->
+                        <div class="categories-group-card">
+                            <a class="categories-group-list card-title"
+                                :class="{ active: currentFormNumber === 2, '': currentFormNumber === 2 }"
+                                @click="changeForm(2)">
+                                <i class="mdi mdi-format-list-bulleted font-size-18 align-middle mr-2"></i> Table of
+                                content
+                            </a>
+                        </div>
+                        <!-- Header/Footer Form Link -->
+                        <div class="categories-group-card">
+                            <a class="categories-group-list card-title"
+                                :class="{ active: currentFormNumber === 3, '': currentFormNumber === 3 }"
+                                @click="changeForm(3)">
+                                <i class="mdi mdi-page-layout-header-footer font-size-18 align-middle mr-2"></i>
+                                Header/Footer
+                            </a>
+                        </div>
+                        <!-- Commons Form Link -->
+                        <div class="categories-group-card">
+                            <a class="categories-group-list card-title"
+                                :class="{ active: currentFormNumber === 4, '': currentFormNumber === 4 }"
+                                @click="changeForm(4)">
+                                <i class="mdi mdi-folder-multiple-outline font-size-18 align-middle mr-2"></i> Commons
+                            </a>
+                        </div>
+                        <!-- Tables Form Link -->
+                        <div class="categories-group-card">
+                            <a class="categories-group-list card-title"
+                                :class="{ active: currentFormNumber === 5, '': currentFormNumber === 5 }"
+                                @click="changeForm(5)">
+                                <i class="mdi mdi-table-large font-size-18 align-middle mr-2"></i> Tables
+                            </a>
+                        </div>
+                        <!-- Lists Form Link -->
+                        <div class="categories-group-card">
+                            <a class="categories-group-list card-title"
+                                :class="{ active: currentFormNumber === 6, '': currentFormNumber === 6 }"
+                                @click="changeForm(6)">
+                                <i class="mdi mdi-format-list-bulleted font-size-18 align-middle mr-2"></i> Lists
+                            </a>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -130,8 +130,8 @@ export default {
             childData: {},
             userId: null,
             orgId: null,
-            projectName:null,
-            repouser:null,
+            projectName: null,
+            repouser: null,
             brachName: null,
         }
     },
@@ -209,11 +209,8 @@ export default {
             }
         },
         redirectDocPublishrer() {
-            const encodedRepouser = encodeURIComponent(this.$route.params.repouser);
-            const encodedReponame = encodeURIComponent(this.$route.params.reponame);
-            const encodedBranch = encodeURIComponent(this.$route.params.repobranch);
             this.$router.push({
-                path: `/pdfdocstyler/docpublisher/${encodedRepouser}/${encodedReponame}/${encodedBranch}`,
+                path: `/docpublisher`,
             });
         },
         finalSubmit() {
@@ -407,4 +404,5 @@ export default {
 
 .custom-progress {
     height: 5px;
-}</style>
+}
+</style>

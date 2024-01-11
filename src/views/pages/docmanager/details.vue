@@ -110,20 +110,18 @@ import Swal from "sweetalert2";
 
 import PageHeader from "@/components/pageheader";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import CryptoJS from "crypto-js";
-import devicevalidator from "../../../components/devicevalidator";
+
+
 import {
     eventBus
 } from "../../../main";
-import {
-    secretKey
-} from "../../../api/global.env";
+
 export default {
     components: {
         PageHeader,
         simplebar,
     },
-    
+
     data() {
         return {
             title: "DocManager",
@@ -136,12 +134,252 @@ export default {
                 active: true,
             },
             ],
-            treeData: [],
+            treeData: [
+                {
+                    "text": "output",
+                    "children": [
+                        {
+                            "text": "commonltr.css",
+                            "children": [],
+                            "sha": "b1ae8e04c6d6566bcd8a537b53fa3e38c3ded45d",
+                            "icon": "ri-file-text-line",
+                            "opened": false
+                        },
+                        {
+                            "text": "commonrtl.css",
+                            "children": [],
+                            "sha": "9a2784d5c76a981ec46a17b0ed7c5466960b8e62",
+                            "icon": "ri-file-text-line",
+                            "opened": false
+                        },
+                        {
+                            "text": "concepts",
+                            "children": [
+                                {
+                                    "text": "notices.html",
+                                    "children": [],
+                                    "sha": "10887a46b2c76c0f9dd23dc316c63a44e15358d7",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "taskbook-abstract.html",
+                                    "children": [],
+                                    "sha": "db2335bec9f62846dd5046e5d0b354f028fc65ae",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                }
+                            ],
+                            "sha": "7acb0578d41b82e31675bd021ef6d6c217fd76a8",
+                            "opened": false
+                        },
+                        {
+                            "text": "index.html",
+                            "children": [],
+                            "sha": "31d8e2af8b5efc7b6549115306ec151edbbeebbf",
+                            "icon": "ri-file-text-line",
+                            "opened": false
+                        },
+                        {
+                            "text": "tasks",
+                            "children": [
+                                {
+                                    "text": "closeprograms.html",
+                                    "children": [],
+                                    "sha": "2a880ccc47e726bf03f2f024703277eba6d5c85d",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "configuredatabase.html",
+                                    "children": [],
+                                    "sha": "0f3a37b808022edcec59d982b66b84177d1be5ac",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "configurestorage.html",
+                                    "children": [],
+                                    "sha": "82a5646f3c4d370bb0a63188bfa67f7ebef9f2fa",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "configurewebserver.html",
+                                    "children": [],
+                                    "sha": "c106d0f3e826de2163ed2ecf407da13918146d03",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "configuring.html",
+                                    "children": [],
+                                    "sha": "361eeb0d6961e71bc395e79f07c766a2159f730d",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "databasetrouble.html",
+                                    "children": [],
+                                    "sha": "ad6601e3d91413aa798be321be4b6f5d1a3b942f",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "drivetrouble.html",
+                                    "children": [],
+                                    "sha": "535ae87d60a782ea03cd8c2d5972f3b9dfb088e3",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "insertdrive.html",
+                                    "children": [],
+                                    "sha": "2f0545f9f82ac7f67b6cac54dcf8ddcd8be88f5c",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "installdb.html",
+                                    "children": [],
+                                    "sha": "c63337050895d1bcbc9333fff149962ce3793db9",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "installstorage.html",
+                                    "children": [],
+                                    "sha": "d8c1b9718b4e0dc28db5f8dcb6fd7ae94cf0987e",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "installwebserver.html",
+                                    "children": [],
+                                    "sha": "fa392239be1e4f8389aef3f5709ddf076b84eb94",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "maintaindatabase.html",
+                                    "children": [],
+                                    "sha": "695536fc62ce835f4e7bd7f8bfae838b51861e55",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "maintaining.html",
+                                    "children": [],
+                                    "sha": "2e6ff1b71727a07380e3ccfe7bb36f61563554a0",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "maintainserver.html",
+                                    "children": [],
+                                    "sha": "f56639183b43c1750bff887028b04941c3782b75",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "maintainstorage.html",
+                                    "children": [],
+                                    "sha": "b1af17e0e2e3ab19e863eca61c319ad4cd40b81c",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "replacecover.html",
+                                    "children": [],
+                                    "sha": "d9017c3acf71b9f2ecb92a4c7a6e918a3bf2dbbf",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "restart.html",
+                                    "children": [],
+                                    "sha": "a1c58fb1b0b1538140ec19a946ab36f630d69446",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "runsetup.html",
+                                    "children": [],
+                                    "sha": "7b598ae6171918e2d71fb8dc73d5948a6a450e02",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "troubleshooting.html",
+                                    "children": [],
+                                    "sha": "b12c420406b51c5264972b6a79ce425905d1bda6",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "unscrewcover.html",
+                                    "children": [],
+                                    "sha": "23b2a23b35fd004fbeacc250eb50452cd0db2153",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "webtrouble.html",
+                                    "children": [],
+                                    "sha": "c9e1ad0a6a37789d8211876ae0985b94e12f253b",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                }
+                            ],
+                            "sha": "7f91446ce83f2d17dd4d11b4f169eadcd950f2f5",
+                            "opened": false
+                        },
+                        {
+                            "text": "topics",
+                            "children": [
+                                {
+                                    "text": "installing.html",
+                                    "children": [],
+                                    "sha": "768a6aa644bb3c55c51aae1df6ade2e9cb89b98a",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "task_appendix.html",
+                                    "children": [],
+                                    "sha": "3418ab49202ef2b7ee22bf2bb0d61f52bffd2282",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "task_preface.html",
+                                    "children": [],
+                                    "sha": "12d942fdd677897db9882c1be42f2d4501c6931f",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                },
+                                {
+                                    "text": "trademarks.html",
+                                    "children": [],
+                                    "sha": "208ba434445dd9e9af53ad3a012995b65ae2f91b",
+                                    "icon": "ri-file-text-line",
+                                    "opened": false
+                                }
+                            ],
+                            "sha": "ef764edb37c4010742f07799da65d766856f553b",
+                            "opened": false
+                        }
+                    ],
+                    "sha": "70e5166a1c141760286f9d3413c7288e3165efc7",
+                    "opened": false
+                }
+            ]
+            ,
             repobranchesdata: [],
             ditaotVersion: "",
             projectName: null,
-            repouser:null,
-            selected: "",
+            repouser: null,
+            selected: "main",
             isLoading: false,
             downloadURL: "",
             brachName: "main",
@@ -155,24 +393,18 @@ export default {
             editorLoader: false,
             modal: false,
             userId: null,
+            ditaOtVersions: '4.3.2'
         };
-    },
-    created() {
-        // this.validateURL();
     },
     async mounted() {
         eventBus.$emit("update-sidebar", "menuitems.docmanager.text");
-        this.getRepoBranch();
-        this.getOrgDetails();
+    
     },
     methods: {
-
-       
         async openEditor() {
             this.navigateToEditor();
         },
         navigateToEditor() {
-          
             this.$router.push({
                 path: `/doceditor`,
             });
@@ -194,104 +426,9 @@ export default {
         itemClick(node) {
             node.model;
         },
-        // Get organization detail
-        async getOrgDetails() {
+       
 
-            let orgId = null;
-            this.$store.getters.client
-                .get(`serveradmin/organization/byorgid?orgId=${orgId}`)
-                .then((res) => {
-
-                    if (res.data && res.data.length > 0) {
-                        // Check if data exists and if it's in the expected format
-                        this.isDocEditor = res.data[0].editor;
-                        this.isDocPublisher = res.data[0].publisher;
-                    } else {
-                        // Handle an invalid response
-                        this.messageToast("Invalid request", "danger", "An error occurred");
-                    }
-                })
-                .catch((err) => {
-
-                    // Handle network issues or unexpected errors
-                    this.messageToast("Invalid request", "danger", err.response ? err.response.data.message : "An error occurred");
-                    devicevalidator(err.response.data.message);
-                });
-        },
-        // Get all branches inside repository
-        async getRepoBranch() {
-
-            let branchResponse;
-            this.$store.getters.client
-                .get(`orguser/repobranches?repoUser=${this.repouser}&repoName=${this.projectName}`)
-                .then((res) => {
-                    branchResponse = res;
-                    if (branchResponse.data && branchResponse.data.length > 0) {
-                        let length = branchResponse.data.length - 1;
-                        this.branchName = branchResponse.data[length].name;
-                        this.selected = branchResponse.data[length].name;
-                        this.repobranchesdata = branchResponse.data.map((element) => ({
-                            value: element.name,
-                            text: element.name,
-                        }));
-                        this.outputURL = `https://github.com/${this.repouser}/${this.projectName}/tree/${branchResponse.data[length].name}/output`;
-                        return this.$store.getters.client.get(
-                            `project/outputtree?gitUsername=${this.repouser}&gitReponame=${this.projectName}&branchsha=${branchResponse.data[length].commit.sha}`
-                        );
-                    } else {
-                        this.messageToast("Invalid request", "danger", "No branches found in the repository.");
-                    }
-                })
-                .then((outputResponse) => {
-                    if (outputResponse.data) {
-                        this.treeData = outputResponse.data;
-                    } else {
-                        this.messageToast("Invalid request", "danger", "No data found in the output tree.");
-                    }
-                })
-                .catch(() => {
-                    // Handle errors here, e.g., show an error message or log the error.
-                    this.messageToast("Invalid request", "danger", "An error occurred while fetching data.");
-                })
-                .finally(() => {
-
-                });
-        },
-        // Get tree of output folder in particular branch
-        getObject(branchsha) {
-            this.brachName = branchsha;
-
-            this.outputURL = `https://github.com/${CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8)}/${CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8)}/tree/${this.brachName}/bin/output`;
-            this.$store.getters.client
-                .get(`project/outputtree?gitUsername=${CryptoJS.AES.decrypt(
-                    this.$route.params.repouser,
-                    secretKey
-                ).toString(CryptoJS.enc.Utf8)}&gitReponame=${CryptoJS.AES.decrypt(
-                    this.$route.params.reponame,
-                    secretKey
-                ).toString(CryptoJS.enc.Utf8)}&branchsha=${branchsha}`)
-                .then((res) => {
-
-                    if (res.data) {
-                        // Check if data exists
-                        this.treeData = res.data;
-                    } else {
-                        // Handle an invalid response
-                        this.messageToast("Invalid request", "danger", "An error occurred");
-                    }
-                })
-                .catch((err) => {
-
-                    // Handle network issues or unexpected errors
-                    this.messageToast("Invalid request", "danger", err.response ? err.response.data.message : "An error occurred");
-                });
-        },
+       
         // Download output folder as a zip
         async downloadFun() {
 
@@ -610,4 +747,5 @@ img {
     img {
         height: 200px;
     }
-}</style>
+}
+</style>

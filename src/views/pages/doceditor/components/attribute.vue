@@ -289,13 +289,7 @@ export default {
             selectedTagData: null
         };
     },
-    created() {
-
-    },
-    mounted() {
-        this.getSchema()
-    },
-
+   
 
 };
 </script>

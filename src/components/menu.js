@@ -29,7 +29,7 @@ export const menuItems = [
     id: 5,
     label: "menuitems.docpublisher.text",
     icon: "ri-settings-5-fill",
-    link: "/docpublisher",
+    link: "/docpublisher/projectlist",
     hide: false,
   },
   {

@@ -216,9 +216,7 @@ import {
     JsonToXml
 } from "./convert.js";
 import Swal from "sweetalert2";
-import {
-    secretKey
-} from "../../../api/global.env";
+
 import RecursiveTag from "./components/recuresivetag.vue";
 import TreeItem from "./components/treeitems.vue";
 import {
@@ -232,7 +230,7 @@ import {
 import navbar from "./components/navbar.vue";
 import simplebar from "simplebar-vue";
 import xmlFormat from "xml-formatter";
-import CryptoJS from "crypto-js";
+
 // import { elementFromString } from "@tiptap/vue-2";
 export default {
     data() {
@@ -1280,14 +1278,11 @@ export default {
                             .then((res) => {
                                 this.disabledownloadbutton = false;
                                 this.releaseParams.commitSHA = res.data.commitSHA;
-                                this.releaseParams.owner = CryptoJS.AES.decrypt(
-                                    this.$route.params.repouser,
-                                    secretKey
-                                ).toString(CryptoJS.enc.Utf8);
+                                this.releaseParams.owner = null;
                                 this.$store.getters.client
                                     .post(`/orguser/release`, this.releaseParams)
                                     .then(() => {
-                                        this.$store.commit("setRecentPublicationsData", []);
+                                       
                                     })
                                     .catch((err) => {
                                         this.$refs["modaloutputprogress"].hide();
@@ -1351,32 +1346,7 @@ export default {
                 text: `Sorry, you do not have access to ${role}. Please contact your administrator if you would like to access this feature. Thank you.`,
             });
         },
-        fetchProjectsData() {
-            this.userId = null;
-            return this.$store.getters.client
-                .get(`/projectuser/byuserid?userId=${this.userId}`)
-                .then((res) => {
-                    if (Array.isArray(res.data)) {
-                        this.$store.commit("setProjectsData", res.data);
-                    } else {
-                        // Handle the case where the response data is not an array
-                        this.messageToast(
-                            "Error",
-                            "danger",
-                            "Received invalid project data from the server"
-                        );
-                    }
-                })
-                .catch((error) => {
-                    this.messageToast(
-                        "Error",
-                        "danger",
-                        error.response ?
-                            error.response.data.message :
-                            "An error occurred while fetching project data."
-                    );
-                });
-        },
+        
         controlcommitbtn() {
             this.$refs.viewDetailsModel.show();
         },

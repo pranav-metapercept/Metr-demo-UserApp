@@ -1,106 +1,122 @@
 <template>
-<div>
-    <div class="toolbar text-center">
-        <div class="btn-group mr-2 m-0 p-0 mb-sm-0 btn-toolbar p-0">
+    <div>
+        <div class="toolbar text-center">
+            <div class="btn-group mr-2 m-0 p-0 mb-sm-0 btn-toolbar p-0">
 
-            <button type="button" class="btn" v-b-tooltip.hover title="Commit on Github" id="github" variant="light" @click="githubCommit()" :disabled="disabledGithub">
-                <img src="../../../../assets/toolbarsvgs/github.svg" alt="SVG Image" />
-            </button>
-            <button type="button" class="btn" v-b-tooltip.hover title="Save document (Ctrl+S)" id="save" variant="light" @click="saveContent()" :disabled="disableSave">
-                <img src="../../../../assets/toolbarsvgs/save.svg" alt="SVG Image" />
-            </button>
-            <button class="btn" v-b-tooltip.hover title="Make your text bold" id="bold" type="button" :class="[
-            'btn',
-
-            { 'custom-background-class': isBoldBackgroundChanged },
-          ]" @click="toggleBold" variant="light" :disabled="disableBoldButton">
-                <span>
-                    <img src="../../../../assets/toolbarsvgs/format-bold.svg" alt="SVG Image" />
-                </span>
-            </button>
-            <button class="btn" v-b-tooltip.hover title="Italicize your text." id="italic" type="button" :class="[
-            'btn',
-
-            { 'custom-background-class': isItalicBackgroundChanged },
-          ]" @click="toggleItalic" variant="light" :disabled="disableItalicButton">
-                <span>
-                    <img src="../../../../assets/toolbarsvgs/format-italic.svg" alt="SVG Image" />
-                </span>
-            </button>
-            <button class="btn " v-b-tooltip.hover title="Underline your text." id="Underline" type="button" :class="[
-            'btn',
-
-            { 'custom-background-class': isUnderlineBackgroundChanged },
-          ]" @click="toggleUnderline" variant="light" :disabled="disableUderlineButton">
-                <span :class="{ 'custom-underline': isUnderline }">
-                    <img src="../../../../assets/toolbarsvgs/format-underline.svg" alt="SVG Image" />
-                </span>
-            </button>
-            <button class="btn " v-b-tooltip.hover title="Insert Ordered List" id="OrderedList" variant="light" @click="toggleOl()" :disabled="disableOlButton" :class="[
-            'btn',
-
-            { 'custom-background-class': isOlBackgroundChanged },
-          ]">
-                <img src="../../../../assets/toolbarsvgs/ol.svg" alt="SVG Image" />
-            </button>
-            <button class="btn" v-b-tooltip.hover title="Insert Unordered List" id="UnOrderedList" variant="light" @click="toggleUl()" :disabled="disableUlButton" :class="[
-            'btn',
-
-            { 'custom-background-class': isUlBackgroundChanged },
-          ]">
-                <img src="../../../../assets/toolbarsvgs/ul.svg" alt="SVG Image" />
-            </button>
-            <button class="btn" v-b-tooltip.hover title="Insert list item" id="addList" variant="light" @click="toggleAddList()" :disabled="disableAddListButton" :class="['btn', 'btn-light']">
-                <img src="../../../../assets/toolbarsvgs/addList.svg" alt="SVG Image" />
-            </button>
-            <button class="btn " v-b-tooltip.hover title="Insert Table" id="table" variant="light" @click="opentableModal()" :disabled="disableTableButton">
-                <img src="../../../../assets/toolbarsvgs/table.svg" alt="SVG Image" />
-            </button>
-            <button class="btn " v-b-tooltip.hover title="Insert Image" id="Image" variant="light" @click="openImageModal()" :disabled="disableImageButton">
-                <img src="../../../../assets/toolbarsvgs/img.svg" alt="SVG Image" />
-            </button>
-            <button class="btn " v-b-tooltip.hover title="Insert Link" id="Link" variant="light" @click="addChild()" :disabled="disableLinkButton">
-                <img src="../../../../assets/toolbarsvgs/link.svg" alt="SVG Image" />
-            </button>
-            <button class="btn " v-b-tooltip.hover title="Undo (Ctrl+Z)" id="undo" variant="light" @click="undo()" v-if="!disableUndoBtn">
-                <img src="../../../../assets/toolbarsvgs/undo.svg" alt="SVG Image" />
-            </button>
-            <button class="btn " v-if="disableUndoBtn" id="undo" variant="light" :disabled="disableUndoBtn">
-                <img src="../../../../assets/toolbarsvgs/undo.svg" alt="SVG Image" />
-            </button>
-            <button class="btn " v-b-tooltip.hover title="Redo (Ctrl+Y)" id="redo" variant="light" @click="redo()" v-if="!disableRedoBtn">
-                <img src="../../../../assets/toolbarsvgs/redo.svg" alt="SVG Image" />
-            </button>
-            <button class="btn " id="redo" variant="light" v-if="disableRedoBtn" :disabled="disableRedoBtn">
-                <img src="../../../../assets/toolbarsvgs/redo.svg" alt="SVG Image" />
-            </button>
-            <button class="btn " v-if="!disableDelete" v-b-tooltip.hover title="Delete Selected Tag" id="delete" variant="light" @click="deleteTag()">
-                <img src="../../../../assets/toolbarsvgs/delete.svg" alt="SVG Image" />
-            </button>
-            <button class="btn " v-if="disableDelete" v-b-tooltip.hover title="Delete Selected Tag" id="delete" variant="light" :disabled="disableDelete">
-                <img src="../../../../assets/toolbarsvgs/delete.svg" alt="SVG Image" />
-            </button>
-            <button class="btn " @click="createPullreq()" v-b-tooltip.hover title="Create Github Pull Request" id="delete" variant="light">
-                <img src="../../../../assets/toolbarsvgs/pullRepo.svg" alt="SVG Image" />
-            </button>
-            <button v-b-tooltip.hover title="Switch to Text View" type="button" @click="toggleView()" class="btn   mr-5">
-                <img src="../../../../assets/toolbarsvgs/ide.svg" alt="SVG Image" />
-            </button>
-            <input accept=".jpg,.jpeg,.png,.gif" type="file" class="form-control-file" id="logo-image" name="logo-image" ref="fileInput" @change="onFileSelected" style="display: none" />
-        </div>
-        <div>
-            <b-modal v-model="tableModalVisible" id="table-modal-center" centered title="Insert Table" title-class="font-18" hide-footer>
-                <Table :tagData="tagData"></Table>
-                <button class="btn btn-primary btn-sm mr-2" @click="cancelTable">
-                    Cancel
+                <button type="button" class="btn" v-b-tooltip.hover title="Commit on Github" id="github" variant="light"
+                    @click="githubCommit()" :disabled="disabledGithub">
+                    <img src="../../../../assets/toolbarsvgs/github.svg" alt="SVG Image" />
                 </button>
-                <button class="btn btn-primary btn-sm" @click="saveTable">
-                    Save
+                <button type="button" class="btn" v-b-tooltip.hover title="Save document (Ctrl+S)" id="save" variant="light"
+                    @click="saveContent()" :disabled="disableSave">
+                    <img src="../../../../assets/toolbarsvgs/save.svg" alt="SVG Image" />
                 </button>
-            </b-modal>
+                <button class="btn" v-b-tooltip.hover title="Make your text bold" id="bold" type="button" :class="[
+                    'btn',
+
+                    { 'custom-background-class': isBoldBackgroundChanged },
+                ]" @click="toggleBold" variant="light" :disabled="disableBoldButton">
+                    <span>
+                        <img src="../../../../assets/toolbarsvgs/format-bold.svg" alt="SVG Image" />
+                    </span>
+                </button>
+                <button class="btn" v-b-tooltip.hover title="Italicize your text." id="italic" type="button" :class="[
+                    'btn',
+
+                    { 'custom-background-class': isItalicBackgroundChanged },
+                ]" @click="toggleItalic" variant="light" :disabled="disableItalicButton">
+                    <span>
+                        <img src="../../../../assets/toolbarsvgs/format-italic.svg" alt="SVG Image" />
+                    </span>
+                </button>
+                <button class="btn " v-b-tooltip.hover title="Underline your text." id="Underline" type="button" :class="[
+                    'btn',
+
+                    { 'custom-background-class': isUnderlineBackgroundChanged },
+                ]" @click="toggleUnderline" variant="light" :disabled="disableUderlineButton">
+                    <span :class="{ 'custom-underline': isUnderline }">
+                        <img src="../../../../assets/toolbarsvgs/format-underline.svg" alt="SVG Image" />
+                    </span>
+                </button>
+                <button class="btn " v-b-tooltip.hover title="Insert Ordered List" id="OrderedList" variant="light"
+                    @click="toggleOl()" :disabled="disableOlButton" :class="[
+                        'btn',
+
+                        { 'custom-background-class': isOlBackgroundChanged },
+                    ]">
+                    <img src="../../../../assets/toolbarsvgs/ol.svg" alt="SVG Image" />
+                </button>
+                <button class="btn" v-b-tooltip.hover title="Insert Unordered List" id="UnOrderedList" variant="light"
+                    @click="toggleUl()" :disabled="disableUlButton" :class="[
+                        'btn',
+
+                        { 'custom-background-class': isUlBackgroundChanged },
+                    ]">
+                    <img src="../../../../assets/toolbarsvgs/ul.svg" alt="SVG Image" />
+                </button>
+                <button class="btn" v-b-tooltip.hover title="Insert list item" id="addList" variant="light"
+                    @click="toggleAddList()" :disabled="disableAddListButton" :class="['btn', 'btn-light']">
+                    <img src="../../../../assets/toolbarsvgs/addList.svg" alt="SVG Image" />
+                </button>
+                <button class="btn " v-b-tooltip.hover title="Insert Table" id="table" variant="light"
+                    @click="opentableModal()" :disabled="disableTableButton">
+                    <img src="../../../../assets/toolbarsvgs/table.svg" alt="SVG Image" />
+                </button>
+                <button class="btn " v-b-tooltip.hover title="Insert Image" id="Image" variant="light"
+                    @click="openImageModal()" :disabled="disableImageButton">
+                    <img src="../../../../assets/toolbarsvgs/img.svg" alt="SVG Image" />
+                </button>
+                <button class="btn " v-b-tooltip.hover title="Insert Link" id="Link" variant="light" @click="addChild()"
+                    :disabled="disableLinkButton">
+                    <img src="../../../../assets/toolbarsvgs/link.svg" alt="SVG Image" />
+                </button>
+                <button class="btn " v-b-tooltip.hover title="Undo (Ctrl+Z)" id="undo" variant="light" @click="undo()"
+                    v-if="!disableUndoBtn">
+                    <img src="../../../../assets/toolbarsvgs/undo.svg" alt="SVG Image" />
+                </button>
+                <button class="btn " v-if="disableUndoBtn" id="undo" variant="light" :disabled="disableUndoBtn">
+                    <img src="../../../../assets/toolbarsvgs/undo.svg" alt="SVG Image" />
+                </button>
+                <button class="btn " v-b-tooltip.hover title="Redo (Ctrl+Y)" id="redo" variant="light" @click="redo()"
+                    v-if="!disableRedoBtn">
+                    <img src="../../../../assets/toolbarsvgs/redo.svg" alt="SVG Image" />
+                </button>
+                <button class="btn " id="redo" variant="light" v-if="disableRedoBtn" :disabled="disableRedoBtn">
+                    <img src="../../../../assets/toolbarsvgs/redo.svg" alt="SVG Image" />
+                </button>
+                <button class="btn " v-if="!disableDelete" v-b-tooltip.hover title="Delete Selected Tag" id="delete"
+                    variant="light" @click="deleteTag()">
+                    <img src="../../../../assets/toolbarsvgs/delete.svg" alt="SVG Image" />
+                </button>
+                <button class="btn " v-if="disableDelete" v-b-tooltip.hover title="Delete Selected Tag" id="delete"
+                    variant="light" :disabled="disableDelete">
+                    <img src="../../../../assets/toolbarsvgs/delete.svg" alt="SVG Image" />
+                </button>
+                <button class="btn " @click="createPullreq()" v-b-tooltip.hover title="Create Github Pull Request"
+                    id="delete" variant="light">
+                    <img src="../../../../assets/toolbarsvgs/pullRepo.svg" alt="SVG Image" />
+                </button>
+                <button v-b-tooltip.hover title="Switch to Text View" type="button" @click="toggleView()"
+                    class="btn   mr-5">
+                    <img src="../../../../assets/toolbarsvgs/ide.svg" alt="SVG Image" />
+                </button>
+                <input accept=".jpg,.jpeg,.png,.gif" type="file" class="form-control-file" id="logo-image" name="logo-image"
+                    ref="fileInput" @change="onFileSelected" style="display: none" />
+            </div>
+            <div>
+                <b-modal v-model="tableModalVisible" id="table-modal-center" centered title="Insert Table"
+                    title-class="font-18" hide-footer>
+                    <Table :tagData="tagData"></Table>
+                    <button class="btn btn-primary btn-sm mr-2" @click="cancelTable">
+                        Cancel
+                    </button>
+                    <button class="btn btn-primary btn-sm" @click="saveTable">
+                        Save
+                    </button>
+                </b-modal>
+            </div>
         </div>
     </div>
-</div>
 </template>
 
 <script>
@@ -110,10 +126,7 @@ import {
 import Swal from "sweetalert2";
 import Table from "./table.vue";
 import schema from "../../../../assets/schema.js";
-import {
-    secretKey
-} from "../../../../api/global.env";
-import CryptoJS from "crypto-js";
+
 export default {
     components: {
         Table,
@@ -147,10 +160,7 @@ export default {
             schema: {},
             value: "",
             webLink: "",
-            projectName: CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
+            projectName: null,
             xml: null,
             disableUndoBtn: true,
             disableRedoBtn: true,
@@ -248,7 +258,7 @@ export default {
             this.disableDelete = true;
         });
     },
-    mounted() {},
+    mounted() { },
     methods: {
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
             this.$bvToast.toast(messageToastContent, {
@@ -418,7 +428,7 @@ export default {
             this.schema = schema;
         },
         createPullreq() {
-          
+
             this.$store.getters.client
                 .post(
                     `/orguser/workspace/pullGitChanges?projectName=${this.projectName}`
@@ -437,8 +447,8 @@ export default {
                             });
                             eventBus.$emit("clearHistory");
                         })
-                        .catch(() => {});
-                   
+                        .catch(() => { });
+
                     this.messageToast(
                         "Success",
                         "success",
@@ -446,7 +456,7 @@ export default {
                     );
                 })
                 .catch((err) => {
-                   
+
                     this.messageToast(
                         "Invalid request",
                         "danger",
@@ -572,15 +582,15 @@ export default {
                 .post(
                     `/orguser/doceditor/uploadDitaContentImg?userId=${userId}&orgId=${orgId}&projectName=${this.projectName}`,
                     formData, {
-                        headers: {
-                            "Content-Type": "multipart/form-data",
-                        },
-                    }
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
                 )
                 .then(() => {
                     this.addImg();
                 })
-                .catch(() => {});
+                .catch(() => { });
         },
         addImg() {
             const body = {
@@ -613,10 +623,10 @@ export default {
         clearData() {
             this.nodeId = "";
             (this.originalString = ""),
-            (this.tagData = ""),
-            (this.self = ""),
-            (this.tagName = ""),
-            (this.parentNodeId = "");
+                (this.tagData = ""),
+                (this.self = ""),
+                (this.tagName = ""),
+                (this.parentNodeId = "");
         },
         toggleBold() {
             if (this.tagName === "b") {
@@ -735,8 +745,8 @@ export default {
                 this.readXML();
             } else if (this.originalString) {
                 this.editedString = `<ol><li>${JSON.stringify(
-          this.originalString
-        )}</li></ol>`;
+                    this.originalString
+                )}</li></ol>`;
                 this.xml = `<title>${this.editedString}</title>`;
                 this.readXML();
             }
@@ -758,8 +768,8 @@ export default {
                 this.readXML();
             } else if (this.originalString) {
                 this.editedString = `<ul><li>${JSON.stringify(
-          this.originalString
-        )}</li></ul>`;
+                    this.originalString
+                )}</li></ul>`;
                 this.xml = `<title>${this.editedString}</title>`;
                 this.readXML();
             }
@@ -911,17 +921,17 @@ export default {
                             break;
                     }
                     (this.selectedText = ""),
-                    (this.beforeSelectedText = ""),
-                    (this.afterSelectedText = ""),
-                    (this.editedString = ""),
-                    (this.xml = null),
-                    (this.originalString = "");
+                        (this.beforeSelectedText = ""),
+                        (this.afterSelectedText = ""),
+                        (this.editedString = ""),
+                        (this.xml = null),
+                        (this.originalString = "");
                     this.nodeId = "";
                     this.tagData = "";
                     this.self = "";
                     this.tagName = "";
                 })
-                .catch(() => {});
+                .catch(() => { });
         },
         addChild() {
             const body = {
@@ -984,5 +994,4 @@ img {
     img {
         height: 15px;
     }
-}
-</style>
+}</style>

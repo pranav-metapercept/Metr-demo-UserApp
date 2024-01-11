@@ -3,25 +3,16 @@ import Projects from "./projects.vue";
 
 export default [
   {
-    path: "/docpublisher/:repouser/:reponame/:repobranch/:repoowner",
+    path: "/docpublisher",
     component: DocPublisher,
     name: "DocPublisher",
-    props: (route) => ({
-      repouser: decodeURIComponent(route.params.repouser),
-      reponame: decodeURIComponent(route.params.reponame),
-      repobranch: decodeURIComponent(route.params.repobranch),
-      repoowner: decodeURIComponent(route.params.repoowner),
-    }),
+   
   },
   {
-    path: "/docpublisher",
+    path: "/docpublisher/projectlist",
     component: Projects,
     name: "Projects",
-    props: (route) => ({
-      repouser: decodeURIComponent(route.params.repouser),
-      reponame: decodeURIComponent(route.params.reponame),
-      repobranch: decodeURIComponent(route.params.repobranch),
-    }),
+    
   },
   
 ];

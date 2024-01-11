@@ -124,8 +124,7 @@ export default {
                 "reponame",
                 cryptoJs.AES.encrypt(projectName, secretKey).toString()
             );
-            this.$store.commit("setRepoUser", owner);
-            this.$store.commit("setRepoName", projectName);
+          
             this.redirectProject(owner, projectName);
         },
         async redirectProject() {

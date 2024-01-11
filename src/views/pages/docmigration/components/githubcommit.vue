@@ -87,7 +87,7 @@ export default {
     },
     data() {
         return {
-            ditaotVersion: '',
+            ditaOtVersions:'4.3.2',
             progress: 0,
             selectedproject: "",
             projectlist: [],

@@ -58,7 +58,7 @@ export default {
    
     data() {
         return {
-            ditaotVersion: "",
+            ditaOtVersions:'4.3.2',
             projectName: null,
             repouser: null,
             brachName:null,

@@ -61,7 +61,7 @@
             </div>
         </div>
         <!-- Conditional HR -->
-        <hr  />
+        <hr />
         <div v-if="!hideform" class="card">
             <div class="card-body">
                 <form novalidate @submit.prevent>
@@ -147,16 +147,11 @@
 import _ from "lodash";
 
 import checkurl from "../../../../components/urlvalidator";
-
-import CryptoJS from "crypto-js";
-import {
-    secretKey
-} from "../../../../api/global.env";
 export default {
-  
+
     data() {
         return {
-            
+
             typeform: {
                 inputPath: "",
                 outputPath: "",
@@ -164,18 +159,9 @@ export default {
                 releaseTitle: "",
             },
             selectInput: null,
-            projectName: CryptoJS.AES.decrypt(
-                this.$route.params.reponame,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            repouser: CryptoJS.AES.decrypt(
-                this.$route.params.repouser,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
-            brachName: CryptoJS.AES.decrypt(
-                this.$route.params.repobranch,
-                secretKey
-            ).toString(CryptoJS.enc.Utf8),
+            projectName: null,
+            repouser: null,
+            brachName: null,
             selectOutputFormat: null,
             submitted: false,
             projectPath: null,
@@ -188,16 +174,16 @@ export default {
             hideform: false,
             showModal: false,
             model: "",
-            releaseParams:null
+            releaseParams: null
         };
     },
     created() {
-        
-       
+
+
         this.hideform = false;
     },
     mounted() {
-       
+
         this.hideform = false;
     },
     computed: {
@@ -234,9 +220,9 @@ export default {
             }
         },
         // Function to create a Pull Request
-       
-        
-       
+
+
+
         async getoutputFormat() {
             await this.$store.getters.client
                 .get(`/plugins`)
@@ -251,18 +237,9 @@ export default {
             this.typeform.releaseTitle = "";
         },
         openDownload() {
-            const encryptedRepouser = CryptoJS.AES.encrypt(
-                this.repouser,
-                secretKey
-            ).toString();
-            const encryptedReponame = CryptoJS.AES.encrypt(
-                this.projectName,
-                secretKey
-            ).toString();
-            const encodedRepouser = encodeURIComponent(encryptedRepouser);
-            const encodedReponame = encodeURIComponent(encryptedReponame);
+
             this.$router.push({
-                path: `/docmanager/${encodedRepouser}/${encodedReponame}`,
+                path: `/docmanager/details`,
             });
         },
     },
@@ -270,7 +247,7 @@ export default {
 </script>
 <style scoped>
 label {
-    font-size: 14px ;
+    font-size: 14px;
     font-weight: 400;
     line-height: 16px;
     letter-spacing: 0em;

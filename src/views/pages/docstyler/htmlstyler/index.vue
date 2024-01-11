@@ -228,11 +228,9 @@ export default {
             }
         },
         redirectDocPublishrer() {
-            const encodedRepouser = encodeURIComponent(this.$route.params.repouser);
-            const encodedReponame = encodeURIComponent(this.$route.params.reponame);
-            const encodedBranch = encodeURIComponent(this.$route.params.repobranch);
+         
             this.$router.push({
-                path: `/htmldocstyler/docpublisher/${encodedRepouser}/${encodedReponame}/${encodedBranch}`,
+                path: `/docpublisher`,
             });
         },
         finalSubmit() {
