@@ -20,7 +20,7 @@
 .multiselect__placeholder {
   padding-top: 0 !important;
   margin-bottom: 0 !important;
-  color: $gray-600 !important
+  color: $gray-400 !important
 }
 
 .multiselect__input {
@@ -71,6 +71,6 @@
 
 .multiselect__option--highlight,
 .multiselect__option--highlight:after {
-  background: #5fa3f0 !important;
+  background: $primary !important;
   color: $white !important;
 }

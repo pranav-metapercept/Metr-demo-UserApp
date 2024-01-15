@@ -12,6 +12,7 @@
 <style>
 @media screen and (max-width: 280px) {
   .footer {
-   font-size: 10px;
+    font-size: 10px;
   }
-}</style>
+}
+</style>

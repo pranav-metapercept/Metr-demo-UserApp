@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Layout>
 
     <!-- Display a page header with title and breadcrumb items -->
     <PageHeader :icon="'ri-dashboard-line h3'" :title="title" :items="items" />
@@ -19,19 +20,26 @@
         <RecentNotification />
       </div>
     </div>
+  </Layout>
   </div>
+  
 </template>
 
 <script>
-import Project from './components/project.vue'
-import Role from './components/role.vue'
-import RecentNotification from './components/recentnotification.vue'
-import RecentPublication from './components/recentpublication.vue'
-import { eventBus } from '../../../main';
+import Layout from "../../layouts/main";
+import PageHeader from "@/components/page-header";
+import Project from './project.vue'
+import Role from './role.vue'
+import RecentNotification from './recentnotification.vue'
+import RecentPublication from './recentpublication.vue'
+// import { eventBus } from '../../../main';
 
 export default {
   components: {
     // Import and use child components
+Layout ,
+PageHeader ,
+
     Project,
     Role,
     RecentNotification,
@@ -48,7 +56,7 @@ export default {
   },
   mounted() {
     // Emit an event to update the sidebar with the current menu item
-    eventBus.$emit('update-sidebar', "menuitems.dashboard.text");
+    // eventBus.$emit('update-sidebar', "menuitems.dashboard.text");
   }
 };
 </script>

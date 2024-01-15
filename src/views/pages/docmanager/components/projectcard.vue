@@ -27,8 +27,7 @@
             <hr />
             <!-- Button to get project details -->
             <div>
-                <button class="btn card-btn  text-primary view-details-btn btn-sm m-0 "
-                    v-on:click="setdata(items.owner, items.projectName)">
+                <button class="btn card-btn  text-primary view-details-btn btn-sm m-0 " v-on:click="redirectProject">
                     <span class="mdi mdi-eye-outline mr-1"></span> View details
                 </button>
             </div>
@@ -124,7 +123,7 @@ export default {
                 "reponame",
                 cryptoJs.AES.encrypt(projectName, secretKey).toString()
             );
-          
+
             this.redirectProject(owner, projectName);
         },
         async redirectProject() {

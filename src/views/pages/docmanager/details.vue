@@ -1,7 +1,8 @@
 <template>
     <div>
+        <Layout>
         <!-- Page Header -->
-        <PageHeader :icon="'fas fa-file-invoice'" :title="title" :items="items" />
+      
         <!-- Project Info -->
         <div class="d-flex justify-content-between align-items-center">
             <div>
@@ -94,6 +95,7 @@
             </div>
 
         </div>
+    </Layout>
     </div>
 </template>
 
@@ -108,7 +110,8 @@ import simplebar from "simplebar-vue";
 import Swal from "sweetalert2";
 
 
-import PageHeader from "@/components/pageheader";
+import Layout from "../../layouts/main";
+
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 
@@ -118,7 +121,7 @@ import {
 
 export default {
     components: {
-        PageHeader,
+        Layout,
         simplebar,
     },
 

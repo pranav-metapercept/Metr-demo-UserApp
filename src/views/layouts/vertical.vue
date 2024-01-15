@@ -1,10 +1,12 @@
 <script>
 import router from "@/router";
 import { layoutComputed } from "@/state/helpers";
+
 import Topbar from "@/components/topbar";
-import SideBar from "@/components/sidebar";
-import Rightsidebar from "@/components/rightsidebar";
+import SideBar from "@/components/side-bar";
+import Rightsidebar from "@/components/right-sidebar";
 import Footer from "@/components/footer";
+
 export default {
   components: { Topbar, SideBar, Rightsidebar, Footer },
   data() {
@@ -21,15 +23,9 @@ export default {
     ...layoutComputed,
   },
   methods: {
-    messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
-            this.$bvToast.toast(messageToastContent, {
-                title: messageToastTitle,
-                variant: messageToastVariant,
-                solid: true,
-            });
-        },
     toggleMenu() {
       document.body.classList.toggle("sidebar-enable");
+
       if (window.screen.width >= 992) {
         // eslint-disable-next-line no-unused-vars
         router.afterEach((routeTo, routeFrom) => {
@@ -58,6 +54,7 @@ export default {
     if (this.loader === true) {
       document.getElementById("preloader").style.display = "block";
       document.getElementById("status").style.display = "block";
+
       setTimeout(function () {
         document.getElementById("preloader").style.display = "none";
         document.getElementById("status").style.display = "none";
@@ -69,6 +66,7 @@ export default {
   },
 };
 </script>
+
 <template>
   <div>
     <div id="preloader">
@@ -78,6 +76,7 @@ export default {
         </div>
       </div>
     </div>
+
     <!-- Begin page -->
     <div id="layout-wrapper">
       <Topbar />

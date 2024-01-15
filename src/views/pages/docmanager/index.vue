@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Layout>
         <!-- Page Header component -->
         <PageHeader :icon="'fas fa-clipboard-list'" :title="title" :items="item" />
         <!-- Modal for Workspace Setup -->
@@ -93,12 +94,14 @@
                 </b-modal>
             </div>
         </div>
+    </Layout>
+
     </div>
 </template>
 <script>
 import projectcard from "./components/projectcard";
 
-
+import Layout from "../../layouts/main";
 
 import {
     BRow,
@@ -108,6 +111,7 @@ import {
 
 export default {
     components: {
+        Layout,
         projectcard,
         BRow,
         BCol,

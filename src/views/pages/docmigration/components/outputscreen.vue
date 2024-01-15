@@ -1,5 +1,6 @@
 <template>
 <div>
+    <Layout>
     <!-- Page header component with title and icon -->
     <PageHeader :icon="'ri-dashboard-line h3'" :title="title" :items="items" />
     <div class="d-flex justify-content-between align-items-center">
@@ -36,6 +37,7 @@
             </div>
         </div>
     </div>
+</Layout>
 </div>
 </template>
 
@@ -45,10 +47,16 @@ import {
     eventBus
 } from "../../../../main";
 import CryptoJS from "crypto-js";
+import Layout from "../../../layouts/main";
 import {
     secretKey
 } from "../../../../api/global.env";
 export default {
+    components: {
+   
+    Layout,
+
+  },
     data() {
         return {
             userId: null,
@@ -115,13 +123,9 @@ export default {
         },
         // Function to navigate to the GitHub commit screen
         gitHubCommit() {
-            const encryptedFoldername = CryptoJS.AES.encrypt(
-                this.selectedfolder,
-                secretKey
-            ).toString();
-            const encodedFoldername = encodeURIComponent(encryptedFoldername);
+           
             this.$router.push({
-                path: `/docmigration/outputscreen/githubcommit/${encodedFoldername}`,
+                path: `/docmigration/outputscreen/githubcommit`,
             });
         },
     },

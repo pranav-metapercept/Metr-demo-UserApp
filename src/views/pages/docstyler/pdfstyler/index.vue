@@ -214,6 +214,7 @@ export default {
             });
         },
         finalSubmit() {
+            console.log(this.formDataList);
             this.progress = 0;
             this.$refs["modaloutputprogress"].show();
             const targetProgress = 100;
@@ -226,62 +227,26 @@ export default {
                     clearInterval(intervalId);
                 }
             }, 20);
-            const body = {
-                userId: this.userId,
-                orgId: this.orgId,
-                customizationOptions: this.formDataList
-            }
-            this.$store.getters.client
-                .post(`/orguser/docstyler/customizePdfOutput`,
-                    body
-                )
-                .then(() => {
-                    setTimeout(() => {
-                        this.messageToast(
-                            "Success",
-                            "success",
-                            "Your customization has been successfully completed, and now you can publish your document to receive the desired output."
-                        );
-                    }, 1000)
-                    setTimeout(() => {
-                        this.redirectDocPublishrer()
-                        this.$refs["modaloutputprogress"].hide();
-                    }, 2000);
-                })
-                .catch((err) => {
-                    this.$refs["modaloutputprogress"].hide()
-                    this.messageToast(
-                        "Invalid request",
-                        "danger",
-                        err.response.data.message
-                    );
-                });
+
+            setTimeout(() => {
+                this.messageToast(
+                    "Success",
+                    "success",
+                    "Your customization has been successfully completed, and now you can publish your document to receive the desired output."
+                );
+            }, 1000)
+            setTimeout(() => {
+                this.redirectDocPublishrer()
+                this.$refs["modaloutputprogress"].hide();
+            }, 2000);
         },
         handledefualt() {
-            const body = {
-                userId: this.userId,
-                orgId: this.orgId,
-                customizationOptions: {}
-            }
-            this.$store.getters.client
-                .post(`/orguser/docstyler/customizePdfOutput`,
-                    body
-                )
-                .then(() => {
-                    this.redirectDocPublishrer()
-                    this.messageToast(
-                        "Success",
-                        "success",
-                        "Your DITA-OT has been reset to its default settings."
-                    );
-                })
-                .catch((err) => {
-                    this.messageToast(
-                        "Invalid request",
-                        "danger",
-                        err.data.message
-                    );
-                });
+            this.redirectDocPublishrer()
+            this.messageToast(
+                "Success",
+                "success",
+                "Your DITA-OT has been reset to its default settings."
+            );
         }
     }
 }

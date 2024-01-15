@@ -98,10 +98,7 @@ import CustomizedOptions from './components/customizedoptions.vue'
 import {
     eventBus
 } from "../../../../main";
-import CryptoJS from "crypto-js";
-import {
-    secretKey
-} from "../../../../api/global.env";
+
 export default {
     components: {
         Header,
@@ -228,7 +225,7 @@ export default {
             }
         },
         redirectDocPublishrer() {
-         
+
             this.$router.push({
                 path: `/docpublisher`,
             });
@@ -247,70 +244,26 @@ export default {
                     clearInterval(intervalId);
                 }
             }, 20);
-            const body = {
-                userId: this.userId,
-                orgId: this.orgId,
-                customizationOptions: this.formDataList,
-                projectName: CryptoJS.AES.decrypt(
-                    this.$route.params.reponame,
-                    secretKey
-                ).toString(CryptoJS.enc.Utf8)
-            }
-            this.$store.getters.client
-                .post(`/orguser/docstyler/customizeHtmlOutput`,
-                    body
-                )
-                .then(() => {
-                    setTimeout(() => {
-                        this.messageToast(
-                            "Success",
-                            "success",
-                            "Your customization has been successfully completed, and now you can publish your document to receive the desired output."
-                        );
-                    }, 1000)
-                    setTimeout(() => {
-                        this.redirectDocPublishrer()
-                        this.$refs["modaloutputprogress"].hide();
-                    }, 2000);
-                })
-                .catch((err) => {
-                    this.$refs["modaloutputprogress"].hide();
-                    this.messageToast(
-                        "Invalid request",
-                        "danger",
-                        err.response.data.message
-                    );
-                });
+
+            setTimeout(() => {
+                this.messageToast(
+                    "Success",
+                    "success",
+                    "Your customization has been successfully completed, and now you can publish your document to receive the desired output."
+                );
+            }, 1000)
+            setTimeout(() => {
+                this.redirectDocPublishrer()
+                this.$refs["modaloutputprogress"].hide();
+            }, 2000);
         },
         handledefualt() {
-            const body = {
-                userId: this.userId,
-                orgId: this.orgId,
-                customizationOptions: {},
-                projectName: CryptoJS.AES.decrypt(
-                    this.$route.params.reponame,
-                    secretKey
-                ).toString(CryptoJS.enc.Utf8)
-            }
-            this.$store.getters.client
-                .post(`/orguser/docstyler/customizePdfOutput`,
-                    body
-                )
-                .then(() => {
-                    this.redirectDocPublishrer()
-                    this.messageToast(
-                        "Success",
-                        "success",
-                        "Your DITA-OT has been reset to its default settings."
-                    );
-                })
-                .catch((err) => {
-                    this.messageToast(
-                        "Invalid request",
-                        "danger",
-                        err.data.message
-                    );
-                });
+            this.redirectDocPublishrer()
+            this.messageToast(
+                "Success",
+                "success",
+                "Your DITA-OT has been reset to its default settings."
+            );
         }
     }
 }

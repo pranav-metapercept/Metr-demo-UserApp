@@ -1,75 +1,78 @@
 <template>
     <div>
-        <!-- Page header component with title and icon -->
-        <PageHeader :title="title" :icon="'ri-dashboard-line h3'" :items="item" />
-        <div>
+        <Layout>
 
-            <div class="mr-2 dita-ot-cont px-1 ">
-                <span class="dita-ot">DITA-OT Version:</span>
-                <span class="dita-ot-version ml-2">{{ ditaOtVersions }}</span>
-            </div>
-        </div>
-        <!-- Modal for committing output to GitHub -->
-        <b-modal id="modal-commit" ref="modalcommit" title="Commit Output" title-class="font-18" hide-footer hide-close
-            no-close-on-backdrop no-close-on-esc>
+            <!-- Page header component with title and icon -->
+            <PageHeader :title="title" :icon="'ri-dashboard-line h3'" :items="item" />
             <div>
-                <b-form-group label="Commit Message">
-                    <b-form-input for="text" v-model="commitMsg"></b-form-input>
-                </b-form-group>
-                <button class="btn btn-sm  btn-primary" v-on:click="commitOutput()">
-                    Commit on GitHub
-                </button>
-            </div>
-        </b-modal>
-        <!-- Modal for showing progress -->
-        <b-modal id="modal-progress" ref="modaloutputprogress" title="Processing" hide-header title-class="font-18"
-            hide-footer hide-close no-close-on-backdrop no-close-on-esc>
-            <strong>Please wait</strong>
-            <br />
-            <p>loading . . .</p>
-            <b-progress :value="progress" :max="100" class="custom-progress"></b-progress>
-        </b-modal>
-        <div class="row justify-content-center">
-            <div class="col-md-4 bg-white">
-                <!-- GitHub commit form -->
-                <div class="custom-notifications d-flex justify-content-between align-items-center flex-wrap">
-                    <div class="custom-title mb-0">
-                        Github Commit
-                    </div>
+
+                <div class="mr-2 dita-ot-cont px-1 ">
+                    <span class="dita-ot">DITA-OT Version:</span>
+                    <span class="dita-ot-version ml-2">{{ ditaOtVersions }}</span>
                 </div>
-
-                <div class="card-body">
-
-                    <label>Select Project<span class="text-danger">*</span></label>
-
-                    <!-- Multiselect for project selection -->
-                    <multiselect v-model="selectedproject" :options="projectlist.map(item => item.text)"
-                        placeholder="Choose a Project">
-                    </multiselect>
-
-                    <div class="text-right pt-1">
-                        <!-- Buttons for committing and syncing projects -->
-                        <button type="submit" class="btn btn-primary btn-sm mr-2 " @click.prevent="syncprojects">
-                            Sync Projects
-                        </button>
-                        <button :disabled="!disabledCommit" type="submit" class="btn btn-secondary btn-sm "
-                            @click.prevent="commitOutput">
-                            Commit on Github
-                        </button>
-
+            </div>
+            <!-- Modal for committing output to GitHub -->
+            <b-modal id="modal-commit" ref="modalcommit" title="Commit Output" title-class="font-18" hide-footer hide-close
+                no-close-on-backdrop no-close-on-esc>
+                <div>
+                    <b-form-group label="Commit Message">
+                        <b-form-input for="text" v-model="commitMsg"></b-form-input>
+                    </b-form-group>
+                    <button class="btn btn-sm  btn-primary" v-on:click="commitOutput()">
+                        Commit on GitHub
+                    </button>
+                </div>
+            </b-modal>
+            <!-- Modal for showing progress -->
+            <b-modal id="modal-progress" ref="modaloutputprogress" title="Processing" hide-header title-class="font-18"
+                hide-footer hide-close no-close-on-backdrop no-close-on-esc>
+                <strong>Please wait</strong>
+                <br />
+                <p>loading . . .</p>
+                <b-progress :value="progress" :max="100" class="custom-progress"></b-progress>
+            </b-modal>
+            <div class="row justify-content-center">
+                <div class="col-md-4 bg-white">
+                    <!-- GitHub commit form -->
+                    <div class="custom-notifications d-flex justify-content-between align-items-center flex-wrap">
+                        <div class="custom-title mb-0">
+                            Github Commit
+                        </div>
                     </div>
 
-                </div>
+                    <div class="card-body">
 
+                        <label>Select Project<span class="text-danger">*</span></label>
+
+                        <!-- Multiselect for project selection -->
+                        <multiselect v-model="selectedproject" :options="projectlist" placeholder="Choose a Project">
+</multiselect>
+
+
+                        <div class="text-right pt-1">
+                            <!-- Buttons for committing and syncing projects -->
+                            <button type="submit" class="btn btn-primary btn-sm mr-2 " @click.prevent="syncprojects">
+                                Sync Projects
+                            </button>
+                            <button :disabled="!disabledCommit" type="submit" class="btn btn-secondary btn-sm "
+                                @click.prevent="commitOutput">
+                                Commit on Github
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
             </div>
-        </div>
+        </Layout>
     </div>
 </template>
 
 <script>
 import _ from "lodash";
 import Multiselect from "vue-multiselect";
-
+import Layout from "../../../layouts/main";
 import Swal from "sweetalert2";
 
 import {
@@ -79,7 +82,7 @@ import {
 
 export default {
     components: {
-
+        Layout,
         Multiselect
     },
     props: {
@@ -87,7 +90,7 @@ export default {
     },
     data() {
         return {
-            ditaOtVersions:'4.3.2',
+            ditaOtVersions: '4.3.2',
             progress: 0,
             selectedproject: "",
             projectlist: [],
@@ -142,7 +145,7 @@ export default {
 
         // Fetch the list of projects
         getprojectslist() {
-            [
+            const projects = [
                 {
                     "userRole": [
                         "DocManager",
@@ -253,12 +256,12 @@ export default {
                     "__v": 0,
                     "owner": "Jyoti-Metapercept"
                 }
-            ].forEach((ele) => {
-                this.projectlist.push({
-                    value: ele.projectName,
-                    text: ele.projectName,
-                });// List of user projects
-            })
+            ];
+            this.projectlist = projects.map(project => ({
+    value: project.projectName,
+    text: project.projectName,
+}));
+
 
         },
         // Show the GitHub commit modal

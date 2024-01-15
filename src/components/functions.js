@@ -1,4 +1,4 @@
-import {secretKey} from "../api/global.env";
+import { secretKey } from "../api/global.env";
 import CryptoJS from "crypto-js";
 
 function decrypt(res) {

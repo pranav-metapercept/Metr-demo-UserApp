@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <PageHeader :icon="'mdi mdi-cog h2'" :title="title" :items="item" />
+    <Layout>
+
         <div class="row ">
             <div class="col-md-8">
                 <div class="card-body">
@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </Layout>
 </template>
 
 <script>
@@ -57,18 +57,15 @@ import {
     mapActions
 } from "vuex";
 import Multiselect from "vue-multiselect";
-import checkurl from '../../../components/urlvalidator';
+import Layout from "../../layouts/main";
 import {
     eventBus
 } from '../../../main';
-import PageHeader from "@/components/pageheader";
-import CryptoJS from "crypto-js";
-import {
-    secretKey
-} from "../../../api/global.env";
+
+
 export default {
     components: {
-        PageHeader,
+        Layout,
         Multiselect
     },
     data() {
@@ -225,21 +222,7 @@ export default {
             ],
         };
     },
-    validateURL() {
-        const newRepoUser = CryptoJS.AES.decrypt(
-            this.$route.params.repouser,
-            secretKey
-        ).toString(CryptoJS.enc.Utf8);
-        const newRepoName = CryptoJS.AES.decrypt(
-            this.$route.params.reponame,
-            secretKey
-        ).toString(CryptoJS.enc.Utf8)
-        const oldRepoUser = localStorage.getItem('repouser');
-        const oldRepoName = localStorage.getItem('reponame');
-        if (newRepoName !== oldRepoName || newRepoUser !== oldRepoUser) {
-            checkurl(newRepoName);
-        }
-    },
+
     created() {
         eventBus.$emit('update-sidebar', "menuitems.docpublisher.text");
 

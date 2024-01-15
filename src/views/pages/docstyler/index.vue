@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div>
+        <Layout>
             <!-- Page Header Component -->
             <PageHeader :title="title" :icon="'fas fa-palette'" :items="items" />
             <div>
@@ -29,7 +29,7 @@
                     <pdfstyler></pdfstyler>
                 </b-tab>
             </b-tabs>
-        </div>
+        </Layout>
     </div>
 </template>
 
@@ -40,7 +40,7 @@ import {
 } from "bootstrap-vue";
 import htmlstyler from "./htmlstyler/index.vue";
 import pdfstyler from "./pdfstyler/index.vue";
-
+import Layout from "../../layouts/main";
 
 import {
     eventBus
@@ -53,6 +53,7 @@ export default {
         BTab,
         htmlstyler,
         pdfstyler,
+        Layout
 
     },
    

@@ -9,12 +9,8 @@
     left: 0;
     z-index: 1002;
     background-color: $header-bg;
+    box-shadow: $box-shadow;
 }
-
-
-
-
-
 
 .navbar-header {
     display: flex;
@@ -33,6 +29,7 @@
 }
 
 .navbar-brand-box {
+    padding: 0 1.5rem;
     width: $navbar-brand-box-width;
 }
 
@@ -87,7 +84,6 @@
 
 @media (max-width: 991px) {
     .navbar-brand-box {
-        padding: 0 16px;
         width: auto;
     }
 
@@ -124,8 +120,7 @@
 .header-profile-user {
     height: 36px;
     width: 36px;
-    background-color: white;
-    color: $header-bg;
+    background-color: $gray-300;
     padding: 3px;
 }
 
@@ -258,7 +253,7 @@ body[data-topbar="dark"] {
 
 body[data-sidebar="dark"] {
     .navbar-brand-box {
-        background: #fff;
+        background: $sidebar-dark-bg;
     }
 
     .logo-dark {

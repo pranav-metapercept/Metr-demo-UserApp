@@ -4,38 +4,14 @@ import Vertical from "./vertical";
 import Horizontal from "./horizontal";
 
 export default {
-  components: { Vertical, Horizontal,  },
+  components: { Vertical, Horizontal },
   data() {
-    return {
-      title: "",
-      items: [],
-      show: false,
-    };
+    return {};
   },
   computed: {
-    ...layoutComputed,
+    ...layoutComputed
   },
-  methods: {
-    
-    messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
-            this.$bvToast.toast(messageToastContent, {
-                title: messageToastTitle,
-                variant: messageToastVariant,
-                solid: true,
-            });
-        },
-    verifyToken() {
-      const token = this.$store.state.Auth.token;
-      if (!token) {
-        this.$router.push({ name: "Login" });
-      }
-    },
-    
-  },
-  mounted() {
-    this.verifyToken();
-  },
-  
+  methods: {}
 };
 </script>
 
@@ -43,8 +19,8 @@ export default {
   <div>
     <vertical v-if="layoutType === 'vertical'" :layout="layoutType">
       <slot />
-      <router-view />
     </vertical>
+
     <Horizontal v-if="layoutType === 'horizontal'" :layout="layoutType">
       <slot />
     </Horizontal>

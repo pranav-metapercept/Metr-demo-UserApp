@@ -109,10 +109,7 @@
 </template>
 <script>
 import _ from "lodash";
-import CryptoJS from "crypto-js";
-import {
-    secretKey
-} from "../../../../api/global.env";
+
 export default {
     data() {
         return {
@@ -241,7 +238,7 @@ export default {
             }, 2000)
             setTimeout(() => {
                 this.$router.push({
-                    path: `/docmigration/outputscreen/${encodeURIComponent(CryptoJS.AES.encrypt(folderName, secretKey).toString())}`
+                    path: `/docmigration/outputscreen`
                 });
                 this.showConvertScreen = false
             }, 2000);

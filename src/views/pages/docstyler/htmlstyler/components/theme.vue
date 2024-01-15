@@ -98,7 +98,7 @@ export default {
             this.submitForm()
         },
         finalSubmit() {
-            alert("hi   ")
+     
             this.$emit('final-submit')
         },
         messageToast(messageToastTitle, messageToastVariant, messageToastContent) {

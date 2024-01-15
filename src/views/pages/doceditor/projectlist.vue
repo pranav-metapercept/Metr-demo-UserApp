@@ -1,51 +1,52 @@
 <template>
   <div>
-    <PageHeader :icon="'mdi mdi-cog h2'" :title="title" :items="item" />
-    <div class="row ">
-      <div class="col-md-8">
-        <div class="card-body">
-          <!-- Project selection card -->
-          <div class="card shadow-sm">
-            <div class="custom-notifications d-flex justify-content-between align-items-center flex-wrap">
-              <div class="custom-title ">
-                Please fill in the following fields to proceed to docEditor
+    <Layout>
+      <div class="row ">
+        <div class="col-md-8">
+          <div class="card-body">
+            <!-- Project selection card -->
+            <div class="card shadow-sm">
+              <div class="custom-notifications d-flex justify-content-between align-items-center flex-wrap">
+                <div class="custom-title ">
+                  Please fill in the following fields to proceed to docEditor
+                </div>
+                <div>
+                </div>
               </div>
-              <div>
+              <div class="container">
+                <form>
+                  <div class="form-group row">
+                    <label class="col-md-12 col-form-label">Select Project<span class="text-danger">*</span></label>
+                    <div class="col-md-12">
+                      <multiselect style=" width: 100%;" v-model="selectedproject"
+                        :options="projectList.map(item => item.projectName)" placeholder="Choose a Project"
+                        class="custom-multiselect">
+                      </multiselect>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-md-12 col-form-label">Select Branch<span class="text-danger">*</span></label>
+                    <div class="col-md-12">
+                      <multiselect v-model="selectedBranch" :options="repobranchesdata.map(item => item.text)"
+                        placeholder="Choose a Project">
+                      </multiselect>
+                    </div>
+                  </div>
+                  <div class="row from-group">
+                    <div class="col-md-12">
+                      <button type="submit" class="btn btn-primary mb-3 btn-sm"
+                        @click.prevent="selectedproject !== '' && setdata(selectedProjectOwner, selectedProjectName,)">
+                        Proceed To DocPublisher
+                      </button>
+                    </div>
+                  </div>
+                </form>
               </div>
-            </div>
-            <div class="container">
-              <form>
-                <div class="form-group row">
-                  <label class="col-md-12 col-form-label">Select Project<span class="text-danger">*</span></label>
-                  <div class="col-md-12">
-                    <multiselect style=" width: 100%;" v-model="selectedproject"
-                      :options="projectList.map(item => item.projectName)" placeholder="Choose a Project"
-                      class="custom-multiselect">
-                    </multiselect>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-md-12 col-form-label">Select Branch<span class="text-danger">*</span></label>
-                  <div class="col-md-12">
-                    <multiselect v-model="selectedBranch" :options="repobranchesdata.map(item => item.text)"
-                      placeholder="Choose a Project">
-                    </multiselect>
-                  </div>
-                </div>
-                <div class="row from-group">
-                  <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary mb-3 btn-sm"
-                      @click.prevent="selectedproject !== '' && setdata(selectedProjectOwner, selectedProjectName,)">
-                      Proceed To DocPublisher
-                    </button>
-                  </div>
-                </div>
-              </form>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   </div>
 </template>
 
@@ -54,15 +55,15 @@ import {
   mapActions
 } from "vuex";
 import Multiselect from "vue-multiselect";
-import checkurl from '../../../components/urlvalidator';
+import Layout from "../../layouts/main";
 import {
   eventBus
 } from '../../../main';
-import PageHeader from "@/components/pageheader";
+
 
 export default {
   components: {
-    PageHeader,
+    Layout,
     Multiselect
   },
   data() {
@@ -219,15 +220,7 @@ export default {
       ],
     };
   },
-  validateURL() {
-    const newRepoUser = null;
-    const newRepoName = null
-    const oldRepoUser = localStorage.getItem('repouser');
-    const oldRepoName = localStorage.getItem('reponame');
-    if (newRepoName !== oldRepoName || newRepoUser !== oldRepoUser) {
-      checkurl(newRepoName);
-    }
-  },
+
   created() {
     eventBus.$emit('update-sidebar', "menuitems.docpublisher.text");
 

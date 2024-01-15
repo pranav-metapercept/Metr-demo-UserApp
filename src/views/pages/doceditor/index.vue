@@ -981,7 +981,7 @@ export default {
         eventBus.$on("githubCommit", this.githubCommit);
 
         let that = this;
-        
+
         eventBus.$on("body-updated", (body) => {
             body.nodeDetails = this.xmlObject;
             this.body = body;
@@ -1092,7 +1092,7 @@ export default {
             that.clickedTag = {};
         });
         document.addEventListener("keydown", this.handleKeyDown);
-        
+
     },
     computed: {
         isFolder() {
@@ -1282,7 +1282,7 @@ export default {
                                 this.$store.getters.client
                                     .post(`/orguser/release`, this.releaseParams)
                                     .then(() => {
-                                       
+
                                     })
                                     .catch((err) => {
                                         this.$refs["modaloutputprogress"].hide();
@@ -1308,14 +1308,10 @@ export default {
                     }
                 });
         },
-     
+
         redirectDocPublisher() {
-            const encodedRepouser = encodeURIComponent(this.$route.params.repouser);
-            const encodedReponame = encodeURIComponent(this.$route.params.reponame);
-            const encodedBranch = encodeURIComponent(this.$route.params.repobranch);
-      
             this.$router.push({
-                path: `/doceditor/docpublisher/${encodedRepouser}/${encodedReponame}/${encodedBranch}`,
+                path: `/docpublisher`,
             });
         },
         redirectDocmanager() {
@@ -1324,7 +1320,7 @@ export default {
             });
         },
         redirectDocStyler() {
-            
+
             this.$router.push({
                 path: `/docstyler`,
             });
@@ -1346,7 +1342,7 @@ export default {
                 text: `Sorry, you do not have access to ${role}. Please contact your administrator if you would like to access this feature. Thank you.`,
             });
         },
-        
+
         controlcommitbtn() {
             this.$refs.viewDetailsModel.show();
         },

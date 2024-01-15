@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <Layout>
         <PageHeader :icon="'mdi mdi-cog h2'" :title="title" :items="items" />
         <div>
             <div>
@@ -12,6 +12,7 @@
                 </div>
             </div>
         </div>
+       
         <div class="row mt-3">
 
             <div class="col-xl-12">
@@ -20,10 +21,11 @@
                 </div>
             </div>
         </div>
-    </div>
+    </Layout>
 </template>
 <script>
 import generateoutput from "./components/generateoutput";
+import Layout from "../../layouts/main";
 
 import {
     eventBus
@@ -33,6 +35,7 @@ import Swal from "sweetalert2";
 
 export default {
     components: {
+        Layout,
         generateoutput,
     },
 

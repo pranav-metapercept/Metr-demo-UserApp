@@ -1,18 +1,23 @@
 import Vue from "vue";
 import App from "./App.vue";
 import BootstrapVue from "bootstrap-vue";
-import VueSweetalert2 from "vue-sweetalert2";
+import VueApexCharts from "vue-apexcharts";
+import Vuelidate from "vuelidate";
 import VeeValidate from "vee-validate";
-import Loading from "vue-loading-overlay";
-import "vue-loading-overlay/dist/vue-loading.css";
+import VueSweetalert2 from "vue-sweetalert2";
+import VueMask from "v-mask";
+import * as VueGoogleMaps from "vue2-google-maps";
+import VueYoutube from "vue-youtube";
+
 import vco from "v-click-outside";
+
 import router from "./router";
 import store from "@/state/store";
 import i18n from "./i18n";
 import VJstree from "vue-jstree";
-
 import "@/assets/scss/app.scss";
-import { initFirebaseBackend } from "./helpers/firebase/authutils.js";
+
+import { initFirebaseBackend } from "./helpers/firebase/authUtils";
 
 import { configureFakeBackend } from "./helpers/fakebackend/fake-backend";
 
@@ -32,25 +37,27 @@ if (process.env.VUE_APP_DEFAULT_AUTH === "firebase") {
 } else {
   configureFakeBackend();
 }
-// Import and register your global components
-import PageHeader from "@/components/pageheader";
-import Simplebar from "simplebar-vue";
-// Load environment variables
-require("dotenv").config();
-// Register global components
-Vue.component("PageHeader", PageHeader);
 
-// Vue.config.devtools = process.env.NODE_ENV !== "production";
-Vue.component("Simplebar", Simplebar);
 Vue.config.productionTip = false;
-Vue.use(Loading);
+Vue.use(VueYoutube);
 Vue.use(BootstrapVue);
 Vue.use(VeeValidate);
 Vue.use(vco);
+Vue.use(Vuelidate);
 Vue.use(VueSweetalert2);
+Vue.use(VueMask);
+Vue.use(require("vue-chartist"));
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyAbvyBxmMbFhrzP9Z8moyYr6dCr-pzjhBE",
+    libraries: "places",
+  },
+  installComponents: true,
+});
+Vue.component("apexchart", VueApexCharts);
 Vue.component("v-jstree", VJstree);
 Vue.prototype.$eventBus = new Vue();
-export const eventBus = new Vue(); // creating an event bus.
+export const eventBus = new Vue();
 new Vue({
   router,
   store,

@@ -1,7 +1,7 @@
 <script>
-import HorizontalTopbar from "@/components/horizontaltopbar";
-import HorizontalNav from "@/components/horizontalnavbar";
-import RightBar from "@/components/rightsidebar";
+import HorizontalTopbar from "@/components/horizontal-topbar";
+import HorizontalNav from "@/components/horizontal-navbar";
+import RightBar from "@/components/right-sidebar";
 import Footer from "@/components/footer";
 
 import { layoutComputed } from "@/state/helpers";
@@ -29,13 +29,6 @@ export default {
     document.body.removeAttribute("data-layout-size", "boxed");
   },
   methods: {
-    messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
-            this.$bvToast.toast(messageToastContent, {
-                title: messageToastTitle,
-                variant: messageToastVariant,
-                solid: true,
-            });
-        },
     toggleRightSidebar() {
       document.body.classList.toggle("right-bar-enabled");
     },

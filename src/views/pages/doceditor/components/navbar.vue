@@ -55,8 +55,7 @@
                             <div class="d-flex align-items-center">
                                 <b-nav-item-dropdown right>
                                     <template v-slot:button-content>
-                                        <span class="rounded-circle header-profile-user" alt="Header Avatar">Demo
-                                            User</span>
+
                                         <span class="d-none d-xl-inline-block ml-1">
                                             Demo User
                                         </span>
