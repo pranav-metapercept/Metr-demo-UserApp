@@ -2,27 +2,26 @@
   <div>
     <Layout>
 
-    <!-- Display a page header with title and breadcrumb items -->
-    <PageHeader :icon="'ri-dashboard-line h3'" :title="title" :items="items" />
+      <!-- Display a page header with title and breadcrumb items -->
+      <PageHeader :icon="'ri-dashboard-line h3'" :title="title" :items="items" />
 
-    <div class="row">
-      <div class="col-lg-3 col-md-6 col-sm-12">
-        <!-- Use responsive classes for different screen sizes -->
-        <Project />
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <!-- Use responsive classes for different screen sizes -->
+          <Project />
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12">
+          <!-- Stat Component for displaying statistics -->
+          <Role />
+          <RecentPublication />
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <!-- RecentNotification Component for displaying recent notifications -->
+          <RecentNotification />
+        </div>
       </div>
-      <div class="col-lg-6 col-md-6 col-sm-12">
-        <!-- Stat Component for displaying statistics -->
-        <Role />
-        <RecentPublication />
-      </div>
-      <div class="col-lg-3 col-md-6 col-sm-12">
-        <!-- RecentNotification Component for displaying recent notifications -->
-        <RecentNotification />
-      </div>
-    </div>
-  </Layout>
+    </Layout>
   </div>
-  
 </template>
 
 <script>
@@ -37,8 +36,8 @@ import RecentPublication from './recentpublication.vue'
 export default {
   components: {
     // Import and use child components
-Layout ,
-PageHeader ,
+    Layout,
+    PageHeader,
 
     Project,
     Role,

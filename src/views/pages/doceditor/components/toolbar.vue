@@ -4,18 +4,18 @@
             <div class="btn-group mr-2 m-0 p-0 mb-sm-0 btn-toolbar p-0">
 
                 <button type="button" class="btn" v-b-tooltip.hover title="Commit on Github" id="github" variant="light"
-                    @click="githubCommit()" :disabled="disabledGithub">
+                    >
                     <img src="../../../../assets/toolbarsvgs/github.svg" alt="SVG Image" />
                 </button>
                 <button type="button" class="btn" v-b-tooltip.hover title="Save document (Ctrl+S)" id="save" variant="light"
-                    @click="saveContent()" :disabled="disableSave">
+                >
                     <img src="../../../../assets/toolbarsvgs/save.svg" alt="SVG Image" />
                 </button>
                 <button class="btn" v-b-tooltip.hover title="Make your text bold" id="bold" type="button" :class="[
                     'btn',
 
                     { 'custom-background-class': isBoldBackgroundChanged },
-                ]" @click="toggleBold" variant="light" :disabled="disableBoldButton">
+                ]" variant="light">
                     <span>
                         <img src="../../../../assets/toolbarsvgs/format-bold.svg" alt="SVG Image" />
                     </span>
@@ -24,7 +24,7 @@
                     'btn',
 
                     { 'custom-background-class': isItalicBackgroundChanged },
-                ]" @click="toggleItalic" variant="light" :disabled="disableItalicButton">
+                ]"  variant="light" >
                     <span>
                         <img src="../../../../assets/toolbarsvgs/format-italic.svg" alt="SVG Image" />
                     </span>
@@ -33,13 +33,13 @@
                     'btn',
 
                     { 'custom-background-class': isUnderlineBackgroundChanged },
-                ]" @click="toggleUnderline" variant="light" :disabled="disableUderlineButton">
+                ]" variant="light" >
                     <span :class="{ 'custom-underline': isUnderline }">
                         <img src="../../../../assets/toolbarsvgs/format-underline.svg" alt="SVG Image" />
                     </span>
                 </button>
                 <button class="btn " v-b-tooltip.hover title="Insert Ordered List" id="OrderedList" variant="light"
-                    @click="toggleOl()" :disabled="disableOlButton" :class="[
+                   :class="[
                         'btn',
 
                         { 'custom-background-class': isOlBackgroundChanged },
@@ -47,7 +47,7 @@
                     <img src="../../../../assets/toolbarsvgs/ol.svg" alt="SVG Image" />
                 </button>
                 <button class="btn" v-b-tooltip.hover title="Insert Unordered List" id="UnOrderedList" variant="light"
-                    @click="toggleUl()" :disabled="disableUlButton" :class="[
+                  @click="toggleUl()"  :class="[
                         'btn',
 
                         { 'custom-background-class': isUlBackgroundChanged },
@@ -55,53 +55,53 @@
                     <img src="../../../../assets/toolbarsvgs/ul.svg" alt="SVG Image" />
                 </button>
                 <button class="btn" v-b-tooltip.hover title="Insert list item" id="addList" variant="light"
-                    @click="toggleAddList()" :disabled="disableAddListButton" :class="['btn', 'btn-light']">
+                    :class="['btn', 'btn-light']">
                     <img src="../../../../assets/toolbarsvgs/addList.svg" alt="SVG Image" />
                 </button>
                 <button class="btn " v-b-tooltip.hover title="Insert Table" id="table" variant="light"
-                    @click="opentableModal()" :disabled="disableTableButton">
+                   >
                     <img src="../../../../assets/toolbarsvgs/table.svg" alt="SVG Image" />
                 </button>
                 <button class="btn " v-b-tooltip.hover title="Insert Image" id="Image" variant="light"
-                    @click="openImageModal()" :disabled="disableImageButton">
+                  >
                     <img src="../../../../assets/toolbarsvgs/img.svg" alt="SVG Image" />
                 </button>
-                <button class="btn " v-b-tooltip.hover title="Insert Link" id="Link" variant="light" @click="addChild()"
-                    :disabled="disableLinkButton">
+                <button class="btn " v-b-tooltip.hover title="Insert Link" id="Link" variant="light"
+                   >
                     <img src="../../../../assets/toolbarsvgs/link.svg" alt="SVG Image" />
                 </button>
-                <button class="btn " v-b-tooltip.hover title="Undo (Ctrl+Z)" id="undo" variant="light" @click="undo()"
+                <button class="btn " v-b-tooltip.hover title="Undo (Ctrl+Z)" id="undo" variant="light"
                     v-if="!disableUndoBtn">
                     <img src="../../../../assets/toolbarsvgs/undo.svg" alt="SVG Image" />
                 </button>
-                <button class="btn " v-if="disableUndoBtn" id="undo" variant="light" :disabled="disableUndoBtn">
+                <button class="btn " v-if="disableUndoBtn" id="undo" variant="light" >
                     <img src="../../../../assets/toolbarsvgs/undo.svg" alt="SVG Image" />
                 </button>
-                <button class="btn " v-b-tooltip.hover title="Redo (Ctrl+Y)" id="redo" variant="light" @click="redo()"
+                <button class="btn " v-b-tooltip.hover title="Redo (Ctrl+Y)" id="redo" variant="light" 
                     v-if="!disableRedoBtn">
                     <img src="../../../../assets/toolbarsvgs/redo.svg" alt="SVG Image" />
                 </button>
-                <button class="btn " id="redo" variant="light" v-if="disableRedoBtn" :disabled="disableRedoBtn">
+                <button class="btn " id="redo" variant="light" v-if="disableRedoBtn" >
                     <img src="../../../../assets/toolbarsvgs/redo.svg" alt="SVG Image" />
                 </button>
                 <button class="btn " v-if="!disableDelete" v-b-tooltip.hover title="Delete Selected Tag" id="delete"
-                    variant="light" @click="deleteTag()">
+                    variant="light" >
                     <img src="../../../../assets/toolbarsvgs/delete.svg" alt="SVG Image" />
                 </button>
                 <button class="btn " v-if="disableDelete" v-b-tooltip.hover title="Delete Selected Tag" id="delete"
-                    variant="light" :disabled="disableDelete">
+                    variant="light">
                     <img src="../../../../assets/toolbarsvgs/delete.svg" alt="SVG Image" />
                 </button>
-                <button class="btn " @click="createPullreq()" v-b-tooltip.hover title="Create Github Pull Request"
+                <button class="btn "  v-b-tooltip.hover title="Create Github Pull Request"
                     id="delete" variant="light">
                     <img src="../../../../assets/toolbarsvgs/pullRepo.svg" alt="SVG Image" />
                 </button>
-                <button v-b-tooltip.hover title="Switch to Text View" type="button" @click="toggleView()"
+                <button v-b-tooltip.hover title="Switch to Text View" type="button" 
                     class="btn   mr-5">
                     <img src="../../../../assets/toolbarsvgs/ide.svg" alt="SVG Image" />
                 </button>
                 <input accept=".jpg,.jpeg,.png,.gif" type="file" class="form-control-file" id="logo-image" name="logo-image"
-                    ref="fileInput" @change="onFileSelected" style="display: none" />
+                    ref="fileInput" style="display: none" />
             </div>
             <div>
                 <b-modal v-model="tableModalVisible" id="table-modal-center" centered title="Insert Table"

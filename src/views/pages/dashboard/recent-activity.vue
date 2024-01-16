@@ -78,13 +78,13 @@ export default {
             <div>
               <div>
                 <h5 class="font-size-13">
-                  {{data.date}}
-                  <small class="text-muted">{{data.time}}</small>
+                  {{ data.date }}
+                  <small class="text-muted">{{ data.time }}</small>
                 </h5>
               </div>
 
               <div>
-                <p class="text-muted mb-0">{{data.title}}</p>
+                <p class="text-muted mb-0">{{ data.title }}</p>
               </div>
             </div>
           </li>

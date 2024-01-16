@@ -161,4 +161,20 @@ export default [
     component: () =>
       import("../views/pages/docmigration/components/githubcommit.vue"),
   },
+  {
+    path: "/release",
+    name: "Releasetable",
+    meta: {
+      authRequired: true,
+    },
+    component: () => import("../views/pages/tables/releasetable.vue"),
+  },
+  {
+    path: "/userrole",
+    name: "userrole",
+    meta: {
+      authRequired: true,
+    },
+    component: () => import("../views/pages/tables/userroletable.vue"),
+  },
 ];

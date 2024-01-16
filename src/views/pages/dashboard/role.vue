@@ -6,11 +6,11 @@
                 <div class="custom-title mb-0">
                     Roles
                 </div>
-                <div>
+                <!-- <div>
                     <button class="btn text-primary view-details-btn btn-sm m-0" @click="viewMore">
                         <span class="mdi mdi-eye-outline mr-2"></span> View details
                     </button>
-                </div>
+                </div> -->
             </div>
             <div data-simplebar class="card-body border-top py-2 mb-3 ">
                 <div class="custom-height">

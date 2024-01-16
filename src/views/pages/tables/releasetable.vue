@@ -1,86 +1,71 @@
 <template>
+<div>
+    <PageHeader :icon="'ri-dashboard-line h3'" :title="title" :items="items" />
     <div>
-        <PageHeader :icon="'ri-dashboard-line h3'" :title="title" :items="items" />
-        <div>
-            <!-- Main Card -->
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <!-- Filter and Per Page Options -->
-                            <div class="row mt-2">
-                                <div class="col-sm-12 col-md-5 col-lg-4">
-                                    <div id="tickets-table_length" class="dataTables_length">
-                                        <label class="d-inline-flex align-items-center">
-                                            Show&nbsp;
-                                            <b-form-select v-model="perPage" size="sm"
-                                                :options="pageOptions"></b-form-select>&nbsp;entries
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-12 col-md-4 col-lg-4">
-                                    <div id="tickets-table_filter" class="dataTables_filter text-md-right">
-                                        <label class="d-inline-flex align-items-center">
-                                            Search:
-                                            <b-form-input v-model="filter" type="search"
-                                                placeholder="Search Project Name..."
-                                                class="form-control form-control-sm ml-2"></b-form-input>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-3 col-lg-4">
-                                    <div class="container">
-                                        <div class="row">
-                                            <!-- Use responsive classes to control button visibility -->
-                                            <b-button size="sm" class="mt-md-1 mt-lg-0 d-md-inline d-lg-none"
-                                                variant="primary" @click="exportToExcel">Export to Excel</b-button>
-                                            <b-button size="sm" class="mt-md-1 mt-lg-0 ml-2 d-md-inline d-lg-none"
-                                                variant="primary" @click="exportToCSV">Export to CSV</b-button>
-                                            <!-- For larger screens, buttons will always be visible -->
-                                            <b-button size="sm" class="mt-md-1 mt-lg-0 d-none d-lg-inline" variant="primary"
-                                                @click="exportToExcel">Export to Excel</b-button>
-                                            <b-button size="sm" class="mt-md-1 mt-lg-0 ml-2 d-none d-lg-inline"
-                                                variant="primary" @click="exportToCSV">Export to CSV</b-button>
-                                        </div>
-                                    </div>
-                                </div>
+        <!-- Main Card -->
+        <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <!-- Filter and Per Page Options -->
+              <div class="row mt-2">
+                <div class="col-sm-12 col-md-5 col-lg-4">
+                  <div id="tickets-table_length" class="dataTables_length">
+                    <label class="d-inline-flex align-items-center">
+                      Show&nbsp;
+                      <b-form-select v-model="perPage" size="sm" :options="pageOptions"></b-form-select>&nbsp;entries
+                    </label>
+                  </div>
+                </div>
+          
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                  <div id="tickets-table_filter" class="dataTables_filter text-md-right">
+                    <label class="d-inline-flex align-items-center">
+                      Search:
+                      <b-form-input v-model="filter" type="search" placeholder="Search Project Name..." class="form-control form-control-sm ml-2"></b-form-input>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-sm-12 col-md-3 col-lg-4">
+                  <div class="container">
+                    <div class="row">
+                      <!-- Use responsive classes to control button visibility -->
+                      <b-button size="sm" class="mt-md-1 mt-lg-0 d-md-inline d-lg-none" variant="primary" @click="exportToExcel">Export to Excel</b-button>
+                      <b-button size="sm" class="mt-md-1 mt-lg-0 ml-2 d-md-inline d-lg-none" variant="primary" @click="exportToCSV">Export to CSV</b-button>
+                      <!-- For larger screens, buttons will always be visible -->
+                      <b-button size="sm" class="mt-md-1 mt-lg-0 d-none d-lg-inline" variant="primary" @click="exportToExcel">Export to Excel</b-button>
+                      <b-button size="sm" class="mt-md-1 mt-lg-0 ml-2 d-none d-lg-inline" variant="primary" @click="exportToCSV">Export to CSV</b-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+                        <!-- Data Table -->
+                        <div class="table-responsive mb-0">
+                            <b-table :items="activityData" :fields="colfields" responsive="sm" :per-page="perPage" :current-page="currentPage" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc" :filter="filter" :filter-included-fields="filterOn" @filtered="onFiltered" :filter-function="filterTable" ref="adminTable" show-empty>
+                                <!-- Custom cell rendering for createdAt -->
+                                <template #cell(createdAt)="row">
+                                    {{ moment(row.item.createdAt).format("YYYY-MM-DD") }}
+                                </template>
+                                <template #cell(delete)="row">
+                                    <div @click="deleteRow(row.item)"><i class="btn text-secondary mdi mdi-delete"></i></div>
+                                </template>
+                                <template #cell(download)="row">
+                                    <b-button size="sm" variant="primary" @click="downloadZip(row.item)"><i class="mdi mdi-download"></i></b-button>
+                                </template>
+                            </b-table>
+                        </div>
+                        <!-- Pagination and Total Rows Count -->
+                        <div class="row">
+                            <div class="dataTables_paginate paging_simple_numbers col justify-content-center row-count-cust-cls">
+                                <ul class="pagination pagination-rounded mb-0">
+                                    <span class="py-2 ml-2"> Total Pages: {{ this.totalPages }}</span>
+                                </ul>
                             </div>
-                            <!-- Data Table -->
-                            <div class="table-responsive mb-0">
-                                <b-table :items="activityData" :fields="colfields" responsive="sm" :per-page="perPage"
-                                    :current-page="currentPage" :sort-by.sync="sortBy" :sort-desc.sync="sortDesc"
-                                    :filter="filter" :filter-included-fields="filterOn" @filtered="onFiltered"
-                                    :filter-function="filterTable" ref="adminTable" show-empty>
-                                    <!-- Custom cell rendering for createdAt -->
-                                    <template #cell(createdAt)="row">
-                                        {{ moment(row.item.createdAt).format("YYYY-MM-DD") }}
-                                    </template>
-                                    <template #cell(delete)="row">
-                                        <div @click="deleteRow(row.item)"><i class="btn text-secondary mdi mdi-delete"></i>
-                                        </div>
-                                    </template>
-                                    <template #cell(download)="row">
-                                        <b-button size="sm" variant="primary" @click="downloadZip(row.item)"><i
-                                                class="mdi mdi-download"></i></b-button>
-                                    </template>
-                                </b-table>
-                            </div>
-                            <!-- Pagination and Total Rows Count -->
-                            <div class="row">
-                                <div
-                                    class="dataTables_paginate paging_simple_numbers col justify-content-center row-count-cust-cls">
-                                    <ul class="pagination pagination-rounded mb-0">
-                                        <span class="py-2 ml-2"> Total Pages: {{ this.totalPages }}</span>
-                                    </ul>
-                                </div>
-                                <div class="row-pagination-cust-cls">
-                                    <ul class="pagination-rounded mb-0">
-                                        <!-- pagination -->
-                                        <b-pagination :key="totalPages" v-model="currentPage" :total-pages="totalPages"
-                                            @change="onPageChange"></b-pagination>
-                                    </ul>
-                                </div>
+                            <div class="row-pagination-cust-cls">
+                                <ul class="pagination-rounded mb-0">
+                                    <!-- pagination -->
+                                    <b-pagination :key="totalPages" v-model="currentPage" :total-pages="totalPages" @change="onPageChange"></b-pagination>
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -88,6 +73,7 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -97,278 +83,18 @@ import * as XLSX from "xlsx";
 export default {
     data() {
         return {
-            activityData: [
-                {
-                    "_id": "641051ebca19b316a00b796a",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T10:52:27.505Z",
-                    "updatedAt": "2023-03-14T10:52:27.505Z"
-                },
-                {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                },
-                {
-                    "_id": "641051ebca19b316a00b796a",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T10:52:27.505Z",
-                    "updatedAt": "2023-03-14T10:52:27.505Z"
-                },
-                {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                },
-                {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                },
-                {
-                    "_id": "641051ebca19b316a00b796a",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T10:52:27.505Z",
-                    "updatedAt": "2023-03-14T10:52:27.505Z"
-                },
-                {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                }, {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                },
-                {
-                    "_id": "641051ebca19b316a00b796a",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T10:52:27.505Z",
-                    "updatedAt": "2023-03-14T10:52:27.505Z"
-                },
-                {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                }, {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                },
-                {
-                    "_id": "641051ebca19b316a00b796a",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T10:52:27.505Z",
-                    "updatedAt": "2023-03-14T10:52:27.505Z"
-                },
-                {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                }, {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                },
-                {
-                    "_id": "641051ebca19b316a00b796a",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T10:52:27.505Z",
-                    "updatedAt": "2023-03-14T10:52:27.505Z"
-                },
-                {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                }, {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                },
-                {
-                    "_id": "641051ebca19b316a00b796a",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T10:52:27.505Z",
-                    "updatedAt": "2023-03-14T10:52:27.505Z"
-                },
-                {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                }, {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                },
-                {
-                    "_id": "641051ebca19b316a00b796a",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T10:52:27.505Z",
-                    "updatedAt": "2023-03-14T10:52:27.505Z"
-                },
-                {
-                    "_id": "64105403ca19b316a00b796b",
-                    "ditaMapFileName": "ditamap20",
-                    "outputFormat": "html5",
-                    "ditaotVersion": "3.4.1",
-                    "orgId": "640ecdb18e33cc0b2c5ea795",
-                    "userId": "63f3120a58cb1b1d4852b107",
-                    "releaseTitle": "DitaxPresso guide",
-                    "releasedBy": "jyoti kamal singh",
-                    "createdAt": "2023-03-14T11:01:23.019Z",
-                    "updatedAt": "2023-03-14T11:01:23.019Z"
-                }
-            ],
+            activityData: [],
             title: "Recent Publication ",
             items: [{
-                text: "Dashboard",
-                href: `/dashboard`,
-            },
-            {
-                text: "Recent Publications",
-                active: true
-            }
+                    text: "Dashboard",
+                    href: `/dashboard`,
+                },
+                {
+                    text: "Recent Publications",
+                    active: true
+                }
             ],
-            userId: null,
+            userId: this.$store.state.Auth.userId,
             totalRows: 1,
             currentPage: 1,
             perPage: 10,
@@ -411,7 +137,11 @@ export default {
         },
     },
     created() {
-
+        if (this.$store.state.Auth.recentPublicationsData.length) {
+            this.activityData = this.$store.state.Auth.recentPublicationsData
+        } else {
+            this.getReleasePublication();
+        }
         this.prepareChartData();
     },
     methods: {
@@ -439,47 +169,47 @@ export default {
         },
         generateTableColumns() {
             return [{
-                key: "releaseTitle",
-                label: "Release Title",
-                sortable: true
-            },
-            {
-                key: "projectName",
-                label: "Project Name",
-                sortable: true
-            },
-            {
-                key: "releasedBy",
-                label: "Released By",
-                sortable: true
-            },
-            {
-                key: "outputFormat",
-                label: "Output Format",
-                sortable: true
-            },
-            {
-                key: "ditaotVersion",
-                label: "DITA OT Version",
-                sortable: true
-            },
-            {
-                key: "createdAt",
-                label: "Created At",
-                sortable: true,
-                sortByFormatted: true,
-                formatter: (value, key, item) => moment(item.createdAt).format("YYYY-MM-DD HH:mm:ss")
-            },
-            {
-                key: "delete",
-                label: "Delete",
-                sortable: false
-            },
-            {
-                key: "download",
-                label: "Download",
-                sortable: false,
-            },
+                    key: "releaseTitle",
+                    label: "Release Title",
+                    sortable: true
+                },
+                {
+                    key: "projectName",
+                    label: "Project Name",
+                    sortable: true
+                },
+                {
+                    key: "releasedBy",
+                    label: "Released By",
+                    sortable: true
+                },
+                {
+                    key: "outputFormat",
+                    label: "Output Format",
+                    sortable: true
+                },
+                {
+                    key: "ditaotVersion",
+                    label: "DITA OT Version",
+                    sortable: true
+                },
+                {
+                    key: "createdAt",
+                    label: "Created At",
+                    sortable: true,
+                    sortByFormatted: true,
+                    formatter: (value, key, item) => moment(item.createdAt).format("YYYY-MM-DD HH:mm:ss")
+                },
+                {
+                    key: "delete",
+                    label: "Delete",
+                    sortable: false
+                },
+                {
+                    key: "download",
+                    label: "Download",
+                    sortable: false,
+                },
             ];
         },
         // This method is use to generate error or success message
@@ -494,7 +224,7 @@ export default {
             const index = this.activityData.indexOf(item);
             if (index !== -1) {
                 this.activityData.splice(index, 1);
-
+                this.$store.commit('setRecentPublicationsData', this.activityData)
                 this.deleteItemOnServer(item);
             }
         },
@@ -515,7 +245,7 @@ export default {
                     if (response.data) {
                         console.log(response.data);
                         this.activityData = response.data.reverse();
-
+                        this.$store.commit('setRecentPublicationsData', response.data);
                     } else {
                         this.messageToast("Invalid request", "danger", "No data received from the server");
                     }
@@ -526,7 +256,9 @@ export default {
                 });
         },
         async downloadZip(item) {
-
+            let loader = this.$loading.show({
+                loader: "dots",
+            });
             try {
                 const response = await this.$store.getters.client.get(`/orguser/release/download?releaseId=${item._id}`, {
                     responseType: "arraybuffer",
@@ -540,10 +272,10 @@ export default {
                 link.setAttribute("download", `${item.releaseTitle}.zip`);
                 document.body.appendChild(link);
                 link.click();
-
+                loader.hide()
                 this.messageToast("Success", "success", "Zip file has been downloaded successfully");
             } catch (error) {
-
+                loader.hide();
                 this.messageToast("Invalid request", "danger", error.message);
             }
         },
@@ -617,4 +349,5 @@ export default {
 @media only screen and (min-width: 992px) {}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}</style>
+@media only screen and (min-width: 1200px) {}
+</style>

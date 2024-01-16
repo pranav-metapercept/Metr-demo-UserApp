@@ -107,61 +107,35 @@ export default {
                         </div>
 
                         <h4 class="font-size-18 mt-4">Register account</h4>
-                        <p class="text-muted">Get your free Nazox account now.</p>
+                        <p class="text-muted">Get your metr account now.</p>
                       </div>
 
                       <div class="p-2 mt-5">
-                        <b-alert
-                          v-model="registerSuccess"
-                          class="mt-3"
-                          variant="success"
-                          dismissible
-                        >Registration successfull.</b-alert>
+                        <b-alert v-model="registerSuccess" class="mt-3" variant="success" dismissible>Registration
+                          successfull.</b-alert>
 
-                        <b-alert
-                          v-model="isRegisterError"
-                          class="mt-3"
-                          variant="danger"
-                          dismissible
-                        >{{regError}}</b-alert>
+                        <b-alert v-model="isRegisterError" class="mt-3" variant="danger"
+                          dismissible>{{ regError }}</b-alert>
 
-                        <b-alert
-                          variant="danger"
-                          class="mt-3"
-                          v-if="notification.message"
-                          show
-                          dismissible
-                        >{{notification.message}}</b-alert>
-                        
+                        <b-alert variant="danger" class="mt-3" v-if="notification.message" show
+                          dismissible>{{ notification.message }}</b-alert>
+
                         <form class="form-horizontal" @submit.prevent="tryToRegisterIn">
                           <div class="form-group auth-form-group-custom mb-4">
                             <i class="ri-user-2-line auti-custom-input-icon"></i>
                             <label for="username">Username</label>
-                            <input
-                              v-model="user.username"
-                              type="text"
-                              class="form-control"
-                              id="username"
+                            <input v-model="user.username" type="text" class="form-control" id="username"
                               :class="{ 'is-invalid': submitted && $v.user.username.$error }"
-                              placeholder="Enter username"
-                            />
-                            <div
-                              v-if="submitted && !$v.user.username.required"
-                              class="invalid-feedback"
-                            >Username is required.</div>
+                              placeholder="Enter username" />
+                            <div v-if="submitted && !$v.user.username.required" class="invalid-feedback">Username is
+                              required.</div>
                           </div>
 
                           <div class="form-group auth-form-group-custom mb-4">
                             <i class="ri-mail-line auti-custom-input-icon"></i>
                             <label for="useremail">Email</label>
-                            <input
-                              v-model="user.email"
-                              type="email"
-                              class="form-control"
-                              id="useremail"
-                              placeholder="Enter email"
-                              :class="{ 'is-invalid': submitted && $v.user.email.$error }"
-                            />
+                            <input v-model="user.email" type="email" class="form-control" id="useremail"
+                              placeholder="Enter email" :class="{ 'is-invalid': submitted && $v.user.email.$error }" />
                             <div v-if="submitted && $v.user.email.$error" class="invalid-feedback">
                               <span v-if="!$v.user.email.required">Email is required.</span>
                               <span v-if="!$v.user.email.email">Please enter valid email.</span>
@@ -171,53 +145,22 @@ export default {
                           <div class="form-group auth-form-group-custom mb-4">
                             <i class="ri-lock-2-line auti-custom-input-icon"></i>
                             <label for="userpassword">Password</label>
-                            <input
-                              v-model="user.password"
-                              type="password"
-                              class="form-control"
-                              id="userpassword"
+                            <input v-model="user.password" type="password" class="form-control" id="userpassword"
                               placeholder="Enter password"
-                              :class="{ 'is-invalid': submitted && $v.user.password.$error }"
-                            />
-                            <div
-                              v-if="submitted && !$v.user.password.required"
-                              class="invalid-feedback"
-                            >Password is required.</div>
+                              :class="{ 'is-invalid': submitted && $v.user.password.$error }" />
+                            <div v-if="submitted && !$v.user.password.required" class="invalid-feedback">Password is
+                              required.</div>
                           </div>
 
                           <div class="text-center">
-                            <button
-                              class="btn btn-primary w-md waves-effect waves-light"
-                              type="submit"
-                            >Register</button>
+                            <button class="btn btn-primary w-md waves-effect waves-light" type="submit">Register</button>
                           </div>
 
-                          <div class="mt-4 text-center">
-                            <p class="mb-0">
-                              By registering you agree to the Nazox
-                              <a
-                                href="#"
-                                class="text-primary"
-                              >Terms of Use</a>
-                            </p>
-                          </div>
+                         
                         </form>
                       </div>
 
-                      <div class="mt-5 text-center">
-                        <p>
-                          Already have an account ?
-                          <router-link
-                            tag="a"
-                            to="/login"
-                            class="font-weight-medium text-primary"
-                          >Login</router-link>
-                        </p>
-                        <p>
-                          © 2020 Nazox. Crafted with
-                          <i class="mdi mdi-heart text-danger"></i> by Themesdesign
-                        </p>
-                      </div>
+                      
                     </div>
                   </div>
                 </div>
