@@ -1,135 +1,142 @@
 <template>
-<div>
-    <!-- Modal for showing processing progress -->
-    <b-modal id="modal-progress" ref="modaloutputprogress" title="Processing" hide-header title-class="font-18" hide-footer hide-close no-close-on-backdrop no-close-on-esc>
-        <strong>Please wait</strong>
-        <br />
-        <p>loading . . .</p>
-        <b-progress :value="75" :max="100" animated></b-progress>
-    </b-modal>
-    <!-- Modal for creating a pull request -->
-    <b-modal ref="pull-modal" hide-footer hide-header hide-close no-close-on-backdrop no-close-on-escer>
-        <div class="d-block text-center">
-            <h3>
-                You will need to Create a Pull Request.
-                <br />
-                We noticed that your repository is currently behind the latest
-                changes. To ensure that your code is up to date and aligned with the
-                latest developments, you will need to create a pull request.
-            </h3>
-        </div>
-        <hr class="my-2" />
-        <button class="btn btn-primary btn-sm  " block @click="createPullreq()">
-            Pull Repository
-        </button>
-    </b-modal>
-    <!-- Modal for committing output -->
-    <b-modal id="modal-commit" v-model="showModal" ref="modalcommit" title="Commit Output" title-class="font-18" hide-footer>
-        <div>
-            <b-form-group label="Commit Message">
-                <b-form-input for="text" v-model="commitMsg"></b-form-input>
-            </b-form-group>
-            <button class="btn btn-sm btn-primary" v-on:click="commitOutput()">
-                Commit
+    <div>
+        <!-- Modal for showing processing progress -->
+        <b-modal id="modal-progress" ref="modaloutputprogress" title="Processing" hide-header title-class="font-18"
+            hide-footer hide-close no-close-on-backdrop no-close-on-esc>
+            <strong>Please wait</strong>
+            <br />
+            <p>loading . . .</p>
+            <b-progress :value="75" :max="100" animated></b-progress>
+        </b-modal>
+        <!-- Modal for creating a pull request -->
+        <b-modal ref="pull-modal" hide-footer hide-header hide-close no-close-on-backdrop no-close-on-escer>
+            <div class="d-block text-center">
+                <h3>
+                    You will need to Create a Pull Request.
+                    <br />
+                    We noticed that your repository is currently behind the latest
+                    changes. To ensure that your code is up to date and aligned with the
+                    latest developments, you will need to create a pull request.
+                </h3>
+            </div>
+            <hr class="my-2" />
+            <button class="btn btn-primary btn-sm  " block @click="createPullreq()">
+                Pull Repository
             </button>
-        </div>
-    </b-modal>
-    <!-- Form for project information -->
-    <div v-if="hideform" class="row justify-content-center">
-        <div class="col-md-6">
-            <div class=" bg-primary text-white"></div>
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <form>
-                        <h5 class=" mb-4">Project Name : {{ projectName }}</h5>
-                        <div>
-                            Please note that the download button will become available only
-                            after you make your commit. Thank you for your understanding.
-                        </div>
-                        <div class="d-flex justify-content-center pt-1">
-                            <button v-on:click="openDownload()" class="btn btn-primary btn-sm  mr-2 mb-2" :disabled="disabledownloadbutton">
-                                <span class="d-flex align-items-center">
-                                    <span>
-                                        <i class="fas fa-file-archive mr-2"></i>
+        </b-modal>
+        <!-- Modal for committing output -->
+        <b-modal id="modal-commit" v-model="showModal" ref="modalcommit" title="Commit Output" title-class="font-18"
+            hide-footer>
+            <div>
+                <b-form-group label="Commit Message">
+                    <b-form-input for="text" v-model="commitMsg"></b-form-input>
+                </b-form-group>
+                <button class="btn btn-sm btn-primary" v-on:click="commitOutput()">
+                    Commit
+                </button>
+            </div>
+        </b-modal>
+        <!-- Form for project information -->
+        <div v-if="hideform" class="row justify-content-center">
+            <div class="col-md-6">
+                <div class=" bg-primary text-white"></div>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <form>
+                            <h5 class=" mb-4">Project Name : {{ projectName }}</h5>
+                            <div>
+                                Please note that the download button will become available only
+                                after you make your commit. Thank you for your understanding.
+                            </div>
+                            <div class="d-flex justify-content-center pt-1">
+                                <button v-on:click="openDownload()" class="btn btn-primary btn-sm  mr-2 mb-2"
+                                    :disabled="disabledownloadbutton">
+                                    <span class="d-flex align-items-center">
+                                        <span>
+                                            <i class="fas fa-file-archive mr-2"></i>
+                                        </span>
+                                        <span>
+                                            Download Output
+                                        </span>
                                     </span>
-                                    <span>
-                                        Download Output
+                                </button>
+                                <button class="btn btn-primary btn-sm  mr-2 mb-2" :disabled="disablecommitbutton"
+                                    @click.prevent="githubCommit">
+                                    <span class="d-flex align-items-center">
+                                        <span>
+                                            <i class="fab fa-github mr-2"></i>
+                                        </span>
+                                        <span>
+                                            Commit on GitHub
+                                        </span>
                                     </span>
-                                </span>
-                            </button>
-                            <button class="btn btn-primary btn-sm  mr-2 mb-2" :disabled="disablecommitbutton" @click.prevent="githubCommit">
-                                <span class="d-flex align-items-center">
-                                    <span>
-                                        <i class="fab fa-github mr-2"></i>
-                                    </span>
-                                    <span>
-                                        Commit on GitHub
-                                    </span>
-                                </span>
-                            </button>
-                        </div>
-                    </form>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-   
-    <!-- Form for release information -->
-    <div v-if="!hideform" class="card mt-4">
-        <div class="card-body">
-            <form novalidate @submit.prevent>
-                <div class="form-group">
-                    <label>Title <span class="text-secondary">*</span></label>
-                    <input v-validate="'required'" required v-model="typeform.releaseTitle" @keydown.space="preventLeadingSpace" name="releaseTitle" type="text" id="releaseTitle" class="form-control" placeholder="Enter release title" :class="{
+
+        <!-- Form for release information -->
+        <div v-if="!hideform" class="card mt-4">
+            <div class="card-body">
+                <form novalidate @submit.prevent>
+                    <div class="form-group">
+                        <label>Title <span class="text-secondary">*</span></label>
+                        <input v-validate="'required'" required v-model="typeform.releaseTitle"
+                            @keydown.space="preventLeadingSpace" name="releaseTitle" type="text" id="releaseTitle"
+                            class="form-control" placeholder="Enter release title" :class="{
                                 'is-invalid': submitted && $v.releaseTitle.$error,
                             }" />
-                    <p class="text-danger text-sm" v-show="errors.has('releaseTitle') &&
+                        <p class="text-danger text-sm" v-show="errors.has('releaseTitle') &&
                             _.find(errors.items, { field: 'releaseTitle' }).rule ==
                             'required'
                             ">
-                        <span>Title field is required</span>
-                    </p>
-                </div>
-                <div class="form-group">
-                    <label>Input Source Ditamap <span class="text-secondary">*</span></label>
-                    <div>
-                        <select class="form-control" v-model="typeform.inputPath" required>
-                            <option value="" disabled selected>Select source Ditamap</option>
-                            <option v-for="data in selectInput" :key="data.path" :value="data.path">{{ data.fileName }}
-                            </option>
-                        </select>
+                            <span>Title field is required</span>
+                        </p>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label>Output Format <span class="text-secondary">*</span></label>
-                    <div>
-                        <select class="form-control" v-model="typeform.outputFormat" required disabled>
-                            <option value="" disabled selected>Select output format</option>
-                            <option :value="outputFormatData[0].transtype">{{
+                    <div class="form-group">
+                        <label>Input Source Ditamap <span class="text-secondary">*</span></label>
+                        <div>
+                            <select class="form-control" v-model="typeform.inputPath" required>
+                                <option value="" disabled selected>Select source Ditamap</option>
+                                <option v-for="data in selectInput" :key="data.path" :value="data.path">{{ data.fileName }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Output Format <span class="text-secondary">*</span></label>
+                        <div>
+                            <select class="form-control" v-model="typeform.outputFormat" required disabled>
+                                <option value="" disabled selected>Select output format</option>
+                                <option :value="outputFormatData[0].transtype">{{
                                     outputFormatData[0].transtype
                                 }}</option>
-                        </select>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group text-right mb-0">
-                    <div>
-                        <button :disabled="!(
+                    <div class="form-group text-right mb-0">
+                        <div>
+                            <button :disabled="!(
                                         typeform.outputFormat &&
                                         typeform.inputPath &&
                                         typeform.releaseTitle
                                     )
-                                    " class="btn btn-primary btn-sm " v-on:click="generateOutputFun(projectPath, workspacePath)">
-                            Transform
-                        </button>
-                        <button @click="resetform()" class="btn btn-sm  btn-light m-l-5 ml-1">
-                            Cancel
-                        </button>
+                                    " class="btn btn-primary btn-sm "
+                                v-on:click="generateOutputFun(projectPath, workspacePath)">
+                                Transform
+                            </button>
+                            <button @click="resetform()" class="btn btn-sm  btn-light m-l-5 ml-1">
+                                Cancel
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </template>
 <script>
 import _ from "lodash";
@@ -148,7 +155,7 @@ export default {
     },
     data() {
         return {
-            userId:null,
+            userId: null,
             orgId: null,
             userName: null,
             typeform: {
@@ -231,7 +238,7 @@ export default {
             }
         },
         createPullreq() {
-        
+
             this.$store.getters.client
                 .post(
                     `/orguser/workspace/pullGitChanges?projectName=${this.projectName}`
@@ -250,10 +257,10 @@ export default {
                             });
                             eventBus.$emit("clearHistory");
                         })
-                        .catch(() => {});
+                        .catch(() => { });
                     res;
                     this.$refs["pull-modal"].hide();
-                   
+
                     this.messageToast(
                         "Success",
                         "success",
@@ -261,7 +268,7 @@ export default {
                     );
                 })
                 .catch((err) => {
-                  
+
                     this.messageToast(
                         "Invalid request",
                         "danger",
@@ -270,7 +277,7 @@ export default {
                 });
         },
         async getWorkspace() {
-           
+
             await this.$store.getters.client
                 .get(`/orguser/workspace/byuserId?userId=${this.userId}`)
                 .then(async (res) => {
@@ -291,24 +298,24 @@ export default {
                     await this.$store.getters.client
                         .get(`/orguser/workspace/inputfiles?path=${path}&extenssion=${ext}`)
                         .then((res) => {
-                          
+
                             this.selectInput = res.data;
                         })
                         .catch(() => {
-                            
+
                         });
                     await this.$store.getters.client
                         .get(`/orguser/workspace/repotree?path=${path}`)
                         .then((tres) => {
-                            
+
                             this.model = tres.data;
                         })
                         .catch(() => {
-                          
+
                         });
                 })
                 .catch(() => {
-                  
+
                 });
         },
         async generateOutputFun(path, workspacePath) {
@@ -404,15 +411,13 @@ export default {
                     let commitProjectObj = {
                         path: this.projectPath,
                         message: commitMsg,
-                        githubUsername:null,
+                        githubUsername: null,
                         email: null,
                     };
                     swalWithBootstrapButtons.fire({
                         title: "Commit request in progress...",
                         allowOutsideClick: false,
-                        onOpen: () => {
-                            Swal.showLoading();
-                        },
+
                     });
                     this.$store.getters.client
                         .put(`/orguser/workspace/commit`, commitProjectObj)
@@ -426,7 +431,7 @@ export default {
                             this.$store.getters.client
                                 .post(`/orguser/release`, this.releaseParams)
                                 .then(() => {
-                                   
+
                                 })
                                 .catch((err) => {
                                     this.$refs["modaloutputprogress"].hide();
@@ -461,7 +466,7 @@ export default {
                     });
                     this.typeform.outputFormat = this.outputFormatData[0].transtype;
                 })
-                .catch(() => {});
+                .catch(() => { });
         },
         resetform() {
             this.typeform.inputPath = null;
@@ -494,5 +499,4 @@ label {
     letter-spacing: 0em;
     text-align: left;
     color: rgba(23, 35, 61, 1);
-}
-</style>
+}</style>

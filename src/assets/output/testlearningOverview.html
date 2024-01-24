@@ -1,0 +1,317 @@
+<!DOCTYPE html
+  SYSTEM "about:legacy-compat">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Generated HTML</title><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous"></head><body><div id="navbar"><div id="logo-bar"><span onclick="openMenu()" id="menuToggle">☰</span></div><div id="searchBar"><input id="text-to-search" type="text" placeholder="Type something..." oninput="search()"><button id="search-button" onclick="search()">🔍</button><button id="clear-button" onclick="clearSearch()">X</button></div></div><div class="container"><div class="row"><html lang="en"><head><meta charset="UTF-8"><meta name="copyright" content="(C) Copyright 2023"><meta name="DC.rights.owner" content="(C) Copyright 2023"><meta name="DC.Type" content="learningOverview"><meta name="description" content="Working outline for learning overview topic design"><meta name="DC.Relation" scheme="URI" content="topOverview.html"><meta name="DC.Relation" scheme="URI" content="testlearningPlan.html#learningPlanTest"><meta name="DC.Relation" scheme="URI" content="testlearningContent.html#learningcontent"><meta name="DC.Format" content="HTML5"><meta name="DC.Identifier" content="overview"><link rel="stylesheet" type="text/css" href="commonltr.css"><title>Learning Overview topic</title></head><body><nav role="toc"><ul><li><a href="topOverview.html">The DITA Learning Topic Types</a><ul><li><a href="testlearningPlan.html#learningPlanTest">Learning Plan</a></li><li class="active"><a href="testlearningOverview.html#overview">Learning Overview topic</a></li><li><a href="testlearningContent.html#learningcontent">Creating a memo</a></li><li><a href="testlearningAssess.html#testAssess">Certification Test</a></li><li><a href="testlearningSummary.html#learningsummary">Learning summary</a></li></ul></li></ul></nav><main role="main"><article role="article" aria-labelledby="ariaid-title1"><article class="nested0" aria-labelledby="ariaid-title1" id="overview">
+ <h1 class="title topictitle1" id="ariaid-title1">Learning Overview topic</h1>
+ 
+ <div class="body learningBasebody learningOverviewbody"><p class="shortdesc">Working outline for learning overview topic design</p>
+  <section class="section lcIntro"><h2 class="title sectiontitle">Introduction</h2>
+   
+   <p class="p">If you need an introduction, you would include it here.</p>
+   <div class="note note note_note"><span class="note__title">Note:</span> You can have notes, tables, all kinds of things like that here, if you desire.</div>
+   <div class="note lcInstructornote note note_note"><span class="note__title">Note:</span> You can provide tips for instructors in an instructor note, like this
+    one.</div>
+  </section>
+  <section class="section lcAudience"><h2 class="title sectiontitle">Audience</h2>
+   
+   <p class="p">Target audience for this lesson includes anyone with a pulse and interest in the topic. </p>
+  </section>
+  <section class="section lcDuration"><h2 class="title sectiontitle">Duration</h2>
+   
+   
+  </section>
+  <section class="section lcPrereqs"><h2 class="title sectiontitle">Prerequisites</h2>
+   
+   <p class="p">You have no need to know anything prior to taking this lesson. It informs all.</p>
+  </section>
+  <section class="section lcObjectives"><h2 class="title sectiontitle">Objectives</h2>
+   
+   <span class="ph lcObjectivesStem">When you complete this lesson, you'll know how to do the
+    following:</span>
+   <ul class="ul lcObjectivesGroup">
+    <li class="li lcObjective">Creating a good learning overview topic.</li>
+    <li class="li lcObjective">Identifying clear learning objectives.</li>
+    <li class="li lcObjective">Adding good test items to assess knowledge gained.</li>
+   </ul>
+  </section>
+  <section class="section lcResources"><h2 class="title sectiontitle">Resources</h2>
+   
+   <p class="p">Use this to list the resources available about this topic.</p>
+   <ul class="ul">
+    <li class="li">A good book.</li>
+    <li class="li">A wiki page.</li>
+    <li class="li">A good article or presentation.</li>
+    <li class="li">A relevant information center URL.</li>
+   </ul>
+  </section>
+  <section class="section"><h2 class="title sectiontitle">Additional sections</h2>
+   
+   <p class="p">You can add additional sections to cover any other content you'd like to include in a learning
+    Overview.</p>
+  </section>
+ </div>
+<nav role="navigation" class="related-links"><div class="familylinks"><div class="parentlink"><strong>Parent topic:</strong> <a class="link" href="topOverview.html" title="Here are the first examples of the DITA Learning Topic types.">The DITA Learning Topic Types</a></div><div class="previouslink"><strong>Previous topic:</strong> <a class="link" href="testlearningPlan.html#learningPlanTest" title="It's always good to provide a plan.">Learning Plan</a></div><div class="nextlink"><strong>Next topic:</strong> <a class="link" href="testlearningContent.html#learningcontent" title="Creating a memo is easy and fun.">Creating a memo</a></div></div></nav></article></article></main></body></html><div class="on-this-page"><b>On this page</b><br><br></div></div></div><div class="to-top" onclick="scrollToTop()"><i class="fa-solid fa-arrow-up"></i></div><div class="footer"><div class="bottom"></div><span class="ftrtxt"></span></div></body></html><script src="https://kit.fontawesome.com/a1435abe6f.js" crossorigin="anonymous"></script><script>
+  
+      const expandmenu = document.querySelectorAll(
+        '.container nav[role="toc"] li, .container nav.toc li'
+      );
+      const multiChapetersTopic = []
+      expandmenu.forEach((ele) => {
+        if (checkForChildUnorderedList(ele.childNodes)) multiChapetersTopic.push(ele);
+      });
+      function checkForChildUnorderedList(nodes) {
+        for (const childNode of nodes) {
+          if (childNode.nodeName === "UL") return true;
+        }
+      }
+      addCollapsibleMenu(multiChapetersTopic);
+      function handleCollapse(){
+        event.target.classList.toggle("rotate-dropdown-arrow")
+        event.target.nextElementSibling.nextElementSibling.classList.toggle("show-submenu")
+      }
+      function openMenu(){
+        const menu = document.querySelector('.container>.row')
+        menu.classList.toggle("hide-menu")
+      }
+      function addCollapsibleMenu(allTopics){
+        allTopics.forEach((topic) => {
+          topic.childNodes[1].classList.add("hide-submenu");
+          const collapseButton = document.createElement("div");
+          collapseButton.classList.add("dropdown-arrow")
+          collapseButton.addEventListener("click", handleCollapse);
+          topic.insertBefore(collapseButton, topic.firstChild);
+        });
+      }
+      function trackActiveTopic(){
+        // logic to handle breadcrumb
+        const breadCrumbDiv = document.createElement("div");
+        breadCrumbDiv.classList.add("breadcrumb")
+        const contentArea = document.querySelector('main.main, main[role="main"]')
+        contentArea.insertBefore(breadCrumbDiv,contentArea.firstChild)
+        // ends here
+        const activeTopic = document.querySelector('.container nav[role="toc"] .active,.container nav.toc .active')
+        keepActiveCollapsableMenuOpen(activeTopic)
+      }
+      function keepActiveCollapsableMenuOpen(activeTopic){
+        handleBreadCrumbs(activeTopic)
+        if(activeTopic.nodeName === "NAV") return 
+        if(activeTopic.parentElement.classList.contains("hide-submenu")){
+          activeTopic.parentElement.classList.toggle("show-submenu")
+          activeTopic.parentElement?.previousElementSibling?.previousElementSibling?.classList.toggle("rotate-dropdown-arrow")
+        }
+        keepActiveCollapsableMenuOpen(activeTopic.parentElement)
+      }
+      trackActiveTopic()
+      function handleBreadCrumbs(activeTopic){
+        if(activeTopic.nodeName !== "LI") return
+        const breadCrumbDiv = document.querySelector('main.main .breadcrumb, main[role="main"] .breadcrumb')
+        const newLink = document.createElement("a")
+        newLink.innerHTML = activeTopic.childNodes[1]?activeTopic.childNodes[1].innerText : activeTopic.innerText 
+        newLink.setAttribute("href",activeTopic.childNodes[1]?activeTopic.childNodes[1].href : activeTopic.childNodes[0].href)
+        breadCrumbDiv.insertBefore(newLink,breadCrumbDiv.firstChild)
+      }
+      window.addEventListener("scroll",()=>{
+        const toTop = document.querySelector(".to-top")
+        if(window.pageYOffset > 100){
+          toTop.classList.add("to-top-visible")
+        }else{
+          toTop.classList.remove("to-top-visible")
+        }
+      })
+      function scrollToTop(){
+        window.scrollTo(0,0)
+      }
+      function addLogo(){
+        const logoDiv = document.querySelector("#logo-bar")
+        const logoImg = document.createElement("img")
+        logoDiv.append(logoImg)
+      }
+      addLogo()
+      function addNextAndPreviousButtons() {
+        const contentBody = document.querySelector(
+          'main.main,main[role="main"]'
+        );
+        const nextButton = document.createElement("a");
+        const prevButton = document.createElement("a");
+        nextButton.innerHTML =
+          'Next Topic <i class="fa-solid fa-arrow-right"></i>';
+        prevButton.innerHTML =
+          '<i class="fa-solid fa-arrow-left"></i> Previous Topic';
+        const nextPrevContainer = document.createElement("div");
+        nextPrevContainer.classList.add("next-prev-container");
+        nextPrevContainer.append(prevButton);
+        nextPrevContainer.append(nextButton);
+        const activeTopic = document.querySelector("li.active")
+        console.dir(activeTopic)
+        const {nextTopic,prevTopic} = getTopicNameAndLink(activeTopic.previousElementSibling,activeTopic.nextElementSibling)
+        nextButton.href = nextTopic?.href || "javascript:void(0)"
+        nextButton.setAttribute("tooltip",nextTopic?.innerText || "")
+        prevButton.href = prevTopic?.href || "javascript:void(0)"
+        prevButton.setAttribute("tooltip",prevTopic?.innerText || "")
+        contentBody.append(nextPrevContainer);
+      }
+      function getTopicNameAndLink(previousElementSibling,nextElementSibling){
+        let prevTopic = null,nextTopic=null;
+        if(previousElementSibling){
+          for(const childElement of previousElementSibling.childNodes){
+            if(childElement.nodeName === "A"){
+              prevTopic=childElement
+            }
+          }
+        }
+        if(nextElementSibling){
+          for(const childElement of nextElementSibling.childNodes){
+            if(childElement.nodeName === "A"){
+              nextTopic=childElement
+            }
+          }
+        }
+        return {
+          nextTopic,
+          prevTopic
+        }
+      }
+      addNextAndPreviousButtons();
+      let searchResultsDisplayed = false;
+      toggleButtonsVisibility()
+      let originalContent = '';
+      function addClassToAllTags() {
+        const body = document.querySelector('body');
+        const allElements = body.getElementsByTagName('*');
+        for (const element of allElements) {
+          if (element.id === 'navbar' || element.nodeName === 'IMG') {
+            continue;
+          }
+          element.classList.add('paragraph');
+        }
+        originalContent = document.querySelector('main').innerHTML; 
+      }
+      window.addEventListener('DOMContentLoaded', addClassToAllTags);
+      function search() {
+        let textToSearch = document.getElementById('text-to-search').value;
+        if (!textToSearch || 3 > textToSearch.length) {
+          restoreOriginalContent()
+          return;
+        }
+        let mainContent = document.querySelector('main');
+        textToSearch = textToSearch.replace(/[.*+?^()|[]\]/g, "\$");
+        let pattern = new RegExp(textToSearch, "gi");
+        mainContent.innerHTML = originalContent; 
+        let paragraphs = mainContent.querySelectorAll('.paragraph:not([role="toc"])');
+        for (const element of paragraphs) {
+          if (element.querySelector('img,a')) {
+            continue; // Skip the entire paragraph if an image is present
+          }
+          element.innerHTML = element.innerHTML.replace(pattern, match => '<mark>'+match+'</mark>');
+        }
+        searchResultsDisplayed = true;
+        toggleButtonsVisibility();
+      }
+      function restoreOriginalContent() {
+        let mainContent = document.querySelector('main');
+        mainContent.innerHTML = originalContent; // Restore original content
+        searchResultsDisplayed = false;
+        toggleButtonsVisibility();
+      }
+      function toggleButtonsVisibility() {
+        const searchButton = document.getElementById('search-button');
+        const clearButton = document.getElementById('clear-button');
+        if (searchResultsDisplayed) {
+          searchButton.style.display = 'none';
+          clearButton.style.display = 'inline-block';
+        } else {
+          searchButton.style.display = 'inline-block';
+          clearButton.style.display = 'none';
+        }
+      }
+      function clearSearch() {
+        let mainContent = document.querySelector('main');
+        let paragraphs = mainContent.querySelectorAll('.paragraph:not([role="toc"])');
+        for (const element of paragraphs) {
+          element.innerHTML = element.innerHTML.replace(/<mark>/g, "").replace(/<\/mark>/g, "");
+        }
+        document.getElementById('text-to-search').value = '';
+        searchResultsDisplayed = false;
+        toggleButtonsVisibility();
+      }
+      // on this page logic
+        function handleOnthisPage(){
+          const onThisPageContainer = document.querySelector('div.on-this-page')
+          const mainContent = document.querySelector('main[role="main"],main.main')
+          const allHeadings = mainContent.querySelectorAll('h1, h2, h3');
+          let currentTopic = null;
+          let currentTopicList = null;
+          allHeadings.forEach((heading) => {
+            const headingText = heading.innerText;
+            let headingId = heading.getAttribute('id');
+            if (heading.tagName === 'H1') {
+              // Create a new main topic
+              if (currentTopicList) {
+                currentTopic.appendChild(currentTopicList);
+              }
+              currentTopic = document.createElement('div');
+              currentTopicList = document.createElement('ul');
+              const topicTitle = document.createElement('a');
+              topicTitle.innerHTML = '<strong>'+headingText+'</strong>';
+              topicTitle.href = '#'+headingId
+              topicTitle.classList.add('main-topic');
+              currentTopic.appendChild(topicTitle);
+              currentTopic.appendChild(currentTopicList);
+              onThisPageContainer.appendChild(currentTopic);
+            } else if (heading.tagName === 'H2' || heading.tagName === "H3" && currentTopicList) {
+              // Create a subtopic
+              const subtopicListItem = document.createElement('li');
+              const subtopicLink = document.createElement('a');
+              if(!headingId){
+                headingId = generateRandomId()
+              }
+              heading.setAttribute('id',headingId)
+              subtopicLink.textContent = headingText;
+              subtopicLink.href = '#' + headingId;
+              subtopicListItem.appendChild(subtopicLink);
+              currentTopicList.appendChild(subtopicListItem);
+            }
+          });
+        }
+        handleOnthisPage()
+        //logic to prevent hiding section by navbar while navigating through on this page section
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+              const offset = targetElement.getBoundingClientRect().top + window.scrollY - 100 //navbarHeight;
+              window.scrollTo({
+                top: offset,
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+        function adjustTables(){
+          const allRows = document.querySelectorAll('tr.row');
+          for(const row of allRows){
+            row.classList.remove('row')
+          }
+        }
+        adjustTables()
+        function generateRandomId() {
+          const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+          const idLength = 8;
+          let randomId = '';
+          for (let i = 0; i < idLength; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            randomId += characters.charAt(randomIndex);
+          }
+          return randomId;
+        }
+        //function to handle broken image link in logo
+        function handleBrokenLogo() {
+          const logoImg = document.querySelector('#logo-bar img');
+          logoImg.addEventListener('error',()=>{
+            logoImg.style.display = 'none'
+          })
+        }
+        handleBrokenLogo()
+      
+  </script>

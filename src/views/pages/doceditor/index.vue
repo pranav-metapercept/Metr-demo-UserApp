@@ -1269,9 +1269,7 @@ export default {
                         swalWithBootstrapButtons.fire({
                             title: "Commit request in progress...",
                             allowOutsideClick: false,
-                            onOpen: () => {
-                                Swal.showLoading();
-                            },
+                           
                         });
                         this.$store.getters.client
                             .put(`/orguser/workspace/commit`, commitProjectObj)

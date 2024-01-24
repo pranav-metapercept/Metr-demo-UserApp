@@ -403,9 +403,7 @@ export default {
                     swalWithBootstrapButtons.fire({
                         title: "Commit request in progress...",
                         allowOutsideClick: false,
-                        onOpen: () => {
-                            Swal.showLoading();
-                        },
+                       
                     });
                     swalWithBootstrapButtons.fire({
                         icon: "success",

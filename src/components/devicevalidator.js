@@ -17,7 +17,7 @@ function devicevalidator(res) {
         timer: 2000,
         timerProgressBar: true,
         didOpen: () => {
-          Swal.showLoading();
+        
           const b = Swal.getHtmlContainer().querySelector("b");
           timerInterval = setInterval(() => {
             b.textContent = Swal.getTimerLeft();

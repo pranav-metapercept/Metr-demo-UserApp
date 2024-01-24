@@ -17,26 +17,22 @@ import i18n from "./i18n";
 import VJstree from "vue-jstree";
 import "@/assets/scss/app.scss";
 
-import { initFirebaseBackend } from "./helpers/firebase/authUtils";
+// import { initFirebaseBackend } from "./helpers/firebase/authUtils";
 
 import { configureFakeBackend } from "./helpers/fakebackend/fake-backend";
 
 const firebaseConfig = {
-  apiKey: process.env.VUE_APP_APIKEY,
-  authDomain: process.env.VUE_APP_AUTHDOMAIN,
-  databaseURL: process.env.VUE_APP_VUE_APP_DATABASEURL,
-  projectId: process.env.VUE_APP_PROJECTId,
-  storageBucket: process.env.VUE_APP_STORAGEBUCKET,
-  messagingSenderId: process.env.VUE_APP_MESSAGINGSENDERID,
-  appId: process.env.VUE_APP_APPId,
-  measurementId: process.env.VUE_APP_MEASUREMENTID,
+  apiKey: "AIzaSyC2b__m7MwoOp4U4HhMb0SsPtuyUlpmTHQ",
+  authDomain: "metr-411707.firebaseapp.com",
+  projectId: "metr-411707",
+  storageBucket: "metr-411707.appspot.com",
+  messagingSenderId: "1081449377795",
+  appId: "1:1081449377795:web:a9389366267528a93f9e36",
+  measurementId: "G-ZEL4BX00J9",
 };
-
-if (process.env.VUE_APP_DEFAULT_AUTH === "firebase") {
-  initFirebaseBackend(firebaseConfig);
-} else {
-  configureFakeBackend();
-}
+firebaseConfig;
+// initFirebaseBackend;
+configureFakeBackend();
 
 Vue.config.productionTip = false;
 Vue.use(VueYoutube);

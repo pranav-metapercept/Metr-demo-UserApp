@@ -63,7 +63,7 @@ export default {
                         "email": "jyotikamal.s@metapercept.com",
                         "date": "2024-03-21T07:04:19Z"
                     },
-                    "projectName": "DITAxPressoBackend",
+                    "projectName": "CipherCraft",
                     "message": "created api ",
                     "comment_count": 0
                 },
@@ -73,7 +73,7 @@ export default {
                         "email": "jyotikamal.s@metapercept.com",
                         "date": "2023-09-20T10:46:14Z"
                     },
-                    "projectName": "DITAxPressoBackend",
+                    "projectName": "CipherCraft",
                     "message": "test commit",
                     "comment_count": 0
                 },
@@ -83,7 +83,7 @@ export default {
                         "email": "jyotikamal.s@metapercept.com",
                         "date": "2024-01-04T08:42:51Z"
                     },
-                    "projectName": "DITAxPressoBackend",
+                    "projectName": "CipherCraft",
                     "message": "added word ",
                     "comment_count": 0
                 },
@@ -93,7 +93,7 @@ export default {
                         "email": "jyotikamal.s@metapercept.com",
                         "date": "2024-03-21T07:04:19Z"
                     },
-                    "projectName": "DITAxPressoBackend",
+                    "projectName": "NeuralNexus",
                     "message": "created api ",
                     "comment_count": 0
                 },
@@ -103,7 +103,7 @@ export default {
                         "email": "jyotikamal.s@metapercept.com",
                         "date": "2023-09-20T10:46:14Z"
                     },
-                    "projectName": "DITAxPressoBackend",
+                    "projectName": "NeuralNexus",
                     "message": "test commit",
                     "comment_count": 0
                 },
@@ -113,220 +113,70 @@ export default {
                         "email": "jyotikamal.s@metapercept.com",
                         "date": "2024-01-04T08:42:51Z"
                     },
-                    "projectName": "DITAxPressoBackend",
+                    "projectName": "NeuralNexus",
                     "message": "added word ",
                     "comment_count": 0
                 },
                 {
                     "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-03-21T07:04:19Z"
+                        "name": "Alice-CodeForge",
+                        "email": "alice@codeforge.com",
+                        "date": "2023-12-15T14:30:02Z"
                     },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "created api ",
+                    "projectName": "QuantumQuasar",
+                    "message": "initial commit",
                     "comment_count": 0
                 },
                 {
                     "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2023-09-20T10:46:14Z"
+                        "name": "Bob-DevWorks",
+                        "email": "bob@devworks.com",
+                        "date": "2024-02-08T09:18:45Z"
                     },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "test commit",
+                    "projectName": "DataDynamo",
+                    "message": "bug fix",
                     "comment_count": 0
                 },
                 {
                     "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-01-04T08:42:51Z"
+                        "name": "Eva-CryptoHub",
+                        "email": "eva@cryptohub.io",
+                        "date": "2023-11-02T17:55:30Z"
                     },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "added word ",
+                    "projectName": "SecureSocket",
+                    "message": "security enhancement",
                     "comment_count": 0
                 },
                 {
                     "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-03-21T07:04:19Z"
+                        "name": "Charlie-ByteBurst",
+                        "email": "charlie@byteburst.net",
+                        "date": "2024-04-12T11:20:36Z"
                     },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "created api ",
+                    "projectName": "ByteBlitz",
+                    "message": "feature implementation",
                     "comment_count": 0
                 },
                 {
                     "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2023-09-20T10:46:14Z"
+                        "name": "Diana-QuantumRealm",
+                        "email": "diana@quantumrealm.com",
+                        "date": "2023-10-05T08:15:02Z"
                     },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "test commit",
+                    "projectName": "QuantumCompute",
+                    "message": "optimization",
                     "comment_count": 0
                 },
                 {
                     "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-01-04T08:42:51Z"
+                        "name": "Frank-FutureForge",
+                        "email": "frank@futureforge.tech",
+                        "date": "2024-02-25T14:40:19Z"
                     },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "added word ",
+                    "projectName": "TimeWarp",
+                    "message": "time-travel support",
                     "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-03-21T07:04:19Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "created api ",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2023-09-20T10:46:14Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "test commit",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-01-04T08:42:51Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "added word ",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-03-21T07:04:19Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "created api ",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2023-09-20T10:46:14Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "test commit",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-01-04T08:42:51Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "added word ",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-03-21T07:04:19Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "created api ",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2023-09-20T10:46:14Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "test commit",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-01-04T08:42:51Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "added word ",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-03-21T07:04:19Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "created api ",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2023-09-20T10:46:14Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "test commit",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-01-04T08:42:51Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "added word ",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-03-21T07:04:19Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "created api ",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2023-09-20T10:46:14Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "test commit",
-                    "comment_count": 0
-                },
-                {
-                    "committer": {
-                        "name": "Jyoti-Metapercept",
-                        "email": "jyotikamal.s@metapercept.com",
-                        "date": "2024-01-04T08:42:51Z"
-                    },
-                    "projectName": "DITAxPressoBackend",
-                    "message": "added word ",
-                    "comment_count": 0
-                },
+                }
             ]
             , // List of recent notifications
             userProjects: null

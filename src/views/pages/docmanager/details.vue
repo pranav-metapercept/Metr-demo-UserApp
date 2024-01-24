@@ -104,10 +104,10 @@
 <script>
 
 import simplebar from "simplebar-vue";
-import { gapi } from 'gapi-script';
+import axios from "axios"
 import Layout from "../../layouts/main";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
+import Swal from "sweetalert2";
 import {
     eventBus
 } from "../../../main";
@@ -150,7 +150,7 @@ export default {
                             "children": [],
                             "sha": "9a2784d5c76a981ec46a17b0ed7c5466960b8e62",
                             "icon": "ri-file-text-line",
-                            "opened": false
+                            "opened": true
                         },
                         {
                             "text": "concepts",
@@ -160,40 +160,85 @@ export default {
                                     "children": [],
                                     "sha": "10887a46b2c76c0f9dd23dc316c63a44e15358d7",
                                     "icon": "ri-file-text-line",
-                                    "opened": false
+                                    "opened": true
                                 },
                                 {
                                     "text": "taskbook-abstract.html",
                                     "children": [],
                                     "sha": "db2335bec9f62846dd5046e5d0b354f028fc65ae",
                                     "icon": "ri-file-text-line",
-                                    "opened": false
+                                    "opened": true
+                                },
+                                {
+                                    "text": "images",
+                                    "children": [
+                                        {
+                                            "text": "image1.png",
+                                            "children": [],
+                                            "sha": "fd8b2a9e01c9c2f8c5cb66a2e0b9fb7c8a6a9c34",
+                                            "icon": "ri-file-image-line",
+                                            "opened": true
+                                        },
+                                        {
+                                            "text": "image2.png",
+                                            "children": [],
+                                            "sha": "a4d3f6e7bd1b632a5e3e1f9dca865dbd3a91b2f9",
+                                            "icon": "ri-file-image-line",
+                                            "opened": true
+                                        }
+                                    ],
+                                    "sha": "a97b8b3e77c61ec10f6c00289941a6c35f93aa3a",
+                                    "opened": true
                                 }
                             ],
                             "sha": "7acb0578d41b82e31675bd021ef6d6c217fd76a8",
-                            "opened": false
+                            "opened": true
                         },
                         {
                             "text": "index.html",
                             "children": [],
                             "sha": "31d8e2af8b5efc7b6549115306ec151edbbeebbf",
                             "icon": "ri-file-text-line",
-                            "opened": false
+                            "opened": true
                         },
-
-
-
+                        {
+                            "text": "scripts",
+                            "children": [
+                                {
+                                    "text": "script1.js",
+                                    "children": [],
+                                    "sha": "e2f0f2c9b9b8e64138d3c3c17bf0f9e6c0c1d45e",
+                                    "icon": "ri-file-code-line",
+                                    "opened": true
+                                },
+                                {
+                                    "text": "script2.js",
+                                    "children": [],
+                                    "sha": "7d33c28a9a35df02a302a8ea096bc68e321163c5",
+                                    "icon": "ri-file-code-line",
+                                    "opened": true
+                                }
+                            ],
+                            "sha": "e5ef48a85c02bca4a1f575438a9d3e4a6a1b3d7d",
+                            "opened": true
+                        }
                     ],
                     "sha": "70e5166a1c141760286f9d3413c7288e3165efc7",
-                    "opened": false
+                    "opened": true
                 }
             ]
             ,
-            repobranchesdata: [],
+            selected: '',
+            repobranchesdata: [
+                { value: 'main', text: 'main' },
+                { value: 'deployment', text: 'deployment' },
+                { value: 'production', text: 'production' },
+
+            ],
             ditaotVersion: "",
             projectName: null,
             repouser: null,
-            selected: "main",
+
             isLoading: false,
             downloadURL: "",
             brachName: "main",
@@ -224,74 +269,46 @@ export default {
                 path: `/doceditor`,
             });
         },
-        async downloadFolder() {
-            try {
-                await this.initGoogleDrive();
-                await this.listFilesAndDownload(this.folderId);
-            } catch (error) {
-                console.error("Error downloading folder:", error);
-            }
-        },
+        downloadFolder() {
+            const url = 'https://demo-download-server.vercel.app/download';
 
-        async initGoogleDrive() {
-            return new Promise((resolve, reject) => {
-                gapi.load('client:auth2', {
-                    callback: async () => {
-                        try {
-                            await gapi.client.init({
-                                apiKey: this.apiKey,
-                                clientId: this.clientID,
-                                discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'],
-                                scope: 'https://www.googleapis.com/auth/drive.readonly',
-                            });
-                            await gapi.auth2.getAuthInstance().signIn();
-                            resolve();
-                        } catch (error) {
-                            reject(error);
-                        }
-                    },
-                    onerror: reject,
-                    timeout: 1000,
-                    ontimeout: reject,
+            axios
+                .get(url, {
+                    responseType: 'arraybuffer', // Set responseType to 'arraybuffer' to handle binary data
+                })
+                .then((response) => {
+
+
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: "btn btn-primary btn-sm mr-2",
+                            cancelButton: "btn btn-light btn-sm",
+                        },
+                        buttonsStyling: false,
+                    });
+                    swalWithBootstrapButtons.fire({
+
+                        icon: "success",
+                        title: "Zip File Downloaded Successfully",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    const blob = new Blob([response.data], { type: 'application/zip' });
+                    const link = document.createElement('a');
+
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = 'output'; // Set the desired file name
+
+                    document.body.appendChild(link);
+                    link.click();
+
+                    document.body.removeChild(link);
+
+
+                })
+                .catch((error) => {
+                    console.error('Error downloading ZIP file:', error);
                 });
-            });
-        },
-        async downloadFile(fileId, fileName) {
-            console.log(fileId, fileName)
-            try {
-                const response = await gapi.client.drive.files.get({
-                    fileId: fileId,
-                    alt: "media",
-                });
-
-                const fileContent = response.body;
-
-                const blob = new Blob([fileContent], { type: 'application/octet-stream' });
-                const link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
-                link.download = fileName;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } catch (error) {
-                console.error(`Error downloading file ${fileName}:`, error);
-            }
-        },
-
-        async listFilesAndDownload(folderId) {
-            try {
-                const response = await gapi.client.drive.files.list({
-                    q: `'${folderId}' in parents`,
-                });
-
-                const files = response.result.files;
-
-                for (const file of files) {
-                    await this.downloadFile(file.id, file.name);
-                }
-            } catch (error) {
-                console.error("Error listing or downloading files:", error);
-            }
         },
 
 
