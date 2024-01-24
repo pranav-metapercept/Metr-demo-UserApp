@@ -17,7 +17,7 @@ import i18n from "./i18n";
 import VJstree from "vue-jstree";
 import "@/assets/scss/app.scss";
 
-// import { initFirebaseBackend } from "./helpers/firebase/authUtils";
+import { initFirebaseBackend } from "./helpers/firebase/authUtils";
 
 import { configureFakeBackend } from "./helpers/fakebackend/fake-backend";
 
@@ -28,10 +28,10 @@ const firebaseConfig = {
   storageBucket: "metr-411707.appspot.com",
   messagingSenderId: "1081449377795",
   appId: "1:1081449377795:web:a9389366267528a93f9e36",
-  measurementId: "G-ZEL4BX00J9",
+  measurementId: "G-ZEL4BX00J9"
 };
 firebaseConfig;
-// initFirebaseBackend;
+initFirebaseBackend;
 configureFakeBackend();
 
 Vue.config.productionTip = false;
