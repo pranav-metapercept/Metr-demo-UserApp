@@ -522,7 +522,7 @@ export default {
             fileSHA: null,
             model: {
                 "path": "/home/pranav-metapercept/DITAxPressoWorkspace/6595087f7883623234585d6f/it-book",
-                "name": "it-book",
+                "name": "Flowers",
                 "children": [
                     {
                         "path": "\\home\\pranav-metapercept\\DITAxPressoWorkspace\\6595087f7883623234585d6f\\it-book\\.git",
