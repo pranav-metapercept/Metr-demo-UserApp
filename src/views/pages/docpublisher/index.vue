@@ -62,7 +62,7 @@ export default {
     },
     created() {
         eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
-        this.getoutputFormat()
+       
     },
     mounted() {
         const swalWithBootstrapButtons = Swal.mixin({

@@ -8,7 +8,7 @@ import VueSweetalert2 from "vue-sweetalert2";
 import VueMask from "v-mask";
 import * as VueGoogleMaps from "vue2-google-maps";
 import VueYoutube from "vue-youtube";
-
+import Loading from "vue-loading-overlay";
 import vco from "v-click-outside";
 
 import router from "./router";
@@ -37,6 +37,7 @@ configureFakeBackend();
 Vue.config.productionTip = false;
 Vue.use(VueYoutube);
 Vue.use(BootstrapVue);
+Vue.use(Loading);
 Vue.use(VeeValidate);
 Vue.use(vco);
 Vue.use(Vuelidate);

@@ -32,7 +32,7 @@
                                 after you make your commit. Thank you for your understanding.
                             </div>
                             <div class="d-flex justify-content-center pt-1">
-                                <button v-on:click="openDownload()" class="btn btn-primary btn-sm  mr-2 mb-2"
+                                <button @click="openDownload()" class="btn btn-primary btn-sm  mr-2 mb-2"
                                     :disabled="disabledownloadbutton">
                                     <span class="d-flex align-items-center">
                                         <span>
@@ -216,7 +216,7 @@ export default {
         this.hideform = false;
     },
     mounted() {
-        this.getoutputFormat();
+       
         this.makedefaultplugin();
         this.hideform = false;
     },
@@ -422,7 +422,6 @@ export default {
             this.typeform.releaseTitle = "";
         },
         openDownload() {
-        
             this.$router.push({
                 path: `/docmanager/details`,
             });

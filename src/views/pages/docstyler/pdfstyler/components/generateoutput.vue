@@ -199,7 +199,7 @@ export default {
         this.hideform = false;
     },
     mounted() {
-        this.getoutputFormat();
+      
         this.hideform = false;
     },
     computed: {

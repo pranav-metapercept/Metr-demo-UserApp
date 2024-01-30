@@ -1,4 +1,4 @@
-# metr- Vuejs admin template
+# Nazox- Vuejs admin template
 
 ## Project setup
 ```

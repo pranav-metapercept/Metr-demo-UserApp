@@ -187,7 +187,7 @@ export default {
         this.hideform = false;
     },
     mounted() {
-        this.getoutputFormat();
+   
         this.makedefaultplugin();
         this.hideform = false;
     },

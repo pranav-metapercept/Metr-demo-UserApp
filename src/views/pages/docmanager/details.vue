@@ -29,7 +29,7 @@
             <div class="row mb-2 mt-3">
                 <label class=" col-label ml-3">Select Branch <span class="text-danger">*</span></label>
                 <div class="col-lg-12 ">
-                    <select class="form-control" v-model="selected" placeholder="Select Branch" @change="getObject">
+                    <select class="form-control" v-model="selected" placeholder="Select Branch" >
                         <option value="" disabled>Please Choose Branch</option>
                         <option v-for="(option, index) in repobranchesdata" :key="index" :value="option.value">{{
                             option.text }}
@@ -79,14 +79,22 @@
                                                 </div>
                                             </div>
                                             <div class="border-top">
-                                                <div class="download-field " @click="downloadFolder">
-                                                    <div class="download-btn">
+                                                <div class="download-field" @click="downloadFolder">
+                                                    <div v-if="isLoading" class="spinner-border text-primary" role="status">
+                                                        <span class="sr-only">Downloading. Please wait.</span>
+
+                                                    </div>
+
+                                                    <div v-else class="download-btn">
                                                         <span>Download as Zip</span>
+
+
                                                         <img class="downloadImg"
                                                             src="../../../assets/toolbarsvgs/download.svg"
                                                             alt="SVG Image" />
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -108,9 +116,7 @@ import axios from "axios"
 import Layout from "../../layouts/main";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Swal from "sweetalert2";
-import {
-    eventBus
-} from "../../../main";
+
 
 export default {
     components: {
@@ -256,10 +262,7 @@ export default {
 
         };
     },
-    async mounted() {
-        eventBus.$emit("update-sidebar", "menuitems.docmanager.text");
 
-    },
     methods: {
         async openEditor() {
             this.navigateToEditor();
@@ -270,46 +273,75 @@ export default {
             });
         },
         downloadFolder() {
-            const url = 'https://demo-download-server.vercel.app/download';
+            const downloadUrl = 'https://demo-download-server.vercel.app/download';
+            this.isLoading = true; // Set loading state to true
 
-            axios
-                .get(url, {
-                    responseType: 'arraybuffer', // Set responseType to 'arraybuffer' to handle binary data
-                })
-                .then((response) => {
+            // Make the request to download the file
+            axios.get(downloadUrl, { responseType: 'arraybuffer' })
+                .then(response => {
+                    // Display success message using SweetAlert
+                    this.showSuccessAlert();
 
-
-                    const swalWithBootstrapButtons = Swal.mixin({
-                        customClass: {
-                            confirmButton: "btn btn-primary btn-sm mr-2",
-                            cancelButton: "btn btn-light btn-sm",
-                        },
-                        buttonsStyling: false,
-                    });
-                    swalWithBootstrapButtons.fire({
-
-                        icon: "success",
-                        title: "Zip File Downloaded Successfully",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
+                    // Create a blob from the response data
                     const blob = new Blob([response.data], { type: 'application/zip' });
+
+                    // Create a link element to trigger the download
                     const link = document.createElement('a');
-
                     link.href = window.URL.createObjectURL(blob);
-                    link.download = 'output'; // Set the desired file name
+                    link.download = 'output.zip'; // Set the desired file name
 
+                    // Append the link to the body and trigger the download
                     document.body.appendChild(link);
                     link.click();
 
+                    // Remove the link from the body
                     document.body.removeChild(link);
 
-
+                    // Reset loading state after successful download
+                    this.isLoading = false;
                 })
-                .catch((error) => {
+                .catch(error => {
+                    // Reset loading state in case of an error
+                    this.isLoading = false;
+
+                    // Display error message using SweetAlert
+                    this.showErrorAlert(error);
+
                     console.error('Error downloading ZIP file:', error);
                 });
         },
+
+
+
+        showSuccessAlert() {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-primary btn-sm mr-2',
+                    cancelButton: 'btn btn-light btn-sm',
+                },
+                buttonsStyling: false,
+            });
+
+            swalWithBootstrapButtons.fire({
+                icon: 'success',
+                title: 'Zip File Downloaded Successfully',
+                showConfirmButton: false,
+                timer: 1500,
+            });
+        },
+
+        showErrorAlert(error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Download Error',
+                text: `There was an error downloading the ZIP file: ${error.message}`,
+                customClass: {
+                    confirmButton: 'btn btn-danger btn-sm mr-2',
+                },
+                buttonsStyling: false,
+            });
+        },
+
 
 
         itemClick(node) {
