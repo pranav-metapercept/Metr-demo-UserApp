@@ -16,8 +16,8 @@ import store from "@/state/store";
 import i18n from "./i18n";
 import VJstree from "vue-jstree";
 import "@/assets/scss/app.scss";
-
-import { initFirebaseBackend } from "./helpers/firebase/authUtils";
+import {initFirebaseBackend} from "./helpers/firebase/authutils"
+// import { initFirebaseBackend } from "./helpers/firebase/authUtils.js";
 
 import { configureFakeBackend } from "./helpers/fakebackend/fake-backend";
 
