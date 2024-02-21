@@ -44,7 +44,7 @@
         <div class="bg-primary text-white"></div>
         <div class="card shadow-sm">
           <div class="card-body">
-            <h5 class="mb-4">Project Name : {{ projectName }}</h5>
+            <h5 class="mb-4">Project Name : Flowers</h5>
             <div>
               Please note that the download button will become available only
               after you make your commit. Thank you for your understanding.

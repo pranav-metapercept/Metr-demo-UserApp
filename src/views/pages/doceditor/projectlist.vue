@@ -56,7 +56,7 @@
                             setdata(selectedProjectOwner, selectedProjectName)
                         "
                       >
-                        Proceed To DocPublisher
+                        Proceed To DocEditor
                       </button>
                     </div>
                   </div>
