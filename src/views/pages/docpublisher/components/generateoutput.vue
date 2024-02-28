@@ -296,11 +296,9 @@ export default {
     };
   },
   created() {
-    this.getWorkspace();
     this.hideform = false;
   },
   mounted() {
-    this.makedefaultplugin();
     this.hideform = false;
   },
   computed: {
@@ -394,21 +392,7 @@ export default {
         })
         .catch(() => {});
     },
-    makedefaultplugin() {
-      const body = {
-        userId: this.userId,
-        orgId: this.orgId,
-        customizationOptions: {},
-      };
-      this.$store.getters.client
-        .post(`/orguser/docstyler/customizePdfOutput`, body)
-        .then(() => {})
-        .catch(() => {});
-      this.$store.getters.client
-        .post(`/orguser/docstyler/customizehtmlOutput`, body)
-        .then(() => {})
-        .catch(() => {});
-    },
+
     async generateOutputFun() {
       this.disablebutton = true;
       this.releaseParams = {

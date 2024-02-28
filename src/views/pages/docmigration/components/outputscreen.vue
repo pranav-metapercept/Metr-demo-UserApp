@@ -2,11 +2,11 @@
   <div>
     <Layout>
       <!-- Page header component with title and icon -->
-      <!-- <PageHeader
+      <PageHeader
         :icon="'ri-dashboard-line h3'"
         :title="title"
         :items="items"
-      /> -->
+      />
       <div class="d-flex justify-content-between align-items-center">
         <div>
           <div class="mr-2 dita-ot-cont px-1">

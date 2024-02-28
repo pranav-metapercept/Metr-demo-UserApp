@@ -47,7 +47,7 @@ export default {
       items: [
         {
           text: "Projects",
-          href: "/docpublisher",
+          href: "/docpublisher/projectlist",
         },
         {
           text: "DocPublisher",

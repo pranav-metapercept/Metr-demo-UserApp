@@ -1,15 +1,9 @@
 <script>
-import simplebar from "simplebar-vue";
 import { layoutComputed } from "@/state/helpers";
-
 import MetisMenu from "metismenujs/dist/metismenujs";
-
 import { menuItems } from "./menu";
-
+import { eventBus } from "../main";
 export default {
-  components: {
-    simplebar,
-  },
   props: {
     isCondensed: {
       type: Boolean,
@@ -27,6 +21,8 @@ export default {
   data() {
     return {
       menuItems: menuItems,
+      activeItem: "",
+      deactiveItem: "",
     };
   },
   computed: {
@@ -43,11 +39,15 @@ export default {
         break;
       }
     }
-
     if (matchingMenuItem) {
+      // Disable menu item if it has disabled:true property
+      if (matchingMenuItem.getAttribute("disabled") === "true") {
+        matchingMenuItem.classList.add("disabled");
+        return;
+      }
       matchingMenuItem.classList.add("active");
       var parent = matchingMenuItem.parentElement;
-
+      // ... rest of the code to activate the parent menu dropdown
       /**
        * TODO: This is hard coded way of expading/activating parent menu dropdown and working till level 3.
        * We should come up with non hard coded approach
@@ -57,7 +57,6 @@ export default {
         const parent2 = parent.parentElement.closest("ul");
         if (parent2 && parent2.id !== "side-menu") {
           parent2.classList.add("mm-show");
-
           const parent3 = parent2.parentElement;
           if (parent3) {
             parent3.classList.add("mm-active");
@@ -65,7 +64,6 @@ export default {
             var childDropdown = parent3.querySelector(".has-dropdown");
             if (childAnchor) childAnchor.classList.add("mm-active");
             if (childDropdown) childDropdown.classList.add("mm-active");
-
             const parent4 = parent3.parentElement;
             if (parent4 && parent4.id !== "side-menu") {
               parent4.classList.add("mm-show");
@@ -88,18 +86,86 @@ export default {
      * Returns true or false if given menu item has child or not
      * @param item menuItem
      */
+    messageToast(messageToastTitle, messageToastVariant, messageToastContent) {
+      this.$bvToast.toast(messageToastContent, {
+        title: messageToastTitle,
+        variant: messageToastVariant,
+        solid: true,
+      });
+    },
     hasItems(item) {
       return item.subItems !== undefined ? item.subItems.length > 0 : false;
     },
+    isDisabled(item) {
+      return item.disabled === true;
+    },
     onRoutechange() {
+      var links = document.getElementsByClassName("side-nav-link-ref");
+      var matchingMenuItem = null;
+      for (var i = 0; i < links.length; i++) {
+        if (
+          window.location.pathname === links[i].pathname &&
+          window.location.pathname !== "/noaccess"
+        ) {
+          matchingMenuItem = links[i];
+          links[i].classList.add("active");
+          break;
+        }
+      }
+      if (matchingMenuItem) {
+        if (matchingMenuItem.getAttribute("disabled") === "true") {
+          matchingMenuItem.classList.add("disabled");
+          return;
+        }
+        matchingMenuItem.classList.add("active");
+        var parent = matchingMenuItem.parentElement;
+        if (parent) {
+          parent.classList.add("mm-active");
+          const parent2 = parent.parentElement.closest("ul");
+          if (parent2 && parent2.id !== "side-menu") {
+            parent2.classList.add("mm-show");
+            const parent3 = parent2.parentElement;
+            if (parent3) {
+              parent3.classList.add("mm-active");
+              var childAnchor = parent3.querySelector(".has-arrow");
+              var childDropdown = parent3.querySelector(".has-dropdown");
+              if (childAnchor) childAnchor.classList.add("mm-active");
+              if (childDropdown) childDropdown.classList.add("mm-active");
+              const parent4 = parent3.parentElement;
+              if (parent4 && parent4.id !== "side-menu") {
+                parent4.classList.add("mm-show");
+                const parent5 = parent4.parentElement;
+                if (parent5 && parent5.id !== "side-menu") {
+                  parent5.classList.add("mm-active");
+                  const childanchor = parent5.querySelector(".is-parent");
+                  if (childanchor && parent5.id !== "side-menu") {
+                    childanchor.classList.add("mm-active");
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
       setTimeout(() => {
-        const currentPosition = document.getElementsByClassName("mm-active")[0]
-          .offsetTop;
+        const currentPosition =
+          document.getElementsByClassName("mm-active")[0].offsetTop;
         if (currentPosition > 400)
           this.$refs.currentMenu.SimpleBar.getScrollElement().scrollTop =
             currentPosition + 200;
       }, 300);
     },
+    isActive(menuItem) {
+      return this.activeItem === menuItem;
+    },
+    setActive(menuItem) {
+      this.activeItem = menuItem; // no need for Vue.set()
+    },
+  },
+  created() {
+    eventBus.$on("update-sidebar", (e) => {
+      this.activeItem = e;
+    });
   },
   watch: {
     $route: {
@@ -180,43 +246,67 @@ export default {
         <ul class="metismenu list-unstyled" id="side-menu">
           <template v-for="item in menuItems">
             <li class="menu-title" v-if="item.isTitle" :key="item.id">
-              {{ $t(item.label) }}
+              <!-- {{ $t(item.label) }} -->
             </li>
-
             <!--end Layouts menu -->
-            <li v-if="!item.isTitle && !item.isLayout" :key="item.id">
+            <li
+              v-if="!item.isTitle && !item.isLayout && !item.hide"
+              :key="item.id"
+            >
               <a
+                ref="linkclsref"
                 v-if="hasItems(item)"
                 href="javascript:void(0);"
                 class="is-parent"
                 :class="{
                   'has-arrow': !item.badge,
                   'has-dropdown': item.badge,
+                  'custom-class': isActive(item.label),
                 }"
+                v-on:click="setActive(item.label)"
               >
                 <i :class="`bx ${item.icon}`" v-if="item.icon"></i>
                 <span>{{ $t(item.label) }}</span>
                 <span
                   :class="`badge badge-pill badge-${item.badge.variant} float-right`"
                   v-if="item.badge"
-                  >{{ $t(item.badge.text) }}</span
                 >
+                  {{ $t(item.badge.text) }}
+                </span>
               </a>
-
               <router-link
                 :to="item.link"
                 v-if="!hasItems(item)"
                 class="side-nav-link-ref"
               >
-                <i :class="`bx ${item.icon}`" v-if="item.icon"></i>
-                <span>{{ $t(item.label) }}</span>
+                <div
+                  class="icon-cust-class"
+                  :class="{ ' custom-class': isActive(item.label) }"
+                >
+                  <i
+                    :class="[
+                      'bx',
+                      item.icon,
+                      { 'custom-class': isActive(item.label) },
+                    ]"
+                    v-if="item.icon"
+                  ></i>
+                </div>
+                <span
+                  v-on:click="setActive(item.label)"
+                  :class="{
+                    'custom-class': isActive(item.label),
+                    disabled: isDisabled(item.label),
+                  }"
+                  >{{ $t(item.label) }}</span
+                >
                 <span
                   :class="`badge badge-pill badge-${item.badge.variant} float-right`"
                   v-if="item.badge"
-                  >{{ $t(item.badge.text) }}</span
                 >
+                  {{ $t(item.badge.text) }}
+                </span>
               </router-link>
-
               <ul v-if="hasItems(item)" class="sub-menu" aria-expanded="false">
                 <li v-for="(subitem, index) of item.subItems" :key="index">
                   <router-link
@@ -251,8 +341,28 @@ export default {
               </ul>
             </li>
           </template>
-
-          
+          <!-- <li>
+            <a href="javascript: void(0);" class="has-arrow waves-effect">
+              <i class="ri-share-line"></i>
+              <span>Multi Level</span>
+            </a>
+            <ul class="sub-menu" aria-expanded="true">
+              <li>
+                <a href="javascript: void(0);">Level 1.1</a>
+              </li>
+              <li>
+                <a href="javascript: void(0);" class="has-arrow">Level 1.2</a>
+                <ul class="sub-menu" aria-expanded="true">
+                  <li>
+                    <a href="javascript: void(0);">Level 2.1</a>
+                  </li>
+                  <li>
+                    <a href="javascript: void(0);">Level 2.2</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li> -->
         </ul>
       </div>
       <!-- Sidebar -->
@@ -260,3 +370,16 @@ export default {
   </div>
   <!-- Left Sidebar End -->
 </template>
+<style scoped>
+.icon-cust-class {
+  display: inline;
+}
+.side-nav-link-ref.disabled:hover {
+  pointer-events: none;
+}
+.custom-class {
+  color: #0f3460 !important;
+  font-weight: 700;
+  display: inline;
+}
+</style>
