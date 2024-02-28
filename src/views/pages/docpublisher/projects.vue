@@ -9,7 +9,7 @@
               class="custom-notifications d-flex justify-content-between align-items-center flex-wrap"
             >
               <div class="custom-title">
-                Please fill in the following fields to proceed to DocPublisher
+                Add details to proceed with DocPublisher
               </div>
               <div></div>
             </div>
@@ -295,6 +295,9 @@ export default {
   },
 
   created() {
+    eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
+  },
+  mounted() {
     eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
   },
   computed: {

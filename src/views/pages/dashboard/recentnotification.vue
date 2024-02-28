@@ -7,9 +7,17 @@
       >
         <div class="custom-title mb-0">Notifications</div>
       </div>
-      <div data-simplebar class="card-body border-top py-2 mb-3">
+      <div data-simplebar class="card-body border-top mb-3">
         <ul class="list-unstyled activity-wid">
-          <div>
+          <!-- Show skeleton loading when 'showSpinner' is true -->
+          <b-skeleton-table
+            v-if="showSpinner"
+            :rows="5"
+            :columns="2"
+            :table-props="{ bordered: true, striped: true }"
+          ></b-skeleton-table>
+          <!-- Render notifications when data is available and not loading -->
+          <div v-else-if="notificationData.length > 0 && !showSpinner">
             <li
               class="activity-list publication-list-cust-cls"
               v-for="data in notificationData"
@@ -19,9 +27,9 @@
                 <div class="activity-icon avatar-xs">
                   <!-- Notification icon -->
                   <span
-                    class="avatar-title bg-soft-primary text-primary rounded-circle font-size-24 avatar-title-cust-cls"
+                    class="avatar-title bg-soft-primary text-secondary rounded-circle font-size-24 avatar-title-cust-cls"
                   >
-                    <i class="ri-price-tag-3-fill"></i>
+                    <span class="dot"></span>
                   </span>
                 </div>
                 <div>
@@ -38,7 +46,7 @@
                 </div>
                 <div>
                   <!-- Time ago since notification -->
-                  <p class="text-muted mb-0 font-smaller">
+                  <p class="text-muted mb-0 mr-1 font-smaller">
                     {{ getTimeAgo(data.committer.date) }}
                   </p>
                 </div>
@@ -46,6 +54,7 @@
             </li>
           </div>
           <!-- Display a message when no notifications are available -->
+          
         </ul>
       </div>
     </div>
@@ -235,7 +244,6 @@ export default {
   padding: 14px;
   gap: 24px;
 }
-
 .custom-title {
   font-size: 18px;
   font-weight: 500;
@@ -244,17 +252,26 @@ export default {
   text-align: left;
   color: rgba(23, 35, 61, 1);
 }
-
 .card {
-  height: 85vh;
+  height: 50rem;
 }
-
 .custom-image {
   height: 200px;
 }
-
 .custom-text {
   color: #666;
   font-size: 16px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: #fe5e45;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.bg-soft-primary {
+  background-color: transparent !important;
 }
 </style>

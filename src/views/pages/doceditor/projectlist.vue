@@ -10,7 +10,7 @@
                 class="custom-notifications d-flex justify-content-between align-items-center flex-wrap"
               >
                 <div class="custom-title">
-                  Please fill in the following fields to proceed to DocEditor
+                  Add details to proceed with DocEditor
                 </div>
                 <div></div>
               </div>
@@ -297,7 +297,10 @@ export default {
   },
 
   created() {
-    eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
+    eventBus.$emit("update-sidebar", "menuitems.doceditor.text");
+  },
+  mounted() {
+    eventBus.$emit("update-sidebar", "menuitems.doceditor.text");
   },
   computed: {
     isButtonDisabled() {

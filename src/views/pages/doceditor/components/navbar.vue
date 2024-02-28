@@ -57,12 +57,7 @@
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="ml-auto">
             <div class="d-flex align-items-center ml-2">
-              <div class="d-flex align-items-center mr-2">
-                <div class="badge-soft-info mr-2 font-size-15 px-1">
-                  <span>DITA-OT Version:</span>
-                  <span class="ml-2">{{ ditaOtVersions }}</span>
-                </div>
-              </div>
+              
               <div class="d-flex align-items-center mr-2"></div>
               <div class="d-flex align-items-center mr-1">
                 <button

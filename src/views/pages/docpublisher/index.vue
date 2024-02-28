@@ -60,6 +60,7 @@ export default {
     eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
   },
   mounted() {
+    eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
     if (Object.keys(null).length) {
       this.organizationDetails = null;
     }

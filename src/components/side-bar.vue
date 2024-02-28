@@ -378,8 +378,9 @@ export default {
   pointer-events: none;
 }
 .custom-class {
-  color: #0f3460 !important;
-  font-weight: 700;
+  color: #000000 !important;
+  font-weight: 600;
+  font-size: 14px;
   display: inline;
 }
 </style>

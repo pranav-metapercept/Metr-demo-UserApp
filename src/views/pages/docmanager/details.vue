@@ -350,7 +350,7 @@ export default {
 
       swalWithBootstrapButtons.fire({
         icon: "success",
-        title: "Zip File Downloaded Successfully",
+        title: "Downloaded successfull!",
         showConfirmButton: false,
         timer: 1500,
       });

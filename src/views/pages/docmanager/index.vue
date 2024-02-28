@@ -176,7 +176,7 @@
 import projectcard from "./components/projectcard";
 
 import Layout from "../../layouts/main";
-
+import { eventBus } from "../../../main";
 import { BRow, BCol, BPagination } from "bootstrap-vue";
 
 export default {
@@ -405,10 +405,15 @@ export default {
       localStorage.setItem("currentPage", newVal);
     },
   },
-  mounted() {},
+  mounted() {
+    eventBus.$emit("update-sidebar", "menuitems.docmanager.text");
+  },
   methods: {
     initializeProjectListSearch() {
       this.projectListSearch = [...this.projectList];
+    },
+    syncprojects() {
+      this.messageToast("Success", "primary", "Sync complete");
     },
 
     // Method to filter project list based on search input

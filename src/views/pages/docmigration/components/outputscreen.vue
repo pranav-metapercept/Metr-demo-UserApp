@@ -32,7 +32,7 @@
             <div class="text-right pt-1">
               <!-- Button to download output as ZIP -->
               <button
-                class="btn btn-sm btn-primary mr-2 mb-2 m-0"
+                class="btn btn-sm btn-light mr-2 mb-2 m-0"
                 @click.prevent="downloadFolder"
               >
                 <span
@@ -46,7 +46,7 @@
               </button>
               <!-- Button to commit output on GitHub -->
               <button
-                class="btn btn-secondary btn-sm mb-2 m-0"
+                class="btn btn-primary btn-sm mb-2 m-0"
                 @click="gitHubCommit"
               >
                 Commit on GitHub
@@ -91,7 +91,6 @@ export default {
     };
   },
   mounted() {
-    // Emit an event to update the sidebar
     eventBus.$emit("update-sidebar", "menuitems.docmigration.text");
   },
 
@@ -152,7 +151,7 @@ export default {
 
       swalWithBootstrapButtons.fire({
         icon: "success",
-        title: "Zip File Downloaded Successfully",
+        title: "Downloaded successfull!",
         showConfirmButton: false,
         timer: 1500,
       });

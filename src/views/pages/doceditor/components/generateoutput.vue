@@ -47,8 +47,7 @@
             <form>
               <h5 class="mb-4">Project Name : Flowers</h5>
               <div>
-                Please note that the download button will become available only
-                after you make your commit. Thank you for your understanding.
+                Important! Commit changes to download the output.
               </div>
               <div class="d-flex justify-content-center pt-1">
                 <button
@@ -214,11 +213,9 @@
     >
       <div class="d-block text-center">
         <h3>
-          You will need to Create a Pull Request.
+          Sync to update.
           <br />
-          We noticed that your repository is currently behind the latest
-          changes. To ensure that your code is up to date and aligned with the
-          latest developments, you will need to create a pull request.
+          You are getting slow! Sync now to baseline with the source code.
         </h3>
       </div>
       <hr class="my-2" />
