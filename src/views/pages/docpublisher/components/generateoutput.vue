@@ -45,10 +45,10 @@
         <div class="card shadow-sm">
           <div class="card-body">
             <h5 class="mb-4">Project Name : Flowers</h5>
-            <div>
+            <div class="mb-2" v-if="disabledownloadbutton">
               Important! Commit changes to download the output.
             </div>
-            <div class="d-flex justify-content-center pt-1">
+            <div class="d-flex justify-content-end pt-1">
               <button
                 class="btn btn-primary btn-sm mr-2 mb-2"
                 :disabled="disablecommitbutton"
@@ -78,7 +78,7 @@
       </div>
     </div>
     <!-- Conditional HR -->
-    <hr />
+
     <div v-if="!hideform" class="card">
       <div class="card-body">
         <form novalidate @submit.prevent>
@@ -398,7 +398,7 @@ export default {
         releasedBy: this.userName,
         projectName: this.projectName,
       };
-      this.messageToast("Success", "success", "output created succesfully");
+      this.messageToast("Success", "success", "Output generated successfully!");
       this.disablebutton = false;
       setTimeout(() => {
         this.typeform.inputPath = null;

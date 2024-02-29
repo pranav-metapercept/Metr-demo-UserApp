@@ -77,16 +77,21 @@
       </b-modal>
       <div class="row">
         <div class="col-md-3 col-sm-12 mb-0">
-          <div class="d-flex align-items-center mb-1">
-            <!-- Input for searching projects -->
-            <b-form-input
-              class="w-100"
-              v-model="search"
-              placeholder="Search Projects"
-              @input="searchProject"
-            ></b-form-input>
+          <div class="search-box mr-3">
+            <div class="position-relative">
+              <input
+                type="text"
+                class="form-control text-primary rounded custom-input-box"
+                placeholder="Search by project name"
+                id="myInput"
+                v-model="search"
+                @input="searchProject"
+              />
+              <i class="mdi mdi-magnify search-icon"></i>
+            </div>
           </div>
         </div>
+
         <div class="col-md-9 col-sm-12">
           <div class="d-flex align-items-center justify-content-end mb-1">
             <!-- Button to refresh projects -->
@@ -456,6 +461,16 @@ export default {
 };
 </script>
 <style scoped>
+.custom-input-box {
+  border: 1px solid #ced4da !important;
+  border-radius: 0px;
+  background-color: #ffffff !important;
+}
+
+.search-box input {
+  height: 38px;
+  /* Match the height of buttons */
+}
 .custom-control-label {
   cursor: default;
 }

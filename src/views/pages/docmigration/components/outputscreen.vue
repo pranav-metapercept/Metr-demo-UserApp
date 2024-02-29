@@ -25,7 +25,7 @@
 
           <div class="card-body">
             <p class="mb-4">
-              <span class="text-muted"> Source word file:</span>
+              <span class="text-muted"> Source docx file:</span>
               <span class="text-primary"> Angular.docx</span>
             </p>
 

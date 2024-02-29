@@ -39,6 +39,7 @@ export default {
 
 .card-header {
   height: 7vh;
+  min-height: 3rem;
   display: flex;
   align-items: center;
 }

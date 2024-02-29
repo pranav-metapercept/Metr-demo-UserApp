@@ -142,6 +142,7 @@
                 @data-mounted="handleChildData"
                 @next-form="handlenextbtn"
                 @final-submit="finalSubmit"
+                @prev-form="handlePreviousBtn"
               >
               </component>
             </div>
@@ -293,9 +294,14 @@ export default {
         this.currentFormNumber++;
       }
     },
+    handlePreviousBtn() {
+      if (this.currentFormNumber > 1) {
+        this.currentFormNumber--;
+      }
+    },
     redirectDocPublishrer() {
       this.$router.push({
-        path: `/docpublisher`,
+        path: `/docstyler/docpublisher`,
       });
     },
     finalSubmit() {

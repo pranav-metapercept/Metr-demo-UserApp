@@ -25,7 +25,7 @@ export const menuItems = [
   {
     id: 5,
     label: "menuitems.docpublisher.text",
-    icon: "ri-settings-5-fill",
+    icon: "mdi mdi-file-export",
     link: "/docpublisher/projectlist",
   },
   {

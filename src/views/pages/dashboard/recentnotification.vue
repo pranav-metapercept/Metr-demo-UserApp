@@ -54,7 +54,6 @@
             </li>
           </div>
           <!-- Display a message when no notifications are available -->
-          
         </ul>
       </div>
     </div>
@@ -84,7 +83,7 @@ export default {
           committer: {
             name: "Jyoti-Metapercept",
             email: "jyotikamal.s@metapercept.com",
-            date: "2023-09-20T10:46:14Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "CipherCraft",
           message: "test commit",
@@ -94,7 +93,7 @@ export default {
           committer: {
             name: "Jyoti-Metapercept",
             email: "jyotikamal.s@metapercept.com",
-            date: "2024-01-04T08:42:51Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "CipherCraft",
           message: "added word ",
@@ -114,7 +113,7 @@ export default {
           committer: {
             name: "Jyoti-Metapercept",
             email: "jyotikamal.s@metapercept.com",
-            date: "2023-09-20T10:46:14Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "NeuralNexus",
           message: "test commit",
@@ -124,7 +123,7 @@ export default {
           committer: {
             name: "Jyoti-Metapercept",
             email: "jyotikamal.s@metapercept.com",
-            date: "2024-01-04T08:42:51Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "NeuralNexus",
           message: "added word ",
@@ -134,7 +133,7 @@ export default {
           committer: {
             name: "Alice-CodeForge",
             email: "alice@codeforge.com",
-            date: "2023-12-15T14:30:02Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "QuantumQuasar",
           message: "initial commit",
@@ -144,7 +143,7 @@ export default {
           committer: {
             name: "Bob-DevWorks",
             email: "bob@devworks.com",
-            date: "2024-02-08T09:18:45Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "DataDynamo",
           message: "bug fix",
@@ -154,27 +153,27 @@ export default {
           committer: {
             name: "Eva-CryptoHub",
             email: "eva@cryptohub.io",
-            date: "2023-11-02T17:55:30Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "SecureSocket",
-          message: "security enhancement",
+          message: "security ",
           comment_count: 0,
         },
         {
           committer: {
             name: "Charlie-ByteBurst",
             email: "charlie@byteburst.net",
-            date: "2024-04-12T11:20:36Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "ByteBlitz",
-          message: "feature implementation",
+          message: "feature ",
           comment_count: 0,
         },
         {
           committer: {
             name: "Diana-QuantumRealm",
             email: "diana@quantumrealm.com",
-            date: "2023-10-05T08:15:02Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "QuantumCompute",
           message: "optimization",
@@ -184,7 +183,7 @@ export default {
           committer: {
             name: "Frank-FutureForge",
             email: "frank@futureforge.tech",
-            date: "2024-02-25T14:40:19Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "TimeWarp",
           message: "time-travel support",

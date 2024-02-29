@@ -1,5 +1,6 @@
 <template>
   <Layout>
+    <PageHeader :icon="'mdi mdi-cog h2'" :title="title" :items="item" />
     <div class="row">
       <div class="col-md-8">
         <div class="card-body">
@@ -55,7 +56,7 @@
                           setdata(selectedProjectOwner, selectedProjectName)
                       "
                     >
-                      Proceed To DocPublisher
+                      Next
                     </button>
                   </div>
                 </div>
