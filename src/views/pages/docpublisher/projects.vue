@@ -1,5 +1,6 @@
 <template>
   <Layout>
+    <PageHeader :icon="'mdi mdi-cog h2'" :title="title" :items="item" />
     <div class="row">
       <div class="col-md-8">
         <div class="card-body">
@@ -9,7 +10,7 @@
               class="custom-notifications d-flex justify-content-between align-items-center flex-wrap"
             >
               <div class="custom-title">
-                Please fill in the following fields to proceed to DocPublisher
+                Add details to proceed with DocPublisher
               </div>
               <div></div>
             </div>
@@ -55,7 +56,7 @@
                           setdata(selectedProjectOwner, selectedProjectName)
                       "
                     >
-                      Proceed To DocPublisher
+                      Next
                     </button>
                   </div>
                 </div>
@@ -295,6 +296,9 @@ export default {
   },
 
   created() {
+    eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
+  },
+  mounted() {
     eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
   },
   computed: {

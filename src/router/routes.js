@@ -120,6 +120,15 @@ export default [
     component: () => import("../views/pages/docstyler/index.vue"),
   },
   {
+    path: "/docstyler/docpublisher",
+    name: "stylerpublisher",
+    meta: {
+      authRequired: true,
+    },
+    component: () =>
+      import("../views/pages/docstyler/htmlstyler/components/docpublisher.vue"),
+  },
+  {
     path: "/docpublisher",
     name: "DocPublisher",
     meta: {

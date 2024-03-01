@@ -75,15 +75,15 @@
               <!-- Buttons for committing and syncing projects -->
               <button
                 type="submit"
-                class="btn btn-primary btn-sm mr-2"
+                class="btn btn-light btn-sm mr-2"
                 @click.prevent="syncprojects"
               >
-                Sync Projects
+                Sync
               </button>
               <button
                 :disabled="!disabledCommit"
                 type="submit"
-                class="btn btn-secondary btn-sm"
+                class="btn btn-primary btn-sm"
                 @click.prevent="commitOutput"
               >
                 Commit on Github
@@ -306,6 +306,7 @@ export default {
       ],
     };
   },
+
   computed: {
     _() {
       return _;
@@ -324,9 +325,7 @@ export default {
     },
   },
   mounted() {
-    // Emit an event to update the sidebar
     eventBus.$emit("update-sidebar", "menuitems.docmigration.text");
-    // this.getprojectslist()
   },
   methods: {
     // Display a toast message
@@ -543,7 +542,7 @@ export default {
       });
       swalWithBootstrapButtons
         .fire({
-          title: "Submit Commit Message to commit on Github",
+          title: "Add description to submit and commit.",
           input: "text",
           showCancelButton: true,
           confirmButtonText: "Submit",
@@ -575,7 +574,7 @@ export default {
             this.showCommitBtn = false;
             swalWithBootstrapButtons.fire({
               icon: "success",
-              title: "Commit request completed successfully!",
+              title: "Commit request completed.",
             });
             this.$router.push({
               path: `/docmigration`,
@@ -586,10 +585,7 @@ export default {
     },
     // Sync projects with GitHub
     syncprojects() {
-      Swal.fire({
-        icon: "success",
-        title: "Project sync successfully!",
-      });
+      this.messageToast("Success", "primary", "Sync complete");
     },
   },
 };
@@ -644,7 +640,6 @@ label {
   text-align: left;
   color: rgba(23, 35, 61, 1);
 }
-
 .custom-notifications {
   padding: 14px;
   gap: 24px;
@@ -657,16 +652,6 @@ label {
   letter-spacing: 0.5px;
   text-align: left;
   color: rgba(23, 35, 61, 1);
-}
-
-.btn-primary {
-  background-color: #2b313f !important;
-  color: #fff !important;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.btn-primary:hover {
-  background-color: #4c5aa7 !important;
 }
 
 .custom-progress {

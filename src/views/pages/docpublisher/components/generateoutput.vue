@@ -45,14 +45,21 @@
         <div class="card shadow-sm">
           <div class="card-body">
             <h5 class="mb-4">Project Name : Flowers</h5>
-            <div>
-              Please note that the download button will become available only
-              after you make your commit. Thank you for your understanding.
+            <div class="mb-2" v-if="disabledownloadbutton">
+              Important! Commit changes to download the output.
             </div>
-            <div class="d-flex justify-content-center pt-1">
+            <div class="d-flex justify-content-end pt-1">
               <button
-                @click="downloadFolder()"
                 class="btn btn-primary btn-sm mr-2 mb-2"
+                :disabled="disablecommitbutton"
+                @click.prevent="githubCommit"
+              >
+                <span class="d-flex align-items-center">
+                  <span> Commit on GitHub </span>
+                </span></button
+              ><button
+                @click="downloadFolder()"
+                class="btn btn-light btn-sm mr-2 mb-2"
                 :disabled="disabledownloadbutton"
               >
                 <span class="d-flex align-items-center">
@@ -65,22 +72,13 @@
                   <span v-if="!isLoading"> Download Output </span>
                 </span>
               </button>
-              <button
-                class="btn btn-primary btn-sm mr-2 mb-2"
-                :disabled="disablecommitbutton"
-                @click.prevent="githubCommit"
-              >
-                <span class="d-flex align-items-center">
-                  <span> Commit on GitHub </span>
-                </span>
-              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- Conditional HR -->
-    <hr />
+
     <div v-if="!hideform" class="card">
       <div class="card-body">
         <form novalidate @submit.prevent>
@@ -212,11 +210,9 @@
     >
       <div class="d-block text-center">
         <h3>
-          You will need to Create a Pull Request.
+          Sync to update.
           <br />
-          We noticed that your repository is currently behind the latest
-          changes. To ensure that your code is up to date and aligned with the
-          latest developments, you will need to create a pull request.
+          You are getting slow! Sync now to baseline with the source code.
         </h3>
       </div>
       <hr class="my-2" />
@@ -226,6 +222,7 @@
     </b-modal>
   </div>
 </template>
+
 <script>
 import _ from "lodash";
 import Swal from "sweetalert2";
@@ -296,11 +293,9 @@ export default {
     };
   },
   created() {
-    this.getWorkspace();
     this.hideform = false;
   },
   mounted() {
-    this.makedefaultplugin();
     this.hideform = false;
   },
   computed: {
@@ -346,11 +341,7 @@ export default {
             .catch(() => {});
           this.$refs["pull-modal"].hide();
 
-          this.messageToast(
-            "Success",
-            "success",
-            "Pull request successfully completed"
-          );
+          this.messageToast("Success", "success", "Pull request completed");
         })
         .catch((err) => {
           this.messageToast(
@@ -394,21 +385,7 @@ export default {
         })
         .catch(() => {});
     },
-    makedefaultplugin() {
-      const body = {
-        userId: this.userId,
-        orgId: this.orgId,
-        customizationOptions: {},
-      };
-      this.$store.getters.client
-        .post(`/orguser/docstyler/customizePdfOutput`, body)
-        .then(() => {})
-        .catch(() => {});
-      this.$store.getters.client
-        .post(`/orguser/docstyler/customizehtmlOutput`, body)
-        .then(() => {})
-        .catch(() => {});
-    },
+
     async generateOutputFun() {
       this.disablebutton = true;
       this.releaseParams = {
@@ -421,11 +398,7 @@ export default {
         releasedBy: this.userName,
         projectName: this.projectName,
       };
-      this.messageToast(
-        "Output Generated",
-        "success",
-        "output created succesfully"
-      );
+      this.messageToast("Success", "success", "Output generated successfully!");
       this.disablebutton = false;
       setTimeout(() => {
         this.typeform.inputPath = null;
@@ -448,7 +421,7 @@ export default {
       });
       swalWithBootstrapButtons
         .fire({
-          title: "Enter Commit Message to Commit on Github",
+          title: "Add description to submit and commit.",
           input: "text",
           showCancelButton: true,
           confirmButtonText: "Submit",
@@ -479,7 +452,7 @@ export default {
             });
             swalWithBootstrapButtons.fire({
               icon: "success",
-              title: "Commit request completed successfully!",
+              title: "Commit request completed.",
             });
             this.disabledownloadbutton = false;
           }
@@ -497,13 +470,17 @@ export default {
 
       // Make the request to download the file
       axios
-        .get(downloadUrl, { responseType: "arraybuffer" })
+        .get(downloadUrl, {
+          responseType: "arraybuffer",
+        })
         .then((response) => {
           // Display success message using SweetAlert
           this.showSuccessAlert();
 
           // Create a blob from the response data
-          const blob = new Blob([response.data], { type: "application/zip" });
+          const blob = new Blob([response.data], {
+            type: "application/zip",
+          });
 
           // Create a link element to trigger the download
           const link = document.createElement("a");
@@ -541,7 +518,7 @@ export default {
 
       swalWithBootstrapButtons.fire({
         icon: "success",
-        title: "Zip File Downloaded Successfully",
+        title: "Downloaded successfull!",
         showConfirmButton: false,
         timer: 1500,
       });
@@ -561,6 +538,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 label {
   font-size: 14px;

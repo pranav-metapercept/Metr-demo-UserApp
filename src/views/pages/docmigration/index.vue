@@ -1,17 +1,20 @@
 <template>
   <div>
     <Layout>
-      <!-- Page Header component with props -->
-      <PageHeader :icon="'mdi mdi-file-replace h2'" :title="title" :items="items" />
+      <PageHeader
+        :icon="'mdi mdi-file-replace h2'"
+        :title="title"
+        :items="items"
+      />
       <div>
-        <div class="mr-2 dita-ot-cont px-1 ">
+        <div class="mr-2 dita-ot-cont px-1">
           <span class="dita-ot">DITA-OT Version:</span>
           <span class="dita-ot-version ml-2">{{ ditaOtVersions }}</span>
         </div>
       </div>
       <div class="container">
-        <div class="row ">
-          <div class="col-md-6 offset-md-3">
+        <div class="row justify-content-center">
+          <div class="col-md-10 col-sm-12 col-lg-7 text-center">
             <!-- Details component -->
             <Details />
           </div>
@@ -29,29 +32,28 @@ export default {
   components: {
     Details,
     Layout,
-
   },
   data() {
     return {
       // Initialize data properties
-      ditaOtVersions: '4.3.2',
+      ditaOtVersions: "4.3.2",
       title: "DocMigration",
       items: [
         {
           text: "Dashboard",
-          href: "/"
+          href: "/",
         },
         {
           text: "DocMigration",
-          active: true
-        }
+          active: true,
+        },
       ],
     };
   },
 
   mounted() {
     // Emit event to update the sidebar menu
-    eventBus.$emit('update-sidebar', "menuitems.docmigration.text");
+    eventBus.$emit("update-sidebar", "menuitems.docmigration.text");
   },
 };
 </script>
@@ -77,7 +79,6 @@ export default {
   letter-spacing: 0em;
   text-align: center;
   color: rgba(23, 35, 61, 1);
-  ;
 }
 
 .dita-ot-cont {
@@ -95,7 +96,6 @@ export default {
 
 .dita-ot-version {
   color: rgba(105, 111, 121, 1);
-  ;
 }
 
 label {

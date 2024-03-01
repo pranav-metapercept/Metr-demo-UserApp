@@ -73,12 +73,7 @@ router.beforeEach((routeTo, routeFrom, next) => {
 })
 
 router.beforeResolve(async (routeTo, routeFrom, next) => {
-  // Create a `beforeResolve` hook, which fires whenever
-  // `beforeRouteEnter` and `beforeRouteUpdate` would. This
-  // allows us to ensure data is fetched even when params change,
-  // but the resolved route does not. We put it in `meta` to
-  // indicate that it's a hook we created, rather than part of
-  // Vue Router (yet?).
+  
   try {
     // For each matched route...
     for (const route of routeTo.matched) {

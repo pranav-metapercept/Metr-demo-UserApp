@@ -25,7 +25,7 @@
 <script>
 import generateoutput from "./components/generateoutput";
 import Layout from "../../layouts/main";
-
+import Swal from "sweetalert2";
 import { eventBus } from "../../../main";
 
 export default {
@@ -47,7 +47,7 @@ export default {
       items: [
         {
           text: "Projects",
-          href: "/docpublisher",
+          href: "/docpublisher/projectlist",
         },
         {
           text: "DocPublisher",
@@ -60,6 +60,34 @@ export default {
     eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
   },
   mounted() {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-primary btn-sm my-3",
+        cancelButton: "btn btn-sm mr-2 btn-light",
+      },
+      buttonsStyling: false,
+    });
+    swalWithBootstrapButtons
+      .fire({
+        text: "Do you want to style your document before publishing?",
+        showCancelButton: true,
+        confirmButtonText: "Yes! Let's proceed",
+        cancelButtonText: "No! Continue with DocPublisher",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          this.$router.push({
+            path: `/docstyler`,
+          });
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons;
+        }
+      });
+    eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
     if (Object.keys(null).length) {
       this.organizationDetails = null;
     }

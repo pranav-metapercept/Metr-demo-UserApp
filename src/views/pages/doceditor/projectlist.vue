@@ -1,6 +1,7 @@
 <template>
   <div>
     <Layout>
+      <PageHeader :icon="'mdi mdi-cog h2'" :title="title" :items="item" />
       <div class="row">
         <div class="col-md-8">
           <div class="card-body">
@@ -10,7 +11,7 @@
                 class="custom-notifications d-flex justify-content-between align-items-center flex-wrap"
               >
                 <div class="custom-title">
-                  Please fill in the following fields to proceed to DocEditor
+                  Add details to proceed with DocEditor
                 </div>
                 <div></div>
               </div>
@@ -56,7 +57,7 @@
                             setdata(selectedProjectOwner, selectedProjectName)
                         "
                       >
-                        Proceed To DocEditor
+                        Next
                       </button>
                     </div>
                   </div>
@@ -282,14 +283,14 @@ export default {
         value: element.name,
         text: element.name,
       })),
-      title: "DocPublisher",
+      title: "DocEditor",
       item: [
         {
           text: "Dashboard",
           href: "/",
         },
         {
-          text: "DocPublisher",
+          text: "DocEditor",
           active: true,
         },
       ],
@@ -297,7 +298,10 @@ export default {
   },
 
   created() {
-    eventBus.$emit("update-sidebar", "menuitems.docpublisher.text");
+    eventBus.$emit("update-sidebar", "menuitems.doceditor.text");
+  },
+  mounted() {
+    eventBus.$emit("update-sidebar", "menuitems.doceditor.text");
   },
   computed: {
     isButtonDisabled() {

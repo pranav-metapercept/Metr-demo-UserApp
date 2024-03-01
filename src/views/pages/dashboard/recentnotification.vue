@@ -7,9 +7,17 @@
       >
         <div class="custom-title mb-0">Notifications</div>
       </div>
-      <div data-simplebar class="card-body border-top py-2 mb-3">
+      <div data-simplebar class="card-body border-top mb-3">
         <ul class="list-unstyled activity-wid">
-          <div>
+          <!-- Show skeleton loading when 'showSpinner' is true -->
+          <b-skeleton-table
+            v-if="showSpinner"
+            :rows="5"
+            :columns="2"
+            :table-props="{ bordered: true, striped: true }"
+          ></b-skeleton-table>
+          <!-- Render notifications when data is available and not loading -->
+          <div v-else-if="notificationData.length > 0 && !showSpinner">
             <li
               class="activity-list publication-list-cust-cls"
               v-for="data in notificationData"
@@ -19,9 +27,9 @@
                 <div class="activity-icon avatar-xs">
                   <!-- Notification icon -->
                   <span
-                    class="avatar-title bg-soft-primary text-primary rounded-circle font-size-24 avatar-title-cust-cls"
+                    class="avatar-title bg-soft-primary text-secondary rounded-circle font-size-24 avatar-title-cust-cls"
                   >
-                    <i class="ri-price-tag-3-fill"></i>
+                    <span class="dot"></span>
                   </span>
                 </div>
                 <div>
@@ -38,7 +46,7 @@
                 </div>
                 <div>
                   <!-- Time ago since notification -->
-                  <p class="text-muted mb-0 font-smaller">
+                  <p class="text-muted mb-0 mr-1 font-smaller">
                     {{ getTimeAgo(data.committer.date) }}
                   </p>
                 </div>
@@ -75,7 +83,7 @@ export default {
           committer: {
             name: "Jyoti-Metapercept",
             email: "jyotikamal.s@metapercept.com",
-            date: "2023-09-20T10:46:14Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "CipherCraft",
           message: "test commit",
@@ -85,7 +93,7 @@ export default {
           committer: {
             name: "Jyoti-Metapercept",
             email: "jyotikamal.s@metapercept.com",
-            date: "2024-01-04T08:42:51Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "CipherCraft",
           message: "added word ",
@@ -105,7 +113,7 @@ export default {
           committer: {
             name: "Jyoti-Metapercept",
             email: "jyotikamal.s@metapercept.com",
-            date: "2023-09-20T10:46:14Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "NeuralNexus",
           message: "test commit",
@@ -115,7 +123,7 @@ export default {
           committer: {
             name: "Jyoti-Metapercept",
             email: "jyotikamal.s@metapercept.com",
-            date: "2024-01-04T08:42:51Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "NeuralNexus",
           message: "added word ",
@@ -125,7 +133,7 @@ export default {
           committer: {
             name: "Alice-CodeForge",
             email: "alice@codeforge.com",
-            date: "2023-12-15T14:30:02Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "QuantumQuasar",
           message: "initial commit",
@@ -135,7 +143,7 @@ export default {
           committer: {
             name: "Bob-DevWorks",
             email: "bob@devworks.com",
-            date: "2024-02-08T09:18:45Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "DataDynamo",
           message: "bug fix",
@@ -145,27 +153,27 @@ export default {
           committer: {
             name: "Eva-CryptoHub",
             email: "eva@cryptohub.io",
-            date: "2023-11-02T17:55:30Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "SecureSocket",
-          message: "security enhancement",
+          message: "security ",
           comment_count: 0,
         },
         {
           committer: {
             name: "Charlie-ByteBurst",
             email: "charlie@byteburst.net",
-            date: "2024-04-12T11:20:36Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "ByteBlitz",
-          message: "feature implementation",
+          message: "feature ",
           comment_count: 0,
         },
         {
           committer: {
             name: "Diana-QuantumRealm",
             email: "diana@quantumrealm.com",
-            date: "2023-10-05T08:15:02Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "QuantumCompute",
           message: "optimization",
@@ -175,7 +183,7 @@ export default {
           committer: {
             name: "Frank-FutureForge",
             email: "frank@futureforge.tech",
-            date: "2024-02-25T14:40:19Z",
+            date: "2024-03-21T07:04:19Z",
           },
           projectName: "TimeWarp",
           message: "time-travel support",
@@ -235,7 +243,6 @@ export default {
   padding: 14px;
   gap: 24px;
 }
-
 .custom-title {
   font-size: 18px;
   font-weight: 500;
@@ -244,17 +251,26 @@ export default {
   text-align: left;
   color: rgba(23, 35, 61, 1);
 }
-
 .card {
-  height: 85vh;
+  height: 50rem;
 }
-
 .custom-image {
   height: 200px;
 }
-
 .custom-text {
   color: #666;
   font-size: 16px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: #fe5e45;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.bg-soft-primary {
+  background-color: transparent !important;
 }
 </style>
